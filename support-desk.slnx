@@ -1,0 +1,16 @@
+<Solution>
+  <Configurations>
+    <Platform Name="ARM64" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="SupportDesk.Application/SupportDesk.Application.csproj" Id="a41481e7-891d-4678-80be-370916eda901" />
+  <Project Path="SupportDesk.Domain/SupportDesk.Domain.csproj" Id="415b0b3d-5f30-4b77-ac56-5dc096483fba" />
+  <Project Path="SupportDesk.Infrastructure/SupportDesk.Infrastructure.csproj" Id="00bd89f4-4218-4a3a-8c01-e272e1daa75f" />
+  <Project Path="SupportDesk.Presentation/SupportDesk.Presentation.csproj">
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
+    <Deploy />
+  </Project>
+</Solution>
