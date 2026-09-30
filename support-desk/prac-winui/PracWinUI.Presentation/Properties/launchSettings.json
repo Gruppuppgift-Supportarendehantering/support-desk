@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "PracWinUI.Presentation (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "PracWinUI.Presentation (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

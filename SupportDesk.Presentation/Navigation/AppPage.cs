@@ -1,5 +1,19 @@
 ﻿namespace SupportDesk.Presentation.Navigation;
 
-public class AppPage
+public enum AppPage
 {
+    Home,                   // Överblick
+
+
+    Customers,
+    CreateCustomer,         // Kundhantering
+    EditCustomer,
+
+    CreateSupportTicket,
+    EditSupportTicket,      // Ärenderegistrering
+
+    SupportTicketOverview,
+    CommentSupportTicket,   // Ärendehantering
+    Users
+
 }

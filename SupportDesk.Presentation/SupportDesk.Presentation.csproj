@@ -13,6 +13,17 @@
     <EnableMsixTooling>true</EnableMsixTooling>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Views\Customers\CreateCustomerView.xaml" />
+    <None Remove="Views\Customers\CustomerView.xaml" />
+    <None Remove="Views\Customers\EditCustomerView.xaml" />
+    <None Remove="Views\HomeView.xaml" />
+    <None Remove="Views\Tickets\CreateSupportTicketView.xaml" />
+    <None Remove="Views\Tickets\EditSupportTicketView.xaml" />
+    <None Remove="Views\Tickets\SupportTicketView.xaml" />
+    <None Remove="Views\Users\CommentSupportTicketView.xaml" />
+    <None Remove="Views\Users\UserView.xaml" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -47,11 +58,55 @@
     <Folder Include="ViewModels\Customers\" />
     <Folder Include="ViewModels\Users\" />
     <Folder Include="ViewModels\Tickets\" />
-    <Folder Include="Views\Users\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SupportDesk.Application\SupportDesk.Application.csproj" />
     <ProjectReference Include="..\SupportDesk.Infrastructure\SupportDesk.Infrastructure.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\HomeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Users\UserView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Users\CommentSupportTicketView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Tickets\SupportTicketView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Tickets\EditSupportTicketView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Tickets\CreateSupportTicketView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Customers\EditCustomerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Customers\CustomerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Customers\CreateCustomerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <!--
