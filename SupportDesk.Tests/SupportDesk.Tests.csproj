@@ -24,4 +24,10 @@
     <Folder Include="Users\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SupportDesk.Application\SupportDesk.Application.csproj" />
+    <ProjectReference Include="..\SupportDesk.Domain\SupportDesk.Domain.csproj" />
+    <ProjectReference Include="..\SupportDesk.Infrastructure\SupportDesk.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
