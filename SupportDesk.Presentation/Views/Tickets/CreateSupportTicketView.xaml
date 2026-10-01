@@ -9,6 +9,43 @@
     mc:Ignorable="d">
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
 
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Background="LightBlue">
+            <!-- vänsterkolumnen input med knappar -->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Skapa Supportärende" HorizontalAlignment="Center" Padding="20"/>
+                <TextBlock Grid.Row="1" Text="Rubrik" HorizontalAlignment="Left" Margin="20"/>
+                <TextBlock Grid.Row="2" Text="Beskrivning" HorizontalAlignment="Left" Margin="20"/>
+                <TextBlock Grid.Row="3" Text="Välj prioritetsnivå på ticket" Margin="20" />
+                <ComboBox Grid.Row="4" Margin="30" Padding="10" HorizontalAlignment="Left" Width="150">
+                    <x:String>Low</x:String>
+                    <x:String>Normal</x:String>
+                    <x:String>High</x:String>
+
+
+                </ComboBox>
+            </Grid>
+        </Border>
+        <Border Grid.Column="1" Background="LightGreen">
+            <!-- mittenkolumnen input med knappar-->
+            
+        </Border>
+        <Border Grid.Column="2" Background="CadetBlue">
+            
+            <!-- högerkolumnen input med knappar -->
+        </Border>
     </Grid>
 </Page>

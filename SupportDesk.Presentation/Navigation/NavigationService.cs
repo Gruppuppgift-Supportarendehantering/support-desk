@@ -1,5 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 using SupportDesk.Presentation.Views;
+using SupportDesk.Presentation.Views.Tickets;
 using System;
 
 namespace SupportDesk.Presentation.Navigation;
@@ -31,6 +32,7 @@ public class NavigationService : INavigationService
         var nextPage = page switch
         {
             AppPage.Home => typeof(HomeView),
+            AppPage.CreateSupportTicket => typeof(CreateSupportTicketView),
             _ => throw new ArgumentOutOfRangeException($"Unable to navigate to {page}.")
         };
 

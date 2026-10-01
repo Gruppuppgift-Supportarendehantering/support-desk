@@ -12,6 +12,6 @@ public sealed partial class MainWindow : Window
 
         _navigationService = navigationService;
         _navigationService.Initialize(RootFrame);
-        _navigationService.Navigate(AppPage.Home);
+        _navigationService.Navigate(AppPage.CreateSupportTicket);
     }
 }
