@@ -1,5 +1,6 @@
 ﻿using SupportDesk.Application.Customers;
 using SupportDesk.Domain.Customers;
+using SupportDesk.Domain.ValueObjects;
 using System.Text.Json;
 
 namespace SupportDesk.Infrastructure.Customers;
@@ -17,14 +18,34 @@ public class JsonFileCustomerRepository : ICustomerRepository
         PropertyNameCaseInsensitive = true
     };
 
-    public Task<bool> CreateAsync(Customer customer)
+    public async Task<bool> CreateAsync(Customer customer)
     {
-        throw new NotImplementedException();
+        ArgumentNullException.ThrowIfNull(customer);
+
+        var customers = await ReadCustomersAsync();
+
+        if (customers.Any(c => c.CustomerId == customer.CustomerId))
+        {
+            return false;
+        }
+
+        var storageModel = new CustomerStorageModel(
+            customer.CustomerId,
+            customer.CustomerName.Value,
+            customer.EmailAddress.Value,
+            customer.IsCompany
+            );
+
+        customers.Add(storageModel);
+
+        await SaveCustomersAsync(customers);
+
+        return true;
     }
 
-    public Task<Customer?> GetByIdAsync(Guid customerId)
+    public async Task<Customer?> GetByIdAsync(Guid customerId)
     {
-        throw new NotImplementedException();
+        
     }
 
     public Task<IReadOnlyList<Customer>> GetAllAsync()
