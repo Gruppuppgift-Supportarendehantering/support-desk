@@ -61,9 +61,17 @@ public class JsonFileCustomerRepository : ICustomerRepository
             storageModel.IsCompany);
     }
 
-    public Task<IReadOnlyList<Customer>> GetAllAsync()
+    public async Task<IReadOnlyList<Customer>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        var customers = await ReadCustomersAsync();
+
+        return customers
+            .Select(storageModel => new Customer(
+            storageModel.CustomerId,
+            new Name(storageModel.CustomerName),
+            new EmailAddress(storageModel.EmailAddress),
+            storageModel.IsCompany))
+            .ToList();
     }
 
     public Task<bool> UpdateAsync(Customer customer)
