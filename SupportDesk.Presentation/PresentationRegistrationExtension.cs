@@ -12,6 +12,7 @@ public static class PresentationRegistrationExtension
         services.AddSingleton<MainWindow>();
 
         services.AddTransient<CreateCustomerViewModel>();
+        services.AddTransient<CustomerViewModel>();
 
         return services;
     }
