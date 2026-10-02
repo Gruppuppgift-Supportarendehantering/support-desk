@@ -1,11 +1,13 @@
-﻿using SupportDesk.Application.Dtos.Customers;
+using SupportDesk.Application.Dtos.Customers;
 
 namespace SupportDesk.Application.Customers;
 
 public interface ICustomerService
 {
     CustomerResponse CreateCustomer(CreateCustomerRequest request);
+    CustomerResponse GetCustomerById(Guid customerId);
+    GetCustomerResponse GetAllCustomers();
     CustomerResponse RenameCustomer(RenameCustomerRequest request);
     CustomerResponse ChangeEmailAddress(ChangeEmailAddressRequest request);
-    GetCustomerResponse GetAllCustomers();
+    DeleteCustomerResponse DeleteCustomer(Guid customerId);
 }

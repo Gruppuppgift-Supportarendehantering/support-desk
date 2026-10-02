@@ -1,4 +1,4 @@
-﻿using SupportDesk.Application.Dtos.Customers;
+using SupportDesk.Application.Dtos.Customers;
 using SupportDesk.Domain.Customers;
 using SupportDesk.Domain.ValueObjects;
 
@@ -46,7 +46,37 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
 
         return new CustomerResponse(true, customerData, null);
     }
+    public CustomerResponse GetCustomerById(Guid customerId)
+    {
+        var customer = customerRepository.GetById(customerId);
 
+        if (customer is null)
+        {
+            return new CustomerResponse(false, null, "Customer was not found.");
+        }
+
+        var customerData = new CustomerData(
+            customer.CustomerId,
+            customer.CustomerName.Value,
+            customer.EmailAddress.Value,
+            customer.IsCompany);
+
+        return new CustomerResponse(true, customerData, null);
+    }
+    public GetCustomerResponse GetAllCustomers()
+    {
+        var customers = customerRepository.GetAll();
+
+        var customerdata = customers
+            .Select(customer => new CustomerData(
+                customer.CustomerId,
+                customer.CustomerName.Value,
+                customer.EmailAddress.Value,
+                customer.IsCompany))
+            .ToList();
+
+        return new GetCustomerResponse(true, customerdata, null);
+    }
     public CustomerResponse RenameCustomer(RenameCustomerRequest request)
     {
         throw new NotImplementedException();
@@ -57,8 +87,10 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
         throw new NotImplementedException();
     }
 
-    public GetCustomerResponse GetAllCustomers()
+    public DeleteCustomerResponse DeleteCustomer(Guid customerId)
     {
         throw new NotImplementedException();
     }
+
+   
 }
