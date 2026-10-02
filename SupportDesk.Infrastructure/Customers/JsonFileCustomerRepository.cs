@@ -100,9 +100,20 @@ public class JsonFileCustomerRepository : ICustomerRepository
 
     }
 
-    public Task<bool> DeleteAsync(Guid customerId)
+    public async Task<bool> DeleteAsync(Guid customerId)
     {
-        throw new NotImplementedException();
+        var customers = await ReadCustomersAsync();
+
+        int removed = customers.RemoveAll(c => c.CustomerId == customerId);
+
+        if (removed == 0)
+        {
+            return false;
+        }
+
+        await SaveCustomersAsync(customers);
+
+        return true;
     }
 
     private async Task<List<CustomerStorageModel>> ReadCustomersAsync()
