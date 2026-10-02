@@ -5,7 +5,7 @@ using System.Text.Json;
 
 namespace SupportDesk.Infrastructure.Customers;
 
-public class JsonFileCustomerRepository : ICustomerRepository
+internal class JsonFileCustomerRepository : ICustomerRepository
 {
     private readonly string _filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
         "SupportDesk",
