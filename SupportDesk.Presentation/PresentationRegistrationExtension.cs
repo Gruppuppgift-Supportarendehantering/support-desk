@@ -13,6 +13,7 @@ public static class PresentationRegistrationExtension
 
         services.AddTransient<CreateCustomerViewModel>();
         services.AddTransient<CustomerViewModel>();
+        services.AddTransient<EditCustomerViewModel>();
 
         return services;
     }
