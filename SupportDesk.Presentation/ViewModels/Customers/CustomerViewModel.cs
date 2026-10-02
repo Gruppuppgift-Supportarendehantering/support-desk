@@ -6,6 +6,7 @@ using SupportDesk.Presentation.Navigation;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace SupportDesk.Presentation.ViewModels.Customers;
@@ -81,5 +82,46 @@ public partial class CustomerViewModel(
         }
 
         _navigationService.Navigate(AppPage.EditCustomer, SelectedCustomer.CustomerId.ToString());
+    }
+    [RelayCommand]
+    private async Task DeleteCustomerAsync()
+    {
+        var customer = SelectedCustomer;
+
+        if (customer is null)
+        {
+            Message = "Välj en kund att ta bort.";
+            return;
+        }
+
+        Message = string.Empty;
+
+        try
+        {
+            var response = await _customerService.DeleteCustomerAsync(customer.CustomerId);
+
+            if (!response.Succeeded)
+            {
+                Message = response.ErrorMessage
+                    ?? "Kunden kunde inte tas bort";
+                return;
+            }
+
+            Customers.Remove(customer);
+            SelectedCustomer = null;
+            Message = "Kunden har tagits bort.";
+        }
+        catch (IOException)
+        {
+            Message = "Kundfilen kunde inte läsas eller sparas.";
+        }
+        catch (UnauthorizedAccessException)
+        {
+            Message = "Applikationen saknar behörighet till kundfilen.";
+        }
+        catch (JsonException)
+        {
+            Message = "Kundfilen innehåller ogiltigt data.";
+        }
     }
 }
