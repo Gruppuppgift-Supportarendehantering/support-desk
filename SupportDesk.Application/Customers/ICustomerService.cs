@@ -4,10 +4,10 @@ namespace SupportDesk.Application.Customers;
 
 public interface ICustomerService
 {
-    CustomerResponse CreateCustomer(CreateCustomerRequest request);
-    CustomerResponse GetCustomerById(Guid customerId);
-    GetCustomerResponse GetAllCustomers();
-    CustomerResponse RenameCustomer(RenameCustomerRequest request);
-    CustomerResponse ChangeEmailAddress(ChangeEmailAddressRequest request);
-    DeleteCustomerResponse DeleteCustomer(Guid customerId);
+    Task<CustomerResponse> CreateCustomerAsync(CreateCustomerRequest request);
+    Task<CustomerResponse> GetCustomerByIdAsync(Guid customerId);
+    Task<GetCustomerResponse> GetAllCustomersAsync();
+    Task<CustomerResponse> RenameCustomerAsync(RenameCustomerRequest request);
+    Task<CustomerResponse> ChangeEmailAddressAsync(ChangeEmailAddressRequest request);
+    Task<DeleteCustomerResponse> DeleteCustomerAsync(Guid customerId);
 }

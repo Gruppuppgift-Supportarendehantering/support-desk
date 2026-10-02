@@ -6,7 +6,7 @@ namespace SupportDesk.Application.Customers;
 
 internal class CustomerService(ICustomerRepository customerRepository) : ICustomerService
 {
-    public CustomerResponse CreateCustomer(CreateCustomerRequest request)
+    public async Task<CustomerResponse> CreateCustomerAsync(CreateCustomerRequest request)
     {
         ArgumentNullException.ThrowIfNull(request);
 
@@ -29,7 +29,7 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
             return new CustomerResponse(false, null, ex.Message);
         }
 
-        bool saved = customerRepository.Add(customer);
+        bool saved = await customerRepository.CreateAsync(customer);
 
         if (!saved)
         {
@@ -38,9 +38,9 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
 
         return new CustomerResponse(true, ToCustomerData(customer), null);
     }
-    public CustomerResponse GetCustomerById(Guid customerId)
+    public async Task<CustomerResponse> GetCustomerByIdAsync(Guid customerId)
     {
-        var customer = customerRepository.GetById(customerId);
+        var customer = await customerRepository.GetByIdAsync(customerId);
 
         if (customer is null)
         {
@@ -49,19 +49,19 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
 
         return new CustomerResponse(true, ToCustomerData(customer), null);
     }
-    public GetCustomerResponse GetAllCustomers()
+    public async Task<GetCustomerResponse> GetAllCustomersAsync()
     {
-        var customers = customerRepository.GetAll();
+        var customers = await customerRepository.GetAllAsync();
 
         var customerData = customers.Select(ToCustomerData).ToList();
 
         return new GetCustomerResponse(true, customerData, null);
     }
-    public CustomerResponse RenameCustomer(RenameCustomerRequest request)
+    public async Task<CustomerResponse> RenameCustomerAsync(RenameCustomerRequest request)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var customer = customerRepository.GetById(request.CustomerId);
+        var customer = await customerRepository.GetByIdAsync(request.CustomerId);
 
         if (customer is null)
         {
@@ -77,7 +77,7 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
             return new CustomerResponse(false, null, ex.Message);
         }
 
-        bool saved = customerRepository.Update(customer);
+        bool saved = await customerRepository.UpdateAsync(customer);
 
         if (!saved)
         {
@@ -87,11 +87,11 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
         return new CustomerResponse(true, ToCustomerData(customer), null);
     }
 
-    public CustomerResponse ChangeEmailAddress(ChangeEmailAddressRequest request)
+    public async Task<CustomerResponse> ChangeEmailAddressAsync(ChangeEmailAddressRequest request)
     {
         ArgumentNullException.ThrowIfNull(request);
 
-        var customer = customerRepository.GetById(request.CustomerId);
+        var customer = await customerRepository.GetByIdAsync(request.CustomerId);
 
         if (customer is null)
         {
@@ -107,7 +107,7 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
             return new CustomerResponse(false, null, ex.Message);
         }
 
-        bool saved = customerRepository.Update(customer);
+        bool saved = await customerRepository.UpdateAsync(customer);
 
         if (!saved)
         {
@@ -117,14 +117,14 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
         return new CustomerResponse(true, ToCustomerData(customer), null);
     }
 
-    public DeleteCustomerResponse DeleteCustomer(Guid customerId)
+    public async Task<DeleteCustomerResponse> DeleteCustomerAsync(Guid customerId)
     {
         if (customerId == Guid.Empty)
         {
             return new DeleteCustomerResponse(false, "Customer ID is required.");
         }
 
-        bool deleted = customerRepository.Delete(customerId);
+        bool deleted = await customerRepository.DeleteAsync(customerId);
 
         return deleted
             ? new DeleteCustomerResponse(true, null)
