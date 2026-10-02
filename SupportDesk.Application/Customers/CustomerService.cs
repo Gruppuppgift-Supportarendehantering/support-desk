@@ -36,15 +36,7 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
             return new CustomerResponse(false, null, "Customer could not be saved.");
         }
 
-        var customerData = new CustomerData
-            (
-                customer.CustomerId,
-                customer.CustomerName.Value,
-                customer.EmailAddress.Value,
-                customer.IsCompany
-            );
-
-        return new CustomerResponse(true, customerData, null);
+        return new CustomerResponse(true, ToCustomerData(customer), null);
     }
     public CustomerResponse GetCustomerById(Guid customerId)
     {
@@ -55,27 +47,15 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
             return new CustomerResponse(false, null, "Customer was not found.");
         }
 
-        var customerData = new CustomerData(
-            customer.CustomerId,
-            customer.CustomerName.Value,
-            customer.EmailAddress.Value,
-            customer.IsCompany);
-
-        return new CustomerResponse(true, customerData, null);
+        return new CustomerResponse(true, ToCustomerData(customer), null);
     }
     public GetCustomerResponse GetAllCustomers()
     {
         var customers = customerRepository.GetAll();
 
-        var customerdata = customers
-            .Select(customer => new CustomerData(
-                customer.CustomerId,
-                customer.CustomerName.Value,
-                customer.EmailAddress.Value,
-                customer.IsCompany))
-            .ToList();
+        var customerData = customers.Select(ToCustomerData).ToList();
 
-        return new GetCustomerResponse(true, customerdata, null);
+        return new GetCustomerResponse(true, customerData, null);
     }
     public CustomerResponse RenameCustomer(RenameCustomerRequest request)
     {
@@ -104,13 +84,7 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
             return new CustomerResponse(false, null, "Customer could not be updated.");
         }
 
-        var customerData = new CustomerData(
-            customer.CustomerId,
-            customer.CustomerName.Value,
-            customer.EmailAddress.Value,
-            customer.IsCompany);
-
-        return new CustomerResponse(true, customerData, null);
+        return new CustomerResponse(true, ToCustomerData(customer), null);
     }
 
     public CustomerResponse ChangeEmailAddress(ChangeEmailAddressRequest request)
@@ -140,13 +114,7 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
             return new CustomerResponse(false, null, "Customer could not be updated.");
         }
 
-        var customerData = new CustomerData(
-            customer.CustomerId,
-            customer.CustomerName.Value,
-            customer.EmailAddress.Value,
-            customer.IsCompany);
-
-        return new CustomerResponse(true, customerData, null);
+        return new CustomerResponse(true, ToCustomerData(customer), null);
     }
 
     public DeleteCustomerResponse DeleteCustomer(Guid customerId)
@@ -163,5 +131,13 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
             : new DeleteCustomerResponse(false, "Customer was not found.");
     }
 
+    private static CustomerData ToCustomerData(Customer customer)
+    {
+        return new CustomerData(
+            customer.CustomerId,
+            customer.CustomerName.Value,
+            customer.EmailAddress.Value,
+            customer.IsCompany);
+    }
 
 }
