@@ -55,7 +55,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Styles\" />
-    <Folder Include="ViewModels\Customers\" />
     <Folder Include="ViewModels\Users\" />
     <Folder Include="ViewModels\Tickets\" />
   </ItemGroup>
