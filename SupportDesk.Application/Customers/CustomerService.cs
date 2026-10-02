@@ -151,7 +151,16 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
 
     public DeleteCustomerResponse DeleteCustomer(Guid customerId)
     {
-        throw new NotImplementedException();
+        if (customerId == Guid.Empty)
+        {
+            return new DeleteCustomerResponse(false, "Customer ID is required.");
+        }
+
+        bool deleted = customerRepository.Delete(customerId);
+
+        return deleted
+            ? new DeleteCustomerResponse(true, null)
+            : new DeleteCustomerResponse(false, "Customer was not found.");
     }
 
 
