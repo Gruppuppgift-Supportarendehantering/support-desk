@@ -15,7 +15,7 @@
             Header="Kundnamn"
             Text="{x:Bind ViewModel.CustomerName, Mode=TwoWay, 
             UpdateSourceTrigger=PropertyChanged}" />
-
+        
         <TextBox
             Header="E-postadress"
             Text="{x:Bind ViewModel.EmailAddress, Mode=TwoWay,

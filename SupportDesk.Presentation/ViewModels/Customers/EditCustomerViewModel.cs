@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SupportDesk.Application.Customers;
+using SupportDesk.Application.Dtos.Customers;
 using SupportDesk.Presentation.Navigation;
 using System;
 using System.IO;
@@ -60,7 +61,50 @@ public partial class EditCustomerViewModel(
             Message = "Kunden har ogiltigt namn eller e-postadress.";
         }
     }
+    [RelayCommand]
+    private async Task RenameCustomerAsync()
+    {
+        Message = string.Empty;
 
+        if (_customerId == Guid.Empty)
+        {
+            Message = "Ingen kund har hämtats.";
+            return;
+        }
+
+        var request = new RenameCustomerRequest(_customerId, CustomerName);
+
+        try
+        {
+            var response = await _customerService.RenameCustomerAsync(request);
+
+            if (!response.Succeeded || response.Customer is null)
+            {
+                Message = response.ErrorMessage
+                    ?? "Kundnamnet kunde inte ändras.";
+                return;
+            }
+
+            CustomerName = response.Customer.CustomerName;
+            Message = "Kundnamnet har ändrats.";
+        }
+        catch (IOException)
+        {
+            Message = "Kundfilen kunde inte läsas eller sparas.";
+        }
+        catch (UnauthorizedAccessException)
+        {
+            Message = "Applikationen saknar behörighet till kundfilen.";
+        }
+        catch (JsonException)
+        {
+            Message = "Kundfilen innehåller ogiltig data.";
+        }
+        catch (ArgumentException)
+        {
+            Message = "En kund i filen har ogiltiga uppgifter.";
+        }
+    }
     [RelayCommand]
     private void GoBack()
     {

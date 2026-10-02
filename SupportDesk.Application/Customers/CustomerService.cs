@@ -87,6 +87,43 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
         return new CustomerResponse(true, ToCustomerData(customer), null);
     }
 
+    public async Task<CustomerResponse> UpdateCustomerAsync(UpdateCustomerRequest request)
+    {
+        ArgumentNullException.ThrowIfNull(request);
+
+        var customer = await customerRepository.GetByIdAsync(request.CustomerId);
+
+        if (customer is null)
+        {
+            return new CustomerResponse(false, null, "Customer was not found.");
+        }
+
+        Name name;
+        EmailAddress emailAddress;
+
+        try
+        {
+            name = new Name(request.CustomerName);
+            emailAddress = new EmailAddress(request.EmailAddress);
+        }
+        catch (ArgumentException ex)
+        {
+            return new CustomerResponse(false, null, ex.Message);
+        }
+
+        customer.Rename(name);
+        customer.ChangeEmailAddress(emailAddress);
+
+        bool saved = await customerRepository.UpdateAsync(customer);
+
+        if (!saved)
+        {
+            return new CustomerResponse(false, null, "Customer could not be updated.");
+        }
+
+        return new CustomerResponse(true, ToCustomerData(customer), null);
+    }
+
     public async Task<CustomerResponse> ChangeEmailAddressAsync(ChangeEmailAddressRequest request)
     {
         ArgumentNullException.ThrowIfNull(request);
@@ -139,5 +176,6 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
             customer.EmailAddress.Value,
             customer.IsCompany);
     }
+
 
 }
