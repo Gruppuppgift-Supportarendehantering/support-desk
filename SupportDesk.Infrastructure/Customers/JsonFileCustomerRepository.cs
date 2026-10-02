@@ -74,9 +74,30 @@ public class JsonFileCustomerRepository : ICustomerRepository
             .ToList();
     }
 
-    public Task<bool> UpdateAsync(Customer customer)
+    public async Task<bool> UpdateAsync(Customer customer)
     {
-        throw new NotImplementedException();
+        ArgumentNullException.ThrowIfNull(customer);
+
+        var customers = await ReadCustomersAsync();
+
+        int index = customers.FindIndex(c => c.CustomerId == customer.CustomerId);
+
+        if (index == -1)
+        {
+            return false;
+        }
+
+        customers[index] = new CustomerStorageModel(
+            customer.CustomerId,
+            customer.CustomerName.Value,
+            customer.EmailAddress.Value,
+            customer.IsCompany
+            );
+
+        await SaveCustomersAsync(customers);
+
+        return true;
+
     }
 
     public Task<bool> DeleteAsync(Guid customerId)
