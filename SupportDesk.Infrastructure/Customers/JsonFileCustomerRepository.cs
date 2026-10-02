@@ -45,7 +45,20 @@ public class JsonFileCustomerRepository : ICustomerRepository
 
     public async Task<Customer?> GetByIdAsync(Guid customerId)
     {
-        
+        var customers = await ReadCustomersAsync();
+
+        var storageModel = customers.FirstOrDefault(c => c.CustomerId == customerId);
+
+        if (storageModel is null)
+        {
+            return null;
+        }
+
+        return new Customer(
+            storageModel.CustomerId,
+            new Name(storageModel.CustomerName),
+            new EmailAddress(storageModel.EmailAddress),
+            storageModel.IsCompany);
     }
 
     public Task<IReadOnlyList<Customer>> GetAllAsync()
