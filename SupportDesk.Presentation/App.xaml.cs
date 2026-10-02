@@ -1,4 +1,7 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Xaml;
+using SupportDesk.Application;
+using SupportDesk.Infrastructure;
 using SupportDesk.Presentation.Navigation;
 
 namespace SupportDesk.Presentation;
@@ -6,16 +9,24 @@ namespace SupportDesk.Presentation;
 public partial class App : Microsoft.UI.Xaml.Application
 {
     private Window? _window;
+    private readonly ServiceProvider _serviceProvider;
 
     public App()
     {
         InitializeComponent();
+
+        var services = new ServiceCollection();
+
+        services.AddApplication();
+        services.AddInfrastructure();
+        services.AddPresentation();
+
+        _serviceProvider = services.BuildServiceProvider();
     }
 
     protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
     {
-        var navigationService = new NavigationService();
-        _window = new MainWindow(navigationService);
+        _window = _serviceProvider.GetRequiredService<MainWindow>();
         _window.Activate();
     }
 }
