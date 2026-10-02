@@ -25,6 +25,9 @@
             <Button
                 Content="Redigera kund"
                 Command="{x:Bind ViewModel.EditCustomerCommand}" />
+            <Button
+                Content="Ta bort kund"
+                Click="DeleteCustomer_Click" />
         </StackPanel>
 
         <TextBlock
