@@ -62,7 +62,7 @@ public partial class EditCustomerViewModel(
         }
     }
     [RelayCommand]
-    private async Task RenameCustomerAsync()
+    private async Task UpdateAsync()
     {
         Message = string.Empty;
 
@@ -72,21 +72,22 @@ public partial class EditCustomerViewModel(
             return;
         }
 
-        var request = new RenameCustomerRequest(_customerId, CustomerName);
+        var request = new UpdateCustomerRequest(_customerId, CustomerName, EmailAddress);
 
         try
         {
-            var response = await _customerService.RenameCustomerAsync(request);
+            var response = await _customerService.UpdateCustomerAsync(request);
 
             if (!response.Succeeded || response.Customer is null)
             {
                 Message = response.ErrorMessage
-                    ?? "Kundnamnet kunde inte ändras.";
+                    ?? "Kunden kunde inte uppdateras.";
                 return;
             }
 
             CustomerName = response.Customer.CustomerName;
-            Message = "Kundnamnet har ändrats.";
+            EmailAddress = response.Customer.EmailAddress;
+            Message = "Kundens uppgifter har uppdateras";
         }
         catch (IOException)
         {

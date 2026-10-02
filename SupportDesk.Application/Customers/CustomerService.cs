@@ -57,36 +57,6 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
 
         return new GetCustomerResponse(true, customerData, null);
     }
-    public async Task<CustomerResponse> RenameCustomerAsync(RenameCustomerRequest request)
-    {
-        ArgumentNullException.ThrowIfNull(request);
-
-        var customer = await customerRepository.GetByIdAsync(request.CustomerId);
-
-        if (customer is null)
-        {
-            return new CustomerResponse(false, null, "Customer was not found.");
-        }
-
-        try
-        {
-            customer.Rename(new Name(request.CustomerName));
-        }
-        catch (ArgumentException ex)
-        {
-            return new CustomerResponse(false, null, ex.Message);
-        }
-
-        bool saved = await customerRepository.UpdateAsync(customer);
-
-        if (!saved)
-        {
-            return new CustomerResponse(false, null, "Customer could not be updated.");
-        }
-
-        return new CustomerResponse(true, ToCustomerData(customer), null);
-    }
-
     public async Task<CustomerResponse> UpdateCustomerAsync(UpdateCustomerRequest request)
     {
         ArgumentNullException.ThrowIfNull(request);
@@ -113,36 +83,6 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
 
         customer.Rename(name);
         customer.ChangeEmailAddress(emailAddress);
-
-        bool saved = await customerRepository.UpdateAsync(customer);
-
-        if (!saved)
-        {
-            return new CustomerResponse(false, null, "Customer could not be updated.");
-        }
-
-        return new CustomerResponse(true, ToCustomerData(customer), null);
-    }
-
-    public async Task<CustomerResponse> ChangeEmailAddressAsync(ChangeEmailAddressRequest request)
-    {
-        ArgumentNullException.ThrowIfNull(request);
-
-        var customer = await customerRepository.GetByIdAsync(request.CustomerId);
-
-        if (customer is null)
-        {
-            return new CustomerResponse(false, null, "Customer was not found.");
-        }
-
-        try
-        {
-            customer.ChangeEmailAddress(new EmailAddress(request.EmailAddress));
-        }
-        catch (ArgumentException ex)
-        {
-            return new CustomerResponse(false, null, ex.Message);
-        }
 
         bool saved = await customerRepository.UpdateAsync(customer);
 

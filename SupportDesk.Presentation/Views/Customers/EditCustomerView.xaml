@@ -28,5 +28,9 @@
         <Button
             Content="Tillbaka"
             Command="{x:Bind ViewModel.GoBackCommand}" />
+
+        <Button
+            Content="Spara ändring"
+            Command="{x:Bind ViewModel.UpdateCommand}" />
     </StackPanel>
 </Page>
