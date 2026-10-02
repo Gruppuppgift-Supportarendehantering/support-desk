@@ -1,5 +1,14 @@
-﻿namespace SupportDesk.Application;
+﻿using Microsoft.Extensions.DependencyInjection;
+using SupportDesk.Application.Customers;
 
-public class ApplicationRegistrationExtension
+namespace SupportDesk.Application;
+
+public static class ApplicationRegistrationExtension
 {
+    public static IServiceCollection AddApplication(this IServiceCollection services)
+    {
+        services.AddTransient<ICustomerService, CustomerService>();
+
+        return services;
+    }
 }
