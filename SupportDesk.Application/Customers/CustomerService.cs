@@ -79,7 +79,38 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
     }
     public CustomerResponse RenameCustomer(RenameCustomerRequest request)
     {
-        throw new NotImplementedException();
+        ArgumentNullException.ThrowIfNull(request);
+
+        var customer = customerRepository.GetById(request.CustomerId);
+
+        if (customer is null)
+        {
+            return new CustomerResponse(false, null, "Customer was not found.");
+        }
+
+        try
+        {
+            customer.Rename(new Name(request.CustomerName));
+        }
+        catch (ArgumentException ex)
+        {
+            return new CustomerResponse(false, null, ex.Message);
+        }
+
+        bool saved = customerRepository.Update(customer);
+
+        if (!saved)
+        {
+            return new CustomerResponse(false, null, "Customer could not be updated.");
+        }
+
+        var customerData = new CustomerData(
+            customer.CustomerId,
+            customer.CustomerName.Value,
+            customer.EmailAddress.Value,
+            customer.IsCompany);
+
+        return new CustomerResponse(true, customerData, null);
     }
 
     public CustomerResponse ChangeEmailAddress(ChangeEmailAddressRequest request)
