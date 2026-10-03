@@ -4,6 +4,7 @@ using System.Text;
 
 namespace SupportDesk.Application.Tickets;
 
-public interface ISupportTicketRepository
+public interface ISupportTicketRepository //flytta över till domain lagret vid tillfälle. pga DDD.
 {
+    //crud
 }

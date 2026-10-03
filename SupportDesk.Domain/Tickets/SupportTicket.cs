@@ -38,16 +38,10 @@ public class SupportTicket
         Title = title;
         Description = description;
         CustomerId = customerId;
+
         TicketPriority = ticketpriority;
         TicketStatus = TicketStatus.New;
         CreatedAt = DateTime.Now;
     }
 }
 
-public record CreateSupportTicketRequest //flytta till dto mappen i application
-    (
-    string Title,
-    string Description,
-    Guid CustomerId,
-    TicketPriority TicketPriority
-    );
