@@ -7,6 +7,15 @@ namespace SupportDesk.Application.Tickets;
 
 public class SupportTicketService : ISupportTicketService
 {
+    private readonly ISupportTicketRepository _repository;
+
+
+    public SupportTicketService(ISupportTicketRepository repository)
+    {
+        _repository = repository;
+    }
+
+
     public SupportTicketResult CreateTicket(SupportTicketRequest request)
     {
         SupportTicket ticket = new SupportTicket
@@ -16,6 +25,8 @@ public class SupportTicketService : ISupportTicketService
             request.CustomerId, 
             request.TicketPriority
             );
+
+        _repository.AddTicketToList(ticket);
 
         Guid ticketId = ticket.TicketId;
         string  title = ticket.Title;

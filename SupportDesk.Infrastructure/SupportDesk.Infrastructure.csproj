@@ -15,4 +15,10 @@
     <ProjectReference Include="..\SupportDesk.Domain\SupportDesk.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Tickets\supporttickets.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
