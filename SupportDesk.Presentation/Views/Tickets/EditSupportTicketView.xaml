@@ -8,7 +8,44 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
+	<ScrollViewer Padding="24">
+		<StackPanel Spacing="16" MaxWidth="600" HorizontalAlignment="Center">
+			<!--ändra horizontalalignment till vänster kanske-->
+			<TextBlock Text="Redigera Ärende" FontSize="24" FontWeight="Bold"/>
+			<TextBox Header="Rubrik" Text="{x:Bind ViewModel.Title, Mode=TwoWay}"/>
+			<TextBox Header="Beskrivning" Text="{x:Bind ViewModel.Description, Mode=TwoWay}" AcceptsReturn="True"
+                     TextWrapping="Wrap"
+                     Height="100" />
 
-    </Grid>
+			<StackPanel Orientation="Horizontal" Spacing="120" >
+				<ComboBox Header="Prioritet" ItemsSource="{x:Bind ViewModel.PriorityOptions}" SelectedItem="{x:Bind ViewModel.Priority, Mode=TwoWay}"/>
+				<ComboBox Header="Status" ItemsSource="{x:Bind ViewModel.StatusOptions}" SelectedItem="{x:Bind ViewModel.Status, Mode=TwoWay}"/>
+				<ComboBox Header="Handläggare" ItemsSource="{x:Bind ViewModel.TechnicianOptions}" SelectedItem="{x:Bind ViewModel.AssignedTechnician, Mode=TwoWay}"/>
+			</StackPanel>
+			
+			<Button Content="Spara ändringar" Command="{x:Bind ViewModel.SaveChangesCommand}" HorizontalAlignment="Left" Style="{StaticResource AccentButtonStyle}"/>
+			
+			<TextBlock Text="Kommentarer" FontSize="20" FontWeight="Bold" Margin="0,24,0,0"/>
+
+			<ListView ItemsSource="{x:Bind ViewModel.Comments}" MaxHeight="200">
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<StackPanel Margin="0,4">
+							<!--<TextBlock Text="{Binding Author}" FontWeight="Bold"/>-->
+						<TextBlock Text="{Binding Author}" FontWeight="Bold"/>
+							<TextBlock Text="{Binding Text}" TextWrapping="Wrap"/>
+						<TextBlock Text="{Binding CreatedAt}" FontSize="12"/>
+						</StackPanel>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+			
+			<TextBox Header="Ny kommentar" Text="{x:Bind ViewModel.NewCommentText, Mode=TwoWay}"/>
+			<Button Content="Lägg till kommentar" Command="{x:Bind ViewModel.AddCommentCommand}" HorizontalAlignment="Left"/>
+			
+                      
+		</StackPanel>
+	</ScrollViewer>
+
+
 </Page>
