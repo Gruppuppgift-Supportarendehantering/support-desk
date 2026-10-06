@@ -8,23 +8,57 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+	<Page.Resources>
+		<SolidColorBrush x:Key="PlaceholderBrush" Color="{ThemeResource TextFillColorSecondary}" Opacity="0.4"/>
+	</Page.Resources>
+
 	<ScrollViewer Padding="24">
 		<StackPanel Spacing="16" MaxWidth="600" HorizontalAlignment="Center">
 			<!--ändra horizontalalignment till vänster kanske-->
 			<TextBlock Text="Redigera Ärende" FontSize="24" FontWeight="Bold"/>
-			<TextBox Header="Rubrik" Text="{x:Bind ViewModel.Title, Mode=TwoWay}"/>
-			<TextBox Header="Beskrivning" Text="{x:Bind ViewModel.Description, Mode=TwoWay}" AcceptsReturn="True"
+			
+			<StackPanel Spacing="4">
+			<TextBlock Text="Kund" FontWeight="SemiBold"/>
+			<TextBlock Text="{x:Bind ViewModel.CustomerName, Mode=OneWay}"/>
+
+			<TextBlock Text="Ärende"
+					   FontWeight="SemiBold"
+					   Margin="0,8,0,0"/>
+			<TextBlock Text="{x:Bind ViewModel.OriginalTitle, Mode=OneWay}"
+					   TextWrapping="Wrap"/>
+		</StackPanel>
+
+			<TextBox Header="Rubrik" Text="{x:Bind ViewModel.Title, Mode=TwoWay}"
+					PlaceholderText="Exempel: Internet fungerar inte"
+				    PlaceholderForeground="{StaticResource PlaceholderBrush}"/>
+
+
+
+			<TextBox Header="Beskrivning" Text="{x:Bind ViewModel.Description, Mode=TwoWay}"
+					 PlaceholderText="Beskriv problemet och vad som redan har provats."
+					 PlaceholderForeground="{StaticResource PlaceholderBrush}"
+					 AcceptsReturn="True"
                      TextWrapping="Wrap"
                      Height="100" />
 
 			<StackPanel Orientation="Horizontal" Spacing="120" >
-				<ComboBox Header="Prioritet" ItemsSource="{x:Bind ViewModel.PriorityOptions}" SelectedItem="{x:Bind ViewModel.Priority, Mode=TwoWay}"/>
-				<ComboBox Header="Status" ItemsSource="{x:Bind ViewModel.StatusOptions}" SelectedItem="{x:Bind ViewModel.Status, Mode=TwoWay}"/>
-				<ComboBox Header="Handläggare" ItemsSource="{x:Bind ViewModel.TechnicianOptions}" SelectedItem="{x:Bind ViewModel.AssignedTechnician, Mode=TwoWay}"/>
+				<ComboBox Header="Prioritet" MinWidth="100" ItemsSource="{x:Bind ViewModel.PriorityOptions}" SelectedItem="{x:Bind ViewModel.Priority, Mode=TwoWay}"/>
+				<ComboBox Header="Status" MinWidth="100" ItemsSource="{x:Bind ViewModel.StatusOptions}" SelectedItem="{x:Bind ViewModel.Status, Mode=TwoWay}"/>
+				<ComboBox Header="Handläggare" Width="150" ItemsSource="{x:Bind ViewModel.TechnicianOptions}" SelectedItem="{x:Bind ViewModel.AssignedTechnician, Mode=TwoWay}"/>
 			</StackPanel>
 			
-			<Button Content="Spara ändringar" Command="{x:Bind ViewModel.SaveChangesCommand}" HorizontalAlignment="Left" Style="{StaticResource AccentButtonStyle}"/>
+			<TextBlock Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}" Foreground="{ThemeResource SystemFillColorCriticalBrush}" TextWrapping="Wrap"/>
 			
+			<TextBlock Text="{x:Bind ViewModel.SuccessMessage, Mode=OneWay}"
+           Foreground="{ThemeResource SystemFillColorSuccessBrush}"
+           TextWrapping="Wrap"/>
+
+
+			<StackPanel Orientation="Horizontal" Spacing="12">
+			<Button Content="Spara ändringar" Command="{x:Bind ViewModel.SaveChangesCommand}" HorizontalAlignment="Left" Style="{StaticResource AccentButtonStyle}"/>
+			<Button Content="Avbryt" Width="120" Click="CancelButton_Click" Padding="20,6"/>
+			</StackPanel>
+
 			<TextBlock Text="Kommentarer" FontSize="20" FontWeight="Bold" Margin="0,24,0,0"/>
 
 			<ListView ItemsSource="{x:Bind ViewModel.Comments}" MaxHeight="200">
@@ -40,8 +74,8 @@
 				</ListView.ItemTemplate>
 			</ListView>
 			
-			<TextBox Header="Ny kommentar" Text="{x:Bind ViewModel.NewCommentText, Mode=TwoWay}"/>
-			<Button Content="Lägg till kommentar" Command="{x:Bind ViewModel.AddCommentCommand}" HorizontalAlignment="Left"/>
+			<!--<TextBox Header="Ny kommentar" Text="{x:Bind ViewModel.NewCommentText, Mode=TwoWay}"/>-->
+			<Button Content="Lägg till kommentar" Click="AddCommentButton_Click" HorizontalAlignment="Left"/>
 			
                       
 		</StackPanel>
