@@ -11,6 +11,7 @@
 	<Page.Resources>
 		<SolidColorBrush x:Key="PlaceholderBrush" Color="{ThemeResource TextFillColorSecondary}" Opacity="0.4"/>
 	</Page.Resources>
+	<!--för att sänka opacity på placeholder-text-->
 	
 	<ScrollViewer Padding="32">
 		<StackPanel Spacing="20" MaxWidth="900" MinWidth="400" HorizontalAlignment="Left">
@@ -43,11 +44,15 @@
                       ItemsSource="{x:Bind ViewModel.PriorityOptions}"
                       SelectedItem="{x:Bind ViewModel.SelectedPriority, Mode=TwoWay}"/>
 
-			<Button Content="Skapa ärende"
+			<StackPanel Orientation="Horizontal" Spacing="20">
+				<Button Content="Skapa ärende"
                     Command="{x:Bind ViewModel.CreateTicketCommand}"
                     HorizontalAlignment="Left"
 					Padding="20,10"
                     Style="{StaticResource AccentButtonStyle}"/>
+
+				<Button Content="Avbryt" Width="124" Click="CancelButton_Click" Padding="20,10"/>
+			</StackPanel>
 
 			<TextBlock Text="{x:Bind ViewModel.SuccessMessage, Mode=OneWay}"
            Foreground="{ThemeResource SystemFillColorSuccessBrush}"
