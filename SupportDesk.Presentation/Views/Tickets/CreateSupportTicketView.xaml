@@ -7,8 +7,52 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+	
+	<Page.Resources>
+		<SolidColorBrush x:Key="PlaceholderBrush" Color="{ThemeResource TextFillColorSecondary}" Opacity="0.4"/>
+	</Page.Resources>
+	
+	<ScrollViewer Padding="32">
+		<StackPanel Spacing="20" MaxWidth="900" MinWidth="400" HorizontalAlignment="Left">
 
-    <Grid>
+			<TextBlock Text="Skapa nytt ärende" FontSize="24" FontWeight="Bold"/>
 
-    </Grid>
+			<ComboBox Header="Välj Kund"
+					  MinWidth="100"
+                      ItemsSource="{x:Bind ViewModel.CustomerOptions}"
+                      SelectedItem="{x:Bind ViewModel.SelectedCustomerName, Mode=TwoWay}"/>
+
+			<TextBox Header="Rubrik"
+					 PlaceholderText="Exempel: Internet fungerar inte"
+				     PlaceholderForeground="{StaticResource PlaceholderBrush}"
+                     Text="{x:Bind ViewModel.Title, Mode=TwoWay}"/>
+
+			<TextBox Header="Beskrivning"
+					 PlaceholderText="Beskriv problemet och vad som redan har provats."
+				     PlaceholderForeground="{StaticResource PlaceholderBrush}"
+                     Text="{x:Bind ViewModel.Description, Mode=TwoWay}"
+                     AcceptsReturn="True"
+                     TextWrapping="Wrap"
+                     Height="100"/>
+
+			<TextBlock Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+					   Foreground="{ThemeResource SystemFillColorCriticalBrush}" TextWrapping="Wrap" />
+
+			<ComboBox Header="Prioritet"
+                      Width="180"
+                      ItemsSource="{x:Bind ViewModel.PriorityOptions}"
+                      SelectedItem="{x:Bind ViewModel.SelectedPriority, Mode=TwoWay}"/>
+
+			<Button Content="Skapa ärende"
+                    Command="{x:Bind ViewModel.CreateTicketCommand}"
+                    HorizontalAlignment="Left"
+					Padding="20,10"
+                    Style="{StaticResource AccentButtonStyle}"/>
+
+			<TextBlock Text="{x:Bind ViewModel.SuccessMessage, Mode=OneWay}"
+           Foreground="{ThemeResource SystemFillColorSuccessBrush}"
+           TextWrapping="Wrap"/>
+
+		</StackPanel>
+	</ScrollViewer>
 </Page>

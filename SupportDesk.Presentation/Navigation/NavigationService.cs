@@ -33,6 +33,7 @@ public class NavigationService : INavigationService
         {
             AppPage.Home => typeof(HomeView),
             AppPage.EditSupportTicket => typeof(EditSupportTicketView),
+            AppPage.CreateSupportTicket => typeof(CreateSupportTicketView),
             _ => throw new ArgumentOutOfRangeException($"Unable to navigate to {page}.")
         };
 
