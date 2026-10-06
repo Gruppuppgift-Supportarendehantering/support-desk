@@ -16,6 +16,7 @@ namespace SupportDesk.Presentation.ViewModels.Tickets
         [ObservableProperty]
         public partial SupportTicket? SelectedTicket { get; set; }
 
+
         [RelayCommand]
         private void OpenTicket()
         {
