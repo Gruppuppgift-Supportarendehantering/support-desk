@@ -27,6 +27,7 @@ public class SupportTicketService : ISupportTicketService
             );
 
         _repository.AddTicketToList(ticket);
+        
 
         Guid ticketId = ticket.TicketId;
         string  title = ticket.Title;

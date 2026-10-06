@@ -1,5 +1,6 @@
 ﻿using SupportDesk.Application.Tickets;
 using SupportDesk.Domain.Tickets;
+using System.Diagnostics;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -10,6 +11,13 @@ public class SupportTicketRepository : ISupportTicketRepository
     private readonly List<SupportTicket> _ticketList = new List<SupportTicket>();
 
     private readonly string _filePath = Path.Combine(AppContext.BaseDirectory, "supporttickets.json");
+
+    public SupportTicketRepository()
+    {
+        Debug.WriteLine(_filePath);
+        LoadFromJson();
+    }
+
     private readonly JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
     {
         WriteIndented = true,
@@ -22,6 +30,7 @@ public class SupportTicketRepository : ISupportTicketRepository
     public void AddTicketToList(SupportTicket ticket)
     {
         _ticketList.Add(ticket);
+        SaveToJson();
     }
 
     public IEnumerable<SupportTicket> GetAllTickets()
@@ -29,7 +38,7 @@ public class SupportTicketRepository : ISupportTicketRepository
         return _ticketList;
     }
 
-    public SupportTicket? GetbyId(Guid ticketId)
+    public SupportTicket? GetTicketbyId(Guid ticketId)
     {
         if (ticketId == Guid.Empty)
         {
@@ -45,5 +54,25 @@ public class SupportTicketRepository : ISupportTicketRepository
 
         File.WriteAllText(_filePath, json);
 
+    }
+
+    public void LoadFromJson()
+    {
+        if (!File.Exists(_filePath))
+        {
+            return;
+        }
+
+        string json = File.ReadAllText(_filePath);
+
+        List<SupportTicket>? tickets = JsonSerializer.Deserialize<List<SupportTicket>>(json, jsonOptions);
+
+        if (tickets is null)
+        {
+            return;
+        }
+
+        _ticketList.Clear();
+        _ticketList.AddRange(tickets);
     }
 }

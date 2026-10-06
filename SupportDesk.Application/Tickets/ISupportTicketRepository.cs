@@ -9,7 +9,7 @@ public interface ISupportTicketRepository //flytta över till domain lagret vid 
 {
     void AddTicketToList(SupportTicket ticket);
 
-    SupportTicket? GetbyId(Guid ticketId);
+    SupportTicket? GetTicketbyId(Guid ticketId);
 
     IEnumerable<SupportTicket> GetAllTickets();
 }
