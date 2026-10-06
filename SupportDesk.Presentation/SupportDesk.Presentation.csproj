@@ -18,6 +18,7 @@
     <None Remove="Views\Customers\CustomerView.xaml" />
     <None Remove="Views\Customers\EditCustomerView.xaml" />
     <None Remove="Views\HomeView.xaml" />
+    <None Remove="Views\Tickets\CommentSupportTicketView.xaml" />
     <None Remove="Views\Tickets\CreateSupportTicketView.xaml" />
     <None Remove="Views\Tickets\EditSupportTicketView.xaml" />
     <None Remove="Views\Tickets\SupportTicketView.xaml" />
@@ -62,7 +63,13 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SupportDesk.Application\SupportDesk.Application.csproj" />
+    <ProjectReference Include="..\SupportDesk.Domain\SupportDesk.Domain.csproj" />
     <ProjectReference Include="..\SupportDesk.Infrastructure\SupportDesk.Infrastructure.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Tickets\CommentSupportTicketView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\HomeView.xaml">

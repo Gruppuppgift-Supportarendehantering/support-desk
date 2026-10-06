@@ -12,7 +12,11 @@ public sealed partial class MainWindow : Window
 
         _navigationService = navigationService;
         _navigationService.Initialize(RootFrame);
-        _navigationService.Navigate(AppPage.Home);
-       //för test av EditSupportTicket-vyn _navigationService.Navigate(AppPage.EditSupportTicket);
+        // _navigationService.Navigate(AppPage.Home);
+        //för test av SupportTicketOverview-vyn _navigationService.Navigate(AppPage.SupportTicketOverview);
+        _navigationService.Navigate(AppPage.SupportTicketOverview);
+        //för test av EditSupportTicket-vyn _navigationService.Navigate(AppPage.EditSupportTicket);
+        //för test av CreateSupportTicket-vyn _navigationService.Navigate(AppPage.CreateSupportTicket);
+        //för test av CommentSupportTicket-vyn _navigationService.Navigate(AppPage.CommentSupportTicket);
     }
 }
