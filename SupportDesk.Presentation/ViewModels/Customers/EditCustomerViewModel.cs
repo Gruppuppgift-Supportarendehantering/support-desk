@@ -47,6 +47,7 @@ public partial class EditCustomerViewModel(
             _customerId = response.Customer.CustomerId;
             CustomerName = response.Customer.CustomerName;
             EmailAddress = response.Customer.EmailAddress;
+
         }
         catch (IOException)
         {
@@ -87,7 +88,7 @@ public partial class EditCustomerViewModel(
 
             CustomerName = response.Customer.CustomerName;
             EmailAddress = response.Customer.EmailAddress;
-            Message = "Kundens uppgifter har uppdateras";
+            GoBack();
         }
         catch (IOException)
         {

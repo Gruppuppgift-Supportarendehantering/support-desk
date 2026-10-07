@@ -39,7 +39,7 @@ public sealed partial class CustomerView : Page
         {
             XamlRoot = this.XamlRoot,
             Title = "Ta bort kund",
-            Content = $"Vill du ta bart {customer.CustomerName}?",
+            Content = $"Vill du ta bort {customer.CustomerName}?",
             PrimaryButtonText = "Ta bort",
             CloseButtonText = "Avbryt",
             DefaultButton = ContentDialogButton.Close

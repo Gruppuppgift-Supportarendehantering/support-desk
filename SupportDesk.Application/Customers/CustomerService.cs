@@ -116,6 +116,4 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
             customer.EmailAddress.Value,
             customer.IsCompany);
     }
-
-
 }
