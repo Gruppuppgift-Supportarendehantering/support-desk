@@ -13,7 +13,19 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <Grid>
-        <Frame x:Name="RootFrame" />
+    <Grid RowDefinitions="Auto,*">
+        <StackPanel
+        Orientation="Horizontal"
+        Spacing="12"
+        Margin="16">
+
+            <Button Content="Kunder"
+                Click="Customers_Click" />
+
+            <Button Content="Skapa ärende"
+                Click="CreateSupportTicket_Click" />
+        </StackPanel>
+
+        <Frame x:Name="RootFrame" Grid.Row="1" />
     </Grid>
 </Window>
