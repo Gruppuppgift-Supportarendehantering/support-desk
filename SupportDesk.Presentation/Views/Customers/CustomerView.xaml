@@ -16,18 +16,20 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" Spacing="16">
+        <StackPanel Spacing="12">
             <TextBlock Text="Kunder" FontSize="28" />
 
-            <Button
+            <StackPanel Orientation="Horizontal" Spacing="16">
+                <Button
                 Content="Ny kund"
                 Command="{x:Bind ViewModel.CreateCustomerCommand}" />
-            <Button
+                <Button
                 Content="Redigera kund"
                 Command="{x:Bind ViewModel.EditCustomerCommand}" />
-            <Button
+                <Button
                 Content="Ta bort kund"
                 Click="DeleteCustomer_Click" />
+            </StackPanel>
         </StackPanel>
 
         <TextBlock

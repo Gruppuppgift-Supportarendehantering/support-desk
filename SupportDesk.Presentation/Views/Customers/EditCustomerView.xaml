@@ -25,12 +25,24 @@
             Text="{x:Bind ViewModel.Message, Mode=OneWay}"
             TextWrapping="Wrap" />
 
-        <Button
-            Content="Tillbaka"
-            Command="{x:Bind ViewModel.GoBackCommand}" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            
+            <Button
+                Grid.Column="0"
+                HorizontalAlignment="Left"
+                Content="Spara ändring"
+                Command="{x:Bind ViewModel.UpdateCommand}" />
+                
 
-        <Button
-            Content="Spara ändring"
-            Command="{x:Bind ViewModel.UpdateCommand}" />
+            <Button
+                Grid.Column="1"
+                HorizontalAlignment="Right"
+                Content="Tillbaka"
+                Command="{x:Bind ViewModel.GoBackCommand}" />
+        </Grid>
     </StackPanel>
 </Page>

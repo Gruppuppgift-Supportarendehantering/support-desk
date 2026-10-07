@@ -9,31 +9,50 @@
     mc:Ignorable="d">
 
     <StackPanel Spacing="12" Padding="24" MaxWidth="500">
+        <TextBlock Text="Lägg till kund" FontSize="28" />
+        
         <TextBox 
             Header="Kundnamn"
+            PlaceholderText="Ange namn"
             Text="{x:Bind ViewModel.CustomerName, Mode=TwoWay,
             UpdateSourceTrigger=PropertyChanged}" />
 
         <TextBox 
             Header="E-postadress"
+            PlaceholderText="Ange e-postadress"
             Text="{x:Bind ViewModel.EmailAddress, Mode=TwoWay,
             UpdateSourceTrigger=PropertyChanged}" />
 
-        <CheckBox
-            Content="Företagskund"
-            IsChecked="{x:Bind ViewModel.IsCompany, Mode=TwoWay}" />
-
-        <Button
-            Content="Spara kund"
-            Command="{x:Bind ViewModel.SaveCommand}" />
-
+        <ToggleSwitch 
+            Header="Kundtyp"
+            OffContent="Privatkund"
+            OnContent="Företagskund"
+            IsOn="{x:Bind ViewModel.IsCompany, Mode=TwoWay}"
+            AutomationProperties.Name="Företagskund"/>
+        
         <TextBlock
             Text="{x:Bind ViewModel.Message, Mode=OneWay}"
             TextWrapping="Wrap" />
 
-        <Button
-            Content="Tillbaka"
-            Command="{x:Bind ViewModel.GoBackCommand}" />
-        
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            
+            <Button
+                Grid.Column="0"
+                HorizontalAlignment="Left"
+                Content="Spara kund"
+                Command="{x:Bind ViewModel.SaveCommand}" />
+
+            <Button
+                Grid.Column="1"
+                HorizontalAlignment="Right"
+                Content="Tillbaka"
+                Command="{x:Bind ViewModel.GoBackCommand}" />
+        </Grid>
+
     </StackPanel>
+    
 </Page>
