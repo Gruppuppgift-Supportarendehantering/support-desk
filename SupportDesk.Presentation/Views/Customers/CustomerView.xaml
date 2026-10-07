@@ -20,15 +20,48 @@
             <TextBlock Text="Kunder" FontSize="28" />
 
             <StackPanel Orientation="Horizontal" Spacing="16">
-                <Button
-                Content="Ny kund"
-                Command="{x:Bind ViewModel.CreateCustomerCommand}" />
-                <Button
-                Content="Redigera kund"
-                Command="{x:Bind ViewModel.EditCustomerCommand}" />
-                <Button
-                Content="Ta bort kund"
-                Click="DeleteCustomer_Click" />
+                <StackPanel Spacing="4">
+                    <Button
+                        HorizontalAlignment="Center"
+                        Command="{x:Bind ViewModel.CreateCustomerCommand}">
+                            <FontIcon
+                                FontFamily="Segoe Fluent Icons"
+                                Glyph="&#xE710;" />
+                    </Button>
+
+                    <TextBlock
+                        Text="Lägg till"
+                        HorizontalAlignment="Center" />
+                </StackPanel>
+
+                <StackPanel Spacing="4">
+                    <Button
+                        HorizontalAlignment="Center"
+                        Command="{x:Bind ViewModel.EditCustomerCommand}">
+                            <FontIcon
+                            FontFamily="Segoe Fluent Icons"
+                            Glyph="&#xE70F;" />
+                    </Button>
+
+                    <TextBlock
+                        Text="Redigera"
+                        HorizontalAlignment="Center" />
+                </StackPanel>
+
+
+                <StackPanel Spacing="4">
+                    <Button
+                        HorizontalAlignment="Center"
+                        Click="DeleteCustomer_Click">
+                            <FontIcon
+                            FontFamily="Segoe Fluent Icons"
+                            Glyph="&#xE74D;" />
+                    </Button>
+
+                    <TextBlock
+                        Text="Radera"
+                        HorizontalAlignment="Center" />
+                </StackPanel>
             </StackPanel>
         </StackPanel>
 

@@ -61,6 +61,10 @@ public partial class CustomerViewModel(
         {
             Message = "Applikationen saknar behörighet till kundfilen.";
         }
+        catch (JsonException)
+        {
+            Message = "Kundfilen innehåller ogiltig data.";
+        }
         catch (ArgumentException)
         {
             Message = "En kund i filen har ogiltigt namn eller e-postadress.";

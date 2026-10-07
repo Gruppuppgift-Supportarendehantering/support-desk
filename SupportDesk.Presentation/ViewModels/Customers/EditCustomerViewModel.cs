@@ -53,6 +53,10 @@ public partial class EditCustomerViewModel(
         {
             Message = "Kundfilen kunde inte läsas.";
         }
+        catch (UnauthorizedAccessException)
+        {
+            Message = "Applikationen saknar behörighet till kundfilen";
+        }
         catch (JsonException)
         {
             Message = "Kundfilen innehåller ogiltig data.";
