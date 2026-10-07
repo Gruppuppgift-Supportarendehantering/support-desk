@@ -23,12 +23,40 @@
             Text="{x:Bind ViewModel.EmailAddress, Mode=TwoWay,
             UpdateSourceTrigger=PropertyChanged}" />
 
-        <ToggleSwitch 
-            Header="Kundtyp"
-            OffContent="Privatkund"
-            OnContent="Företagskund"
-            IsOn="{x:Bind ViewModel.IsCompany, Mode=TwoWay}"
-            AutomationProperties.Name="Företagskund"/>
+        <StackPanel Spacing="8">
+            <TextBlock Text="Kundtyp" />
+
+            <Border
+                BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="8"
+                HorizontalAlignment="Left">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <RadioButton
+                        Grid.Column="0"
+                        Content="Privatkund"
+                        GroupName="CustomerType"
+                        IsChecked="True"
+                        HorizontalAlignment="Stretch"
+                        CornerRadius="7,0,0,7"
+                        Style="{StaticResource SegmentedSwitch}" />
+
+                    <RadioButton
+                        Grid.Column="1"
+                        Content="Företagskund"
+                        GroupName="CustomerType"
+                        IsChecked="{x:Bind ViewModel.IsCompany, Mode=TwoWay}"
+                        HorizontalAlignment="Stretch"
+                        CornerRadius="0,7,7,0"
+                        Style="{StaticResource SegmentedSwitch}" />
+                </Grid>
+            </Border>
+        </StackPanel>
         
         <TextBlock
             Text="{x:Bind ViewModel.Message, Mode=OneWay}"

@@ -26,7 +26,7 @@ public partial class CustomerViewModel(
     public partial CustomerData? SelectedCustomer { get; set; }
 
     [RelayCommand]
-    private async Task LoadCustomerAsync()
+    private async Task LoadCustomersAsync()
     {
         Message = string.Empty;
 
@@ -107,7 +107,7 @@ public partial class CustomerViewModel(
             if (!response.Succeeded)
             {
                 Message = response.ErrorMessage
-                    ?? "Kunden kunde inte tas bort";
+                    ?? "Kunden kunde inte tas bort.";
                 return;
             }
 
@@ -125,7 +125,7 @@ public partial class CustomerViewModel(
         }
         catch (JsonException)
         {
-            Message = "Kundfilen innehåller ogiltigt data.";
+            Message = "Kundfilen innehåller ogiltig data.";
         }
     }
 }

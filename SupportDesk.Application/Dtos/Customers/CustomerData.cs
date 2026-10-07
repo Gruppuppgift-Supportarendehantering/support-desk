@@ -6,4 +6,7 @@ public record CustomerData
         string CustomerName,
         string EmailAddress,
         bool IsCompany
-    );
+    )
+{
+    public string CustomerTypeText => IsCompany ? "Företagskund" : "Privatkund";
+}

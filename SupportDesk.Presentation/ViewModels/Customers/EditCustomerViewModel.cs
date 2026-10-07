@@ -55,7 +55,7 @@ public partial class EditCustomerViewModel(
         }
         catch (UnauthorizedAccessException)
         {
-            Message = "Applikationen saknar behörighet till kundfilen";
+            Message = "Applikationen saknar behörighet till kundfilen.";
         }
         catch (JsonException)
         {

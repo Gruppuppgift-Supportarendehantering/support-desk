@@ -74,17 +74,6 @@
             Grid.Row="2"
             ItemsSource="{x:Bind ViewModel.Customers}"
             SelectedItem="{x:Bind ViewModel.SelectedCustomer, Mode=TwoWay}"
-            SelectionMode="Single">
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="dto:CustomerData">
-                    <StackPanel Spacing="4" Padding="8">
-                        <TextBlock
-                            Text="{x:Bind CustomerName}"
-                            FontWeight="SemiBold" />
-                        <TextBlock Text="{x:Bind EmailAddress}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            SelectionMode="Single"
     </Grid>
 </Page>

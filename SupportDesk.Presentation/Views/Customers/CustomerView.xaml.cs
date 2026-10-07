@@ -22,7 +22,7 @@ public sealed partial class CustomerView : Page
 
     private async void CustomerView_Loaded(object sender, RoutedEventArgs e)
     {
-        await ViewModel.LoadCustomerCommand.ExecuteAsync(null);
+        await ViewModel.LoadCustomersCommand.ExecuteAsync(null);
     }
 
     private async void DeleteCustomer_Click(object sender, RoutedEventArgs e)
