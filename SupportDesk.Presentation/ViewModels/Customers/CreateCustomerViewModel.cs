@@ -40,17 +40,13 @@ public partial class CreateCustomerViewModel(
         {
             var response = await _customerService.CreateCustomerAsync(request);
 
-            // om lyckad response - töm fälten.
-            if (response.Succeeded)
+            if (!response.Succeeded)
             {
-                //CustomerName = string.Empty;
-                //EmailAddress = string.Empty;
-                GoBack();
+                Message = response.ErrorMessage ?? "Kunden kunde inte sparas.";
+                return;
             }
 
-            Message = response.Succeeded
-                ? "Kunden har sparats."
-                : response.ErrorMessage ?? "Kunden kunde inte sparas.";
+            GoBack();
 
         }
         catch (IOException)
