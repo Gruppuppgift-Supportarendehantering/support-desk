@@ -74,6 +74,43 @@
             Grid.Row="2"
             ItemsSource="{x:Bind ViewModel.Customers}"
             SelectedItem="{x:Bind ViewModel.SelectedCustomer, Mode=TwoWay}"
-            SelectionMode="Single"
+            SelectionMode="Single">
+
+            <ListView.ItemContainerStyle>
+                <Style 
+                    TargetType="ListViewItem"
+                    BasedOn="{StaticResource DefaultListViewItemStyle}">
+                    <Setter
+                        Property="HorizontalContentAlignment"
+                        Value="Stretch" />
+                    <Setter
+                        Property="CornerRadius"
+                        Value="8" />
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="dto:CustomerData">
+                    <Grid Padding="8" ColumnSpacing="24">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Spacing="4">
+                            <TextBlock
+                                Text="{x:Bind CustomerName}"
+                                FontWeight="SemiBold" />
+                            <TextBlock Text="{x:Bind EmailAddress}" />
+                        </StackPanel>
+
+                        <TextBlock
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Text="{x:Bind CustomerTypeText}" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>
