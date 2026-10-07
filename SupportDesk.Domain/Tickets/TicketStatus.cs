@@ -2,4 +2,8 @@
 
 public enum TicketStatus
 {
+    New,
+    Active,
+    Resolved,
+
 }

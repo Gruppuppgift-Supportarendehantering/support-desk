@@ -56,7 +56,6 @@
   <ItemGroup>
     <Folder Include="Styles\" />
     <Folder Include="ViewModels\Users\" />
-    <Folder Include="ViewModels\Tickets\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SupportDesk.Application\SupportDesk.Application.csproj" />
