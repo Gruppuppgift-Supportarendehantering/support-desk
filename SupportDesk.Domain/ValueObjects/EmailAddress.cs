@@ -10,14 +10,14 @@ public record EmailAddress
 	{
 		if (string.IsNullOrWhiteSpace(value))
 		{
-			throw new ArgumentException("Email address is required.");
+			throw new ArgumentException("E-postadress måste anges.");
 		}
 
 		var normalizedValue = value.Trim().ToLowerInvariant();
 
 		if (!MailAddress.TryCreate(normalizedValue, out var emailAddress) || !string.Equals(emailAddress.Address, normalizedValue, StringComparison.Ordinal))
 		{
-			throw new ArgumentException("Email address must be valid.", nameof(value));
+			throw new ArgumentException("E-postadressen måste vara giltig.");
 		}
 
 		Value = normalizedValue;

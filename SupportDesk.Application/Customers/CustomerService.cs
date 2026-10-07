@@ -33,7 +33,7 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
 
         if (!saved)
         {
-            return new CustomerResponse(false, null, "Customer could not be saved.");
+            return new CustomerResponse(false, null, "Kunden kunde inte sparas.");
         }
 
         return new CustomerResponse(true, ToCustomerData(customer), null);
@@ -44,7 +44,7 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
 
         if (customer is null)
         {
-            return new CustomerResponse(false, null, "Customer was not found.");
+            return new CustomerResponse(false, null, "Kunden hittas inte.");
         }
 
         return new CustomerResponse(true, ToCustomerData(customer), null);
@@ -65,7 +65,7 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
 
         if (customer is null)
         {
-            return new CustomerResponse(false, null, "Customer was not found.");
+            return new CustomerResponse(false, null, "Kunden hittades inte.");
         }
 
         Name name;
@@ -88,7 +88,7 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
 
         if (!saved)
         {
-            return new CustomerResponse(false, null, "Customer could not be updated.");
+            return new CustomerResponse(false, null, "Kunden kunde inte uppdateras.");
         }
 
         return new CustomerResponse(true, ToCustomerData(customer), null);
@@ -98,14 +98,14 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
     {
         if (customerId == Guid.Empty)
         {
-            return new DeleteCustomerResponse(false, "Customer ID is required.");
+            return new DeleteCustomerResponse(false, "Kund-ID saknas.");
         }
 
         bool deleted = await customerRepository.DeleteAsync(customerId);
 
         return deleted
             ? new DeleteCustomerResponse(true, null)
-            : new DeleteCustomerResponse(false, "Customer was not found.");
+            : new DeleteCustomerResponse(false, "Kunden hittades inte.");
     }
 
     private static CustomerData ToCustomerData(Customer customer)

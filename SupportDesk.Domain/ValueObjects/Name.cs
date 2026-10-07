@@ -8,14 +8,14 @@ public record Name
 	{
 		if (string.IsNullOrWhiteSpace(value))
 		{
-			throw new ArgumentException("Name is required", nameof(value));
+			throw new ArgumentException("Namn måste anges.");
 		}
 
 		var normalizedValue = value.Trim();
 
 		if (normalizedValue.Length < minLength)
 		{
-			throw new ArgumentException($"Name must contain at least {minLength} characters.", nameof(value));
+			throw new ArgumentException($"Namnet måste innehålla minst {minLength} tecken.");
 		}
 
 		Value = normalizedValue;
