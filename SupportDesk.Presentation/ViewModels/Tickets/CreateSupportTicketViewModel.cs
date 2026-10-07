@@ -1,51 +1,58 @@
 ﻿
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using SupportDesk.Application.Customers;
+using SupportDesk.Application.Dtos.Customers;
 using SupportDesk.Application.Dtos.Tickets;
 using SupportDesk.Application.Tickets;
-using SupportDesk.Domain.Customers;
 using SupportDesk.Domain.Tickets;
 using System;
-
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace SupportDesk.Presentation.ViewModels.Tickets;
 
-
-//instansiera navigation
 public partial class CreateSupportTicketViewModel : ObservableObject
 {
     private readonly ISupportTicketService _supportTicketService;
+    private readonly ICustomerService _customerService;
 
-    public CreateSupportTicketViewModel(ISupportTicketService supportTicketService)
+    public CreateSupportTicketViewModel(ICustomerService customerService, ISupportTicketService supportTicketService)
     {
         _supportTicketService = supportTicketService;
+        _customerService = customerService;
+
+        _ = LoadCustomersAsync();
     }
+
     [ObservableProperty]
     public partial string ErrorMessage { get; set; } = string.Empty;
 
     [ObservableProperty]
-    public partial string SuccessMessage {  get; set; } = string.Empty;
+    public partial string SuccessMessage { get; set; } = string.Empty;
 
-    [ObservableProperty] 
+    [ObservableProperty]
     public partial string Title { get; set; } = string.Empty;
 
     [ObservableProperty]
     public partial string Description { get; set; } = string.Empty;
 
     [ObservableProperty]
-    public partial TemporaryCustomer? SelectedCustomer {  get; set; }
-
-    [ObservableProperty]
-    public partial Guid CustomerId { get; set; }
+    public partial CustomerData? SelectedCustomer { get; set; }
 
     [ObservableProperty]
     public partial TicketPriority TicketPriority { get; set; }
 
+    public ObservableCollection<CustomerData> Customers { get; } = [];
+
+    public TicketPriority[] Priorities { get; } = Enum.GetValues<TicketPriority>();
 
     [RelayCommand]
     private void UICreateTicket()
     {
+        SuccessMessage = string.Empty;
+
         if (string.IsNullOrWhiteSpace(Title))
         {
             ErrorMessage = "Titel får inte vara tom.";
@@ -65,26 +72,39 @@ public partial class CreateSupportTicketViewModel : ObservableObject
 
         SupportTicketResult result = _supportTicketService.CreateTicket(request);
 
+        ErrorMessage = string.Empty;
         SuccessMessage = $"Ärendet har skapats! Med ärendenummer {result.TicketId}";
 
         Title = string.Empty;
         Description = string.Empty;
         SelectedCustomer = null;
         TicketPriority = TicketPriority.Normal;
+
     }
 
-    //placeholder för customers
 
-    public record TemporaryCustomer(string Name, Guid CustomerId);
-
-    public TemporaryCustomer[] Customers { get; } =
+    public async Task LoadCustomersAsync()
     {
-        new("Kendall Collins", Guid.NewGuid()),
-        new("Henry Ross",Guid.NewGuid()),
-        new("Vance DeLeon", Guid.NewGuid()),
-        new("Victoria Burke", Guid.NewGuid()),
-        new("Amber Rodriguez", Guid.NewGuid())
-    };
+        try
+        {
+            var response = await _customerService.GetAllCustomersAsync();
 
-    public TicketPriority[] Priorities { get; } = Enum.GetValues<TicketPriority>();
+            if (!response.Succeeded)
+            {
+                ErrorMessage = response.ErrorMessage ?? "Kunde inte hämta kunder.";
+                return;
+            }
+
+            Customers.Clear();
+
+            foreach (var customer in response.Customers)
+            {
+                Customers.Add(customer);
+            }
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or ArgumentException)
+        {
+            ErrorMessage = "Kunderna kunde inte läsas in";
+        }
+    }
 }
