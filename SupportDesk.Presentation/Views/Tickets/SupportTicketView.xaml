@@ -17,6 +17,9 @@
 				<Button Content="Öppna markerat ärende" Click="OpenTicketButton_Click" Command="{x:Bind ViewModel.OpenTicketCommand}" Style="{StaticResource AccentButtonStyle}"/>
 
 				<Button Content="Skapa ett ärende" Click ="CreateTicketButton_Click"/>
+
+				<Button x:Name="CustomerViewButton" Content="Kunder" Click="CustomerViewButton_Click" MinWidth="120" Margin="20,0,0,0"/>
+				
 			</StackPanel>
 		</StackPanel>
 

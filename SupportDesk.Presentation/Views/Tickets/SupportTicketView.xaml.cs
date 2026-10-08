@@ -22,6 +22,12 @@ public sealed partial class SupportTicketView : Page
     {
         Frame.Navigate(typeof(CreateSupportTicketView));
     }
+
+    private void CustomerViewButton_Click(object sender, RoutedEventArgs e)
+    {
+        Frame.Navigate(typeof(SupportDesk.Presentation.Views.Customers.CustomerView));
+    }
+
     public SupportTicketView()
     {
         InitializeComponent();
