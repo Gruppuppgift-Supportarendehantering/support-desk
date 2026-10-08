@@ -14,18 +14,31 @@
     </Window.SystemBackdrop>
 
     <Grid RowDefinitions="Auto,*">
-        <StackPanel
-        Orientation="Horizontal"
-        Spacing="12"
-        Margin="16">
+        <Grid
+            Grid.Row="0"
+            Margin="16"
+            ColumnSpacing="24">
 
-            <Button Content="Kunder"
-                Click="Customers_Click" />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    Width="*" />
+                <ColumnDefinition
+                    Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel
+                Orientation="Horizontal"
+                Spacing="12"
+                Margin="16">
 
-            <Button Content="Skapa ärende"
-                Click="CreateSupportTicket_Click" />
-        </StackPanel>
+                <Button
+                    Content="Kunder"
+                    Click="Customers_Click" />
 
+                <Button
+                    Content="Skapa ärende"
+                    Click="CreateSupportTicket_Click" />
+            </StackPanel>
+        </Grid>
         <Frame x:Name="RootFrame" Grid.Row="1" />
     </Grid>
 </Window>

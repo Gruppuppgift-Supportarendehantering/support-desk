@@ -9,17 +9,28 @@
     mc:Ignorable="d">
 
     <StackPanel Spacing="12" Padding="24" MaxWidth="500">
-        <TextBlock Text="Lägg till kund" FontSize="28" />
+        <TextBlock
+            Text="Lägg till kund"
+            FontSize="28"
+            HorizontalAlignment="Center" />
+
+        <Button
+            HorizontalAlignment="Left"
+            Command="{x:Bind ViewModel.GoBackCommand}">
+            <FontIcon
+                FontFamily="Segoe Fluent Icons"
+                Glyph="&#xE72B;" />
+        </Button>
         
         <TextBox 
             Header="Kundnamn"
-            PlaceholderText="Ange namn"
+            PlaceholderText="Namn"
             Text="{x:Bind ViewModel.CustomerName, Mode=TwoWay,
             UpdateSourceTrigger=PropertyChanged}" />
 
         <TextBox 
             Header="E-postadress"
-            PlaceholderText="Ange e-postadress"
+            PlaceholderText="namn@exempel.se"
             Text="{x:Bind ViewModel.EmailAddress, Mode=TwoWay,
             UpdateSourceTrigger=PropertyChanged}" />
 
@@ -62,49 +73,12 @@
             Text="{x:Bind ViewModel.Message, Mode=OneWay}"
             TextWrapping="Wrap" />
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
 
-            <StackPanel
-                Grid.Column="0"
-                HorizontalAlignment="Left"
-                Spacing="4">
-                <Button
-                    HorizontalAlignment="Center"
-                    Command="{x:Bind ViewModel.GoBackCommand}">
-                    <FontIcon
-                            FontFamily="Segoe Fluent Icons"
-                            Glyph="&#xE72B;" />
-                </Button>
-
-
-                <TextBlock
-                    Text="Tillbaka"
-                    HorizontalAlignment="Center" />
-            </StackPanel>
-
-            <StackPanel
-                Grid.Column="1"
-                HorizontalAlignment="Right"
-                Spacing="4">
-                <Button
-                    HorizontalAlignment="Center"
-                    Command="{x:Bind ViewModel.SaveCommand}">
-                    <FontIcon
-                        FontFamily="Segoe Fluent Icons"
-                        Glyph="&#xE74E;" />
-                </Button>
-
-                <TextBlock
-                    Text="Lägg till"
-                    HorizontalAlignment="Center" />
-            </StackPanel>
-
-
-        </Grid>
+        <Button
+            HorizontalAlignment="Right"
+            Content="Lägg till"
+            Style="{StaticResource ActionButton}"
+            Command="{x:Bind ViewModel.SaveCommand}" />
 
     </StackPanel>
     

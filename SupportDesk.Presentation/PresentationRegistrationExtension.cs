@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SupportDesk.Presentation.Navigation;
+using SupportDesk.Presentation.ViewModels;
 using SupportDesk.Presentation.ViewModels.Customers;
 using SupportDesk.Presentation.ViewModels.Tickets;
 
@@ -13,6 +14,7 @@ public static class PresentationRegistrationExtension
         services.AddSingleton<INavigationService, NavigationService>();
         services.AddSingleton<MainWindow>();
 
+        services.AddTransient<LoginViewModel>();
         services.AddTransient<CustomerViewModel>();
         services.AddTransient<CreateCustomerViewModel>();
         services.AddTransient<EditCustomerViewModel>();

@@ -34,6 +34,7 @@ public class NavigationService : INavigationService
         var nextPage = page switch
         {
             AppPage.Home => typeof(HomeView),
+            AppPage.Login => typeof(LoginView),
 
             AppPage.Customers => typeof(CustomerView),
             AppPage.CreateCustomer => typeof(CreateCustomerView),
