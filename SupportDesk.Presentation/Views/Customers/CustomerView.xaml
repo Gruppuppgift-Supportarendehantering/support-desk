@@ -6,9 +6,50 @@
     xmlns:local="using:SupportDesk.Presentation.Views.Customers"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dto="using:SupportDesk.Application.Dtos.Customers"
     mc:Ignorable="d">
 
-    <Grid>
+    <Grid Padding="24" RowSpacing="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
+        <StackPanel Orientation="Horizontal" Spacing="16">
+            <TextBlock Text="Kunder" FontSize="28" />
+
+            <Button
+                Content="Ny kund"
+                Command="{x:Bind ViewModel.CreateCustomerCommand}" />
+            <Button
+                Content="Redigera kund"
+                Command="{x:Bind ViewModel.EditCustomerCommand}" />
+            <Button
+                Content="Ta bort kund"
+                Click="DeleteCustomer_Click" />
+        </StackPanel>
+
+        <TextBlock
+            Grid.Row="1"
+            Text="{x:Bind ViewModel.Message, Mode=OneWay}"
+            TextWrapping="Wrap" />
+
+        <ListView
+            Grid.Row="2"
+            ItemsSource="{x:Bind ViewModel.Customers}"
+            SelectedItem="{x:Bind ViewModel.SelectedCustomer, Mode=TwoWay}"
+            SelectionMode="Single">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="dto:CustomerData">
+                    <StackPanel Spacing="4" Padding="8">
+                        <TextBlock
+                            Text="{x:Bind CustomerName}"
+                            FontWeight="SemiBold" />
+                        <TextBlock Text="{x:Bind EmailAddress}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

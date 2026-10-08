@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
+using SupportDesk.Application.Dtos.Tickets;
 
 namespace SupportDesk.Application.Tickets;
 
 public interface ISupportTicketService
 {
+    SupportTicketResult CreateTicket(SupportTicketRequest request);
 }

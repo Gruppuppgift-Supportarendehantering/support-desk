@@ -1,29 +1,35 @@
-using Microsoft.UI.Xaml;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using SupportDesk.Presentation.ViewModels.Customers;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace SupportDesk.Presentation.Views.Customers;
-/// <summary>
-/// An empty page that can be used on its own or navigated to within a Frame.
-/// </summary>
+
 public sealed partial class EditCustomerView : Page
 {
+    public EditCustomerViewModel ViewModel { get; }
+
     public EditCustomerView()
     {
+        ViewModel = ((App)Microsoft.UI.Xaml.Application.Current)
+            .Services.GetRequiredService<EditCustomerViewModel>();
+
         InitializeComponent();
+    }
+
+    protected override async void OnNavigatedTo(NavigationEventArgs e)
+    {
+        base.OnNavigatedTo(e);
+
+        if (e.Parameter is not string id || 
+            !Guid.TryParse(id, out var customerId) ||
+            customerId == Guid.Empty)
+        {
+            ViewModel.Message = "Kund-ID saknas eller är ogiltigt.";
+            return;
+        }
+
+        await ViewModel.LoadCustomerAsync(customerId);
     }
 }

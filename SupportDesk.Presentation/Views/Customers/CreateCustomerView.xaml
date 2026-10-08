@@ -8,7 +8,32 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
+    <StackPanel Spacing="12" Padding="24" MaxWidth="500">
+        <TextBox 
+            Header="Kundnamn"
+            Text="{x:Bind ViewModel.CustomerName, Mode=TwoWay,
+            UpdateSourceTrigger=PropertyChanged}" />
 
-    </Grid>
+        <TextBox 
+            Header="E-postadress"
+            Text="{x:Bind ViewModel.EmailAddress, Mode=TwoWay,
+            UpdateSourceTrigger=PropertyChanged}" />
+
+        <CheckBox
+            Content="Företagskund"
+            IsChecked="{x:Bind ViewModel.IsCompany, Mode=TwoWay}" />
+
+        <Button
+            Content="Spara kund"
+            Command="{x:Bind ViewModel.SaveCommand}" />
+
+        <TextBlock
+            Text="{x:Bind ViewModel.Message, Mode=OneWay}"
+            TextWrapping="Wrap" />
+
+        <Button
+            Content="Tillbaka"
+            Command="{x:Bind ViewModel.GoBackCommand}" />
+        
+    </StackPanel>
 </Page>

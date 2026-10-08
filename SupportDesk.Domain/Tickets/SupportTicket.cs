@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-
-namespace SupportDesk.Domain.Tickets;
+﻿namespace SupportDesk.Domain.Tickets;
 
 public class SupportTicket
 {

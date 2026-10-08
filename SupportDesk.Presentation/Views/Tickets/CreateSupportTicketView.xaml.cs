@@ -1,27 +1,22 @@
-using Microsoft.UI.Xaml;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
 using SupportDesk.Presentation.ViewModels.Tickets;
-
+using System.Collections.ObjectModel;
 
 namespace SupportDesk.Presentation.Views.Tickets;
-
 public sealed partial class CreateSupportTicketView : Page
 {
-    public CreateSupportTicketViewModel ViewModel { get; } = new();
+    public CreateSupportTicketViewModel ViewModel { get; }
 
-    private void CancelButton_Click(object sender, RoutedEventArgs e)
-    {
-        if (Frame.CanGoBack)
-        {
-            Frame.GoBack();
-            return;
-        }
-
-        Frame.Navigate(typeof(SupportTicketView));
-    }
-
-    public CreateSupportTicketView()
+    public CreateSupportTicketView(/*CreateSupportTicketViewModel viewModel*/)
     {
         InitializeComponent();
+
+        //ViewModel = viewModel;
+        //tillfällig lösning, gör DI manuellt
+        ViewModel = ((App)Microsoft.UI.Xaml.Application.Current).Services.GetRequiredService<CreateSupportTicketViewModel>();
     }
+
+    
+
 }
