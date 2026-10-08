@@ -54,24 +54,14 @@ internal class JsonFileCustomerRepository : ICustomerRepository
             return null;
         }
 
-        return new Customer(
-            storageModel.CustomerId,
-            new Name(storageModel.CustomerName),
-            new EmailAddress(storageModel.EmailAddress),
-            storageModel.IsCompany);
+        return ConvertToCustomer(storageModel);
     }
 
     public async Task<IReadOnlyList<Customer>> GetAllAsync()
     {
         var customers = await ReadCustomersAsync();
 
-        return customers
-            .Select(storageModel => new Customer(
-            storageModel.CustomerId,
-            new Name(storageModel.CustomerName),
-            new EmailAddress(storageModel.EmailAddress),
-            storageModel.IsCompany))
-            .ToList();
+        return customers.Select(ConvertToCustomer).ToList();
     }
 
     public async Task<bool> UpdateAsync(Customer customer)
@@ -139,5 +129,14 @@ internal class JsonFileCustomerRepository : ICustomerRepository
 
         await File.WriteAllTextAsync(tempPath, json);
         File.Move(tempPath, _filePath, overwrite: true);
+    }
+
+    private static Customer ConvertToCustomer(CustomerStorageModel storageModel)
+    {
+        return new Customer(
+            storageModel.CustomerId,
+            new Name(storageModel.CustomerName),
+            new EmailAddress(storageModel.EmailAddress),
+            storageModel.IsCompany);
     }
 }

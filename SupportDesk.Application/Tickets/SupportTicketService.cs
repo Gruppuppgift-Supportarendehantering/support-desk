@@ -1,7 +1,5 @@
-﻿using SupportDesk.Application.Customers;
-using SupportDesk.Application.Dtos.Tickets;
+﻿using SupportDesk.Application.Dtos.Tickets;
 using SupportDesk.Domain.Tickets;
-using System.Reflection;
 
 namespace SupportDesk.Application.Tickets;
 
@@ -20,17 +18,17 @@ public class SupportTicketService : ISupportTicketService
     {
         SupportTicket ticket = new SupportTicket
             (
-            request.Title, 
-            request.Description, 
-            request.CustomerId, 
+            request.Title,
+            request.Description,
+            request.CustomerId,
             request.TicketPriority
             );
 
         _repository.AddTicketToList(ticket);
-        
+
 
         Guid ticketId = ticket.TicketId;
-        string  title = ticket.Title;
+        string title = ticket.Title;
         string description = ticket.Description;
         Guid customerId = ticket.CustomerId;
         TicketPriority ticketPriority = ticket.TicketPriority;
