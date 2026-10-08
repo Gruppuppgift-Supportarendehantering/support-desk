@@ -70,7 +70,7 @@ public partial class CreateSupportTicketViewModel : ObservableObject
         Title = string.Empty;
         Description = string.Empty;
         SelectedCustomer = null;
-        TicketPriority = TicketPriority.Normal;
+        TicketPriority = TicketPriority.Medium;
     }
 
     //placeholder för customers

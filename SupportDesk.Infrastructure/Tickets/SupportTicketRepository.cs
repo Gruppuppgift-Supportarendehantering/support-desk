@@ -45,7 +45,7 @@ public class SupportTicketRepository : ISupportTicketRepository
             throw new ArgumentException("Supportärendenummer får inte vara tomt",nameof(ticketId));
         }
         
-        return _ticketList.FirstOrDefault(x => x.TicketId == ticketId);
+        return _ticketList.FirstOrDefault(x => x.Id == ticketId);
     }
 
     public void SaveToJson()

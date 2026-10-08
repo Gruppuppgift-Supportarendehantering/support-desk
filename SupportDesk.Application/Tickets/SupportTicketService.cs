@@ -20,21 +20,21 @@ public class SupportTicketService : ISupportTicketService
     {
         SupportTicket ticket = new SupportTicket
             (
-            request.Title, 
-            request.Description, 
-            request.CustomerId, 
+            request.CustomerId,
+            request.Title,
+            request.Description,
             request.TicketPriority
             );
 
         _repository.AddTicketToList(ticket);
         
 
-        Guid ticketId = ticket.TicketId;
+        Guid ticketId = ticketId = ticket.Id;
         string  title = ticket.Title;
         string description = ticket.Description;
         Guid customerId = ticket.CustomerId;
-        TicketPriority ticketPriority = ticket.TicketPriority;
-        TicketStatus ticketStatus = ticket.TicketStatus;
+        TicketPriority ticketPriority = ticket.Priority;
+        TicketStatus ticketStatus = ticket.Status;
         DateTime createdAt = ticket.CreatedAt;
 
         return new SupportTicketResult
