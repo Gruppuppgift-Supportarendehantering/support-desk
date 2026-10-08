@@ -6,6 +6,7 @@ using SupportDesk.Application.Dtos.Customers;
 using SupportDesk.Application.Dtos.Tickets;
 using SupportDesk.Application.Tickets;
 using SupportDesk.Domain.Tickets;
+using SupportDesk.Presentation.Navigation;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -17,11 +18,13 @@ public partial class CreateSupportTicketViewModel : ObservableObject
 {
     private readonly ISupportTicketService _supportTicketService;
     private readonly ICustomerService _customerService;
+    private readonly INavigationService _navigationService;
 
-    public CreateSupportTicketViewModel(ICustomerService customerService, ISupportTicketService supportTicketService)
+    public CreateSupportTicketViewModel(ICustomerService customerService, ISupportTicketService supportTicketService, INavigationService navigationService)
     {
         _supportTicketService = supportTicketService;
         _customerService = customerService;
+        _navigationService = navigationService;
 
         _ = LoadCustomersAsync();
     }
@@ -73,12 +76,12 @@ public partial class CreateSupportTicketViewModel : ObservableObject
         SupportTicketResult result = _supportTicketService.CreateTicket(request);
 
         ErrorMessage = string.Empty;
-        SuccessMessage = $"Ärendet har skapats! Med ärendenummer {result.TicketId}";
+        SuccessMessage = $"Ärendet har skapats!";
 
         Title = string.Empty;
         Description = string.Empty;
         SelectedCustomer = null;
-        TicketPriority = TicketPriority.Normal;
+        TicketPriority = TicketPriority.Medium;
     }
 
 
@@ -105,5 +108,11 @@ public partial class CreateSupportTicketViewModel : ObservableObject
         {
             ErrorMessage = "Kunderna kunde inte läsas in";
         }
+    }
+
+    [RelayCommand]
+    public void GoBack()
+    {
+        _navigationService.Navigate(AppPage.SupportTicketOverview);
     }
 }
