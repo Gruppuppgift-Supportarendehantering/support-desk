@@ -5,5 +5,5 @@ namespace SupportDesk.Application.Tickets;
 
 public interface ISupportTicketService
 {
-    SupportTicketResult CreateTicket(SupportTicketRequest request);
+    Task<SupportTicketResult> CreateTicketAsync(SupportTicketRequest request);
 }

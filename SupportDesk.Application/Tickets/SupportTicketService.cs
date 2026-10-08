@@ -16,7 +16,7 @@ public class SupportTicketService : ISupportTicketService
     }
 
 
-    public SupportTicketResult CreateTicket(SupportTicketRequest request)
+    public async Task<SupportTicketResult> CreateTicketAsync(SupportTicketRequest request)
     {
         SupportTicket ticket = new SupportTicket
             (
@@ -26,26 +26,24 @@ public class SupportTicketService : ISupportTicketService
             request.TicketPriority
             );
 
-        _repository.AddTicketToList(ticket);
-        
+        await _repository.AddTicketToListAsync(ticket);
 
-        Guid ticketId = ticketId = ticket.Id;
-        string  title = ticket.Title;
-        string description = ticket.Description;
-        Guid customerId = ticket.CustomerId;
-        TicketPriority ticketPriority = ticket.Priority;
-        TicketStatus ticketStatus = ticket.Status;
-        DateTime createdAt = ticket.CreatedAt;
+        TicketData ticketData = new TicketData(
+            ticket.Id,
+            ticket.Title,
+            ticket.Description,
+            ticket.CustomerId,
+            ticket.Priority,
+            ticket.Status,
+            ticket.CreatedAt
+            );
+        
 
         return new SupportTicketResult
             (
-            ticketId,
-            title,
-            description,
-            customerId,
-            ticketPriority,
-            ticketStatus,
-            createdAt
+            true,
+            ticketData,
+            null
             );
     }
 }

@@ -10,11 +10,11 @@ public class SupportTicketRepository : ISupportTicketRepository
 {
     private readonly List<SupportTicket> _ticketList = new List<SupportTicket>();
 
-    private readonly string _filePath = Path.Combine(AppContext.BaseDirectory, "supporttickets.json");
+    private readonly string _filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SupportDesk", "supporttickets.json");
 
     public SupportTicketRepository()
     {
-        Debug.WriteLine(_filePath);
+        Debug.WriteLine(_filePath); //ta bort sen
         LoadFromJson();
     }
 
@@ -27,18 +27,19 @@ public class SupportTicketRepository : ISupportTicketRepository
 
     
 
-    public void AddTicketToList(SupportTicket ticket)
+    public async Task AddTicketToListAsync(SupportTicket ticket)
     {
         _ticketList.Add(ticket);
-        SaveToJson();
+        await SaveToJsonAsync();
     }
 
-    public IEnumerable<SupportTicket> GetAllTickets()
+    public async Task<IEnumerable<SupportTicket>> GetAllTicketsAsync()
     {
+        //await Task.Yield() ?
         return _ticketList;
     }
 
-    public SupportTicket? GetTicketbyId(Guid ticketId)
+    public async Task<SupportTicket?> GetTicketbyIdAsync(Guid ticketId)
     {
         if (ticketId == Guid.Empty)
         {
@@ -48,7 +49,7 @@ public class SupportTicketRepository : ISupportTicketRepository
         return _ticketList.FirstOrDefault(x => x.Id == ticketId);
     }
 
-    public void SaveToJson()
+    public async Task SaveToJsonAsync()
     {
         string json = JsonSerializer.Serialize(_ticketList, jsonOptions);
 
@@ -74,5 +75,15 @@ public class SupportTicketRepository : ISupportTicketRepository
 
         _ticketList.Clear();
         _ticketList.AddRange(tickets);
+    }
+
+    public Task UpdateTicketAsync(SupportTicket ticket)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task DeleteTicketAsync(Guid ticketId)
+    {
+        throw new NotImplementedException();
     }
 }

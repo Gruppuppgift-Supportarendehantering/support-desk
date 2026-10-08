@@ -52,8 +52,9 @@ public partial class CreateSupportTicketViewModel : ObservableObject
     public TicketPriority[] Priorities { get; } = Enum.GetValues<TicketPriority>();
 
     [RelayCommand]
-    private void UICreateTicket()
+    private async Task UICreateTicketAsync()
     {
+        ErrorMessage = string.Empty;
         SuccessMessage = string.Empty;
 
         if (string.IsNullOrWhiteSpace(Title))
@@ -73,9 +74,15 @@ public partial class CreateSupportTicketViewModel : ObservableObject
         }
         var request = new SupportTicketRequest(Title, Description, SelectedCustomer.CustomerId, TicketPriority);
 
-        SupportTicketResult result = _supportTicketService.CreateTicket(request);
+        SupportTicketResult result = await _supportTicketService.CreateTicketAsync(request);
 
-        ErrorMessage = string.Empty;
+        if (!result.Succeeded)
+        {
+            ErrorMessage = result.ErrorMessage ?? "Kunde inte skapa ärendet.";
+            return;
+        }
+        
+        
         SuccessMessage = $"Ärendet har skapats!";
 
         Title = string.Empty;
