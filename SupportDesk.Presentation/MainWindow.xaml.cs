@@ -15,7 +15,7 @@ public sealed partial class MainWindow : Window
         _navigationService.Initialize(RootFrame);
 
         // Börja på kundlistan.
-        _navigationService.Navigate(AppPage.CreateSupportTicket);
+        _navigationService.Navigate(AppPage.Customers);
     }
 
     private void Customers_Click(object sender, RoutedEventArgs e)
