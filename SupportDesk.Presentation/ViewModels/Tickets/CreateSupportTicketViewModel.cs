@@ -8,6 +8,7 @@ using SupportDesk.Domain.Tickets;
 using System;
 
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace SupportDesk.Presentation.ViewModels.Tickets;
 
@@ -44,7 +45,7 @@ public partial class CreateSupportTicketViewModel : ObservableObject
 
 
     [RelayCommand]
-    private void UICreateTicket()
+    private async Task UICreateTicketAsync()
     {
         if (string.IsNullOrWhiteSpace(Title))
         {
@@ -63,7 +64,7 @@ public partial class CreateSupportTicketViewModel : ObservableObject
         }
         var request = new SupportTicketRequest(Title, Description, SelectedCustomer.CustomerId, TicketPriority);
 
-        SupportTicketResult result = _supportTicketService.CreateTicket(request);
+        SupportTicketResult result = await _supportTicketService.CreateTicketAsync(request);
 
         SuccessMessage = $"Ärendet har skapats! Med ärendenummer {result.TicketId}";
 

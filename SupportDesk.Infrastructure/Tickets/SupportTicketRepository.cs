@@ -8,15 +8,7 @@ namespace SupportDesk.Infrastructure.Tickets;
 
 public class SupportTicketRepository : ISupportTicketRepository
 {
-    private readonly List<SupportTicket> _ticketList = new List<SupportTicket>();
-
     private readonly string _filePath = Path.Combine(AppContext.BaseDirectory, "supporttickets.json");
-
-    public SupportTicketRepository()
-    {
-        Debug.WriteLine(_filePath);
-        LoadFromJson();
-    }
 
     private readonly JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
     {
@@ -25,54 +17,45 @@ public class SupportTicketRepository : ISupportTicketRepository
         PropertyNameCaseInsensitive = true,
     };
 
-    
-
-    public void AddTicketToList(SupportTicket ticket)
+    public SupportTicketRepository()
     {
-        _ticketList.Add(ticket);
-        SaveToJson();
+        Debug.WriteLine(_filePath);
     }
 
-    public IEnumerable<SupportTicket> GetAllTickets()
+    private async Task<List<SupportTicket>> ReadTicketsAsync()
     {
-        return _ticketList;
+        if (!File.Exists(_filePath)) return [];
+
+        string json = await File.ReadAllTextAsync(_filePath);
+        return JsonSerializer.Deserialize<List<SupportTicket>>(json, jsonOptions) ?? [];
     }
 
-    public SupportTicket? GetTicketbyId(Guid ticketId)
+    private async Task SaveTicketsAsync(List<SupportTicket> tickets)
+    {
+        string json = JsonSerializer.Serialize(tickets, jsonOptions);
+        await File.WriteAllTextAsync(_filePath, json);
+    }
+
+    public async Task AddAsync(SupportTicket ticket)
+    {
+        var tickets = await ReadTicketsAsync();
+        tickets.Add(ticket);
+        await SaveTicketsAsync(tickets);
+    }
+
+    public async Task<IReadOnlyList<SupportTicket>> GetAllTicketsAsync()
+    {
+        return await ReadTicketsAsync();
+    }
+
+    public async Task<SupportTicket?> GetByIdAsync(Guid ticketId)
     {
         if (ticketId == Guid.Empty)
         {
-            throw new ArgumentException("Supportärendenummer får inte vara tomt",nameof(ticketId));
-        }
-        
-        return _ticketList.FirstOrDefault(x => x.Id == ticketId);
-    }
-
-    public void SaveToJson()
-    {
-        string json = JsonSerializer.Serialize(_ticketList, jsonOptions);
-
-        File.WriteAllText(_filePath, json);
-
-    }
-
-    public void LoadFromJson()
-    {
-        if (!File.Exists(_filePath))
-        {
-            return;
+            throw new ArgumentException("Supportärendenummer får inte vara tomt", nameof(ticketId));
         }
 
-        string json = File.ReadAllText(_filePath);
-
-        List<SupportTicket>? tickets = JsonSerializer.Deserialize<List<SupportTicket>>(json, jsonOptions);
-
-        if (tickets is null)
-        {
-            return;
-        }
-
-        _ticketList.Clear();
-        _ticketList.AddRange(tickets);
+        var tickets = await ReadTicketsAsync();
+        return tickets.FirstOrDefault(x => x.Id == ticketId);
     }
 }

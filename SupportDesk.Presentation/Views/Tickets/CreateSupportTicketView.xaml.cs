@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using SupportDesk.Presentation.ViewModels.Tickets;
 using System.Collections.ObjectModel;
@@ -17,6 +18,9 @@ public sealed partial class CreateSupportTicketView : Page
         ViewModel = ((App)Microsoft.UI.Xaml.Application.Current).Services.GetRequiredService<CreateSupportTicketViewModel>();
     }
 
-    
+    private void CancelButton_Click(object sender, RoutedEventArgs e)
+    {
+        Frame.GoBack();
+    }
 
 }
