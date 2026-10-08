@@ -80,12 +80,22 @@
                 <Style 
                     TargetType="ListViewItem"
                     BasedOn="{StaticResource DefaultListViewItemStyle}">
+                    
                     <Setter
                         Property="HorizontalContentAlignment"
                         Value="Stretch" />
                     <Setter
+                        Property="Background"
+                        Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+                    <Setter
                         Property="CornerRadius"
                         Value="8" />
+                    <Setter
+                        Property="Margin"
+                        Value="0,0,0,12" />
+                    <Setter
+                        Property="Padding"
+                        Value="12" />
                 </Style>
             </ListView.ItemContainerStyle>
 

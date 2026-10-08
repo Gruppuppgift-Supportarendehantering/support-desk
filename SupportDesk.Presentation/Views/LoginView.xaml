@@ -10,24 +10,24 @@
 
 
     <StackPanel
-        Grid.Row="1"
         Spacing="12"
         Padding="24"
         MaxWidth="500"
         HorizontalAlignment="Stretch"
-        VerticalAlignment="Center">
+        VerticalAlignment="Top">
+        
         <TextBlock
             Text="Support Desk"
             FontSize="50"
-            HorizontalAlignment="Center" />
+            HorizontalAlignment="Center"
+            Margin="0,0,0,50"/>
 
         <TextBox
-            Header="Användarnamn"
-            Text="Morgan" />
+            Header="E-postadress" />
 
-        <TextBox
-            Header="E-postadress"
-            Text="Mjausson" />
+        <PasswordBox
+            Header="Lösenord" />
+
 
         <Button
             HorizontalAlignment="Stretch"
