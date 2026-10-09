@@ -1,29 +1,49 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using SupportDesk.Presentation.Navigation;
+using SupportDesk.Presentation.ViewModels.Tickets;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace SupportDesk.Presentation.Views.Tickets;
-/// <summary>
-/// An empty page that can be used on its own or navigated to within a Frame.
-/// </summary>
+
 public sealed partial class SupportTicketView : Page
 {
+    private readonly INavigationService _navigationService;
+    public SupportTicketOverviewViewModel ViewModel { get; } 
+
+
+
     public SupportTicketView()
     {
+        var services = ((App)Microsoft.UI.Xaml.Application.Current).Services;
+        _navigationService = services.GetRequiredService<INavigationService>();
+        ViewModel = services.GetRequiredService<SupportTicketOverviewViewModel>();
         InitializeComponent();
+
+        Loaded += SupportTicketView_Loaded;
+    }
+
+    private async void SupportTicketView_Loaded(object sender, RoutedEventArgs e)
+    {
+        await ViewModel.LoadTicketsCommand.ExecuteAsync(null);
+    }
+
+    private void OpenTicketButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (ViewModel.SelectedTicket is null)
+        {
+            return;
+        }
+        Frame.Navigate(typeof(EditSupportTicketView), ViewModel.SelectedTicket); //ViewModel.SelectedTicket.Id efter merge?
+    }
+    private void CustomerViewButton_Click(object sender, RoutedEventArgs e)
+    {
+        Frame.Navigate(typeof(SupportDesk.Presentation.Views.Customers.CustomerView));
+    }
+
+    private void CreateTicketButton_Click(object sender, RoutedEventArgs e)
+    {
+        Frame.Navigate(typeof(CreateSupportTicketView));
     }
 }

@@ -7,9 +7,12 @@ namespace SupportDesk.Application.Tickets;
 
 public interface ISupportTicketRepository //flytta över till domain lagret vid tillfälle. pga DDD.
 {
-    void AddTicketToList(SupportTicket ticket);
+    Task AddTicketToJsonAsync(SupportTicket ticket);
 
-    SupportTicket? GetTicketbyId(Guid ticketId);
+    Task<SupportTicket?> GetTicketbyIdAsync(Guid ticketId);
 
-    IEnumerable<SupportTicket> GetAllTickets();
+    Task<IEnumerable<SupportTicket>> GetAllTicketsAsync();
+
+    Task UpdateTicketAsync(SupportTicket ticket);
+    Task DeleteTicketAsync(Guid ticketId);
 }

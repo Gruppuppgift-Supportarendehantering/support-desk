@@ -1,5 +1,7 @@
-﻿using SupportDesk.Application.Dtos.Tickets;
+﻿using SupportDesk.Application.Customers;
+using SupportDesk.Application.Dtos.Tickets;
 using SupportDesk.Domain.Tickets;
+using System.Reflection;
 
 namespace SupportDesk.Application.Tickets;
 
@@ -14,36 +16,38 @@ public class SupportTicketService : ISupportTicketService
     }
 
 
-    public SupportTicketResult CreateTicket(SupportTicketRequest request)
+    public async Task<SupportTicketResult> CreateTicketAsync(SupportTicketRequest request)
     {
         SupportTicket ticket = new SupportTicket
             (
+            request.CustomerId,
             request.Title,
             request.Description,
-            request.CustomerId,
             request.TicketPriority
             );
 
-        _repository.AddTicketToList(ticket);
+        await _repository.AddTicketToJsonAsync(ticket);
 
+        TicketData ticketData = new TicketData(
+            ticket.Id,
+            ticket.Title,
+            ticket.Description,
+            ticket.CustomerId,
+            ticket.Priority,
+            ticket.Status,
+            ticket.CreatedAt
+            );
 
-        Guid ticketId = ticket.TicketId;
-        string title = ticket.Title;
-        string description = ticket.Description;
-        Guid customerId = ticket.CustomerId;
-        TicketPriority ticketPriority = ticket.TicketPriority;
-        TicketStatus ticketStatus = ticket.TicketStatus;
-        DateTime createdAt = ticket.CreatedAt;
 
         return new SupportTicketResult
             (
-            ticketId,
-            title,
-            description,
-            customerId,
-            ticketPriority,
-            ticketStatus,
-            createdAt
+            true,
+            ticketData,
+            null
             );
+    }
+    public async Task<IReadOnlyList<SupportTicket>> GetAllTicketsAsync()
+    {
+        return await _repository.GetAllTicketsAsync();
     }
 }

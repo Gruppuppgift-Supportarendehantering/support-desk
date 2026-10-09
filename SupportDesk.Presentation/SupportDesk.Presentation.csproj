@@ -21,6 +21,7 @@
     <None Remove="Views\Customers\EditCustomerView.xaml" />
     <None Remove="Views\HomeView.xaml" />
     <None Remove="Views\LoginView.xaml" />
+	<None Remove="Views\Tickets\CommentSupportTicketView.xaml" />
     <None Remove="Views\Tickets\CreateSupportTicketView.xaml" />
     <None Remove="Views\Tickets\EditSupportTicketView.xaml" />
     <None Remove="Views\Tickets\SupportTicketView.xaml" />
@@ -57,10 +58,13 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="2.5.1" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Styles\" />
+    <Folder Include="ViewModels\Customers\" />
     <Folder Include="ViewModels\Users\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SupportDesk.Application\SupportDesk.Application.csproj" />
+    <ProjectReference Include="..\SupportDesk.Domain\SupportDesk.Domain.csproj" />
     <ProjectReference Include="..\SupportDesk.Infrastructure\SupportDesk.Infrastructure.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -78,11 +82,16 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\HomeView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
+	<ItemGroup>
+		<Page Update="Views\Tickets\CommentSupportTicketView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+	</ItemGroup>
+	<ItemGroup>
+		<Page Update="Views\HomeView.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+	</ItemGroup>
   <ItemGroup>
     <Page Update="Views\Users\UserView.xaml">
       <Generator>MSBuild:Compile</Generator>
