@@ -54,14 +54,14 @@ internal class JsonFileCustomerRepository : ICustomerRepository
             return null;
         }
 
-        return ConvertToCustomer(storageModel);
+        return ToCustomerObject(storageModel);
     }
 
     public async Task<IReadOnlyList<Customer>> GetAllAsync()
     {
         var customers = await ReadCustomersAsync();
 
-        return customers.Select(ConvertToCustomer).ToList();
+        return customers.Select(ToCustomerObject).ToList();
     }
 
     public async Task<bool> UpdateAsync(Customer customer)
@@ -115,8 +115,10 @@ internal class JsonFileCustomerRepository : ICustomerRepository
 
         string json = await File.ReadAllTextAsync(_filePath);
 
-        return JsonSerializer.Deserialize<List<CustomerStorageModel>>(json, _options) 
+        var customers = JsonSerializer.Deserialize<List<CustomerStorageModel>>(json, _options)
             ?? throw new JsonException("Customer file does not contain a valid customer list.");
+
+        return customers;
     }
 
     private async Task SaveCustomersAsync(IEnumerable<CustomerStorageModel> customers)
@@ -128,10 +130,11 @@ internal class JsonFileCustomerRepository : ICustomerRepository
         var tempPath = _filePath + ".tmp";
 
         await File.WriteAllTextAsync(tempPath, json);
+
         File.Move(tempPath, _filePath, overwrite: true);
     }
 
-    private static Customer ConvertToCustomer(CustomerStorageModel storageModel)
+    private static Customer ToCustomerObject(CustomerStorageModel storageModel)
     {
         return new Customer(
             storageModel.CustomerId,

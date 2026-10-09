@@ -34,7 +34,7 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
             return new CustomerResponse(false, null, "Kunden kunde inte sparas.");
         }
 
-        return new CustomerResponse(true, ConvertToCustomerData(customer), null);
+        return new CustomerResponse(true, ToCustomerData(customer), null);
     }
     public async Task<CustomerResponse> GetCustomerByIdAsync(Guid customerId)
     {
@@ -45,13 +45,13 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
             return new CustomerResponse(false, null, "Kunden hittas inte.");
         }
 
-        return new CustomerResponse(true, ConvertToCustomerData(customer), null);
+        return new CustomerResponse(true, ToCustomerData(customer), null);
     }
     public async Task<GetCustomerResponse> GetAllCustomersAsync()
     {
         var customers = await customerRepository.GetAllAsync();
 
-        var customerData = customers.Select(ConvertToCustomerData).ToList();
+        var customerData = customers.Select(ToCustomerData).ToList();
 
         return new GetCustomerResponse(true, customerData, null);
     }
@@ -89,7 +89,7 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
             return new CustomerResponse(false, null, "Kunden kunde inte uppdateras.");
         }
 
-        return new CustomerResponse(true, ConvertToCustomerData(customer), null);
+        return new CustomerResponse(true, ToCustomerData(customer), null);
     }
 
     public async Task<DeleteCustomerResponse> DeleteCustomerAsync(Guid customerId)
@@ -106,7 +106,7 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
             : new DeleteCustomerResponse(false, "Kunden hittades inte.");
     }
 
-    private static CustomerData ConvertToCustomerData(Customer customer)
+    private static CustomerData ToCustomerData(Customer customer)
     {
         return new CustomerData(
             customer.CustomerId,
