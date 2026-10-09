@@ -12,12 +12,14 @@
     <Grid
         Padding="24,0,24,24">
         <Grid.RowDefinitions>
+            <RowDefinition Height="124" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Spacing="12">
+        <StackPanel Spacing="12"
+                    Grid.Row="1">
             <TextBlock
                 FontSize="28"
                 Text="Kunder" />
@@ -71,12 +73,12 @@
         </StackPanel>
 
         <TextBlock
-            Grid.Row="1"
+            Grid.Row="2"
             Text="{x:Bind ViewModel.Message, Mode=OneWay}"
             TextWrapping="Wrap" />
 
         <ListView
-            Grid.Row="2"
+            Grid.Row="3"
             ItemsSource="{x:Bind ViewModel.Customers}"
             SelectedItem="{x:Bind ViewModel.SelectedCustomer, Mode=TwoWay}"
             SelectionMode="Single">
