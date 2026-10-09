@@ -26,6 +26,12 @@ namespace SupportDesk.Presentation.ViewModels.Tickets
         [ObservableProperty]
         public partial SupportTicket? SelectedTicket { get; set; }
 
+        public int NewCount => Tickets.Count(t => t.Status == TicketStatus.New);
+
+        public int InProgressCount => Tickets.Count(t => t.Status == TicketStatus.InProgress);
+
+        public int ResolvedCount => Tickets.Count(t => t.Status == TicketStatus.Resolved);
+
         [RelayCommand]
         private async Task LoadTicketsAsync()
         {
@@ -35,6 +41,10 @@ namespace SupportDesk.Presentation.ViewModels.Tickets
             {
                 Tickets.Add(ticket);
             }
+
+            OnPropertyChanged(nameof(NewCount));
+            OnPropertyChanged(nameof(InProgressCount));
+            OnPropertyChanged(nameof(ResolvedCount));
         }
 
         [RelayCommand]

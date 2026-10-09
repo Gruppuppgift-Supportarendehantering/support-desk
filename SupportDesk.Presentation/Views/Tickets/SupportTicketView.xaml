@@ -60,7 +60,7 @@
                                 FontSize="20"
                                 FontWeight="SemiBold"
                                 Foreground="{ThemeResource TextFillColorPrimaryBrush}"
-                                Text="8" />
+                                Text="{x:Bind ViewModel.NewCount, Mode=OneWay}" />
                         </Border>
                     </StackPanel>
 
@@ -82,7 +82,7 @@
                                 FontSize="20"
                                 FontWeight="SemiBold"
                                 Foreground="{ThemeResource TextFillColorPrimaryBrush}"
-                                Text="5" />
+                                Text="{x:Bind ViewModel.InProgressCount, Mode=OneWay}" />
                         </Border>
                     </StackPanel>
 
@@ -104,7 +104,7 @@
                                 FontSize="20"
                                 FontWeight="SemiBold"
                                 Foreground="{ThemeResource TextFillColorPrimaryBrush}"
-                                Text="5" />
+                                Text="{x:Bind ViewModel.ResolvedCount, Mode=OneWay}" />
                         </Border>
                     </StackPanel>
                 </StackPanel>
