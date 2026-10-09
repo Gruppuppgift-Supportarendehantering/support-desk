@@ -33,21 +33,6 @@
                     Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <StackPanel
-                Grid.Column="0"
-                Orientation="Horizontal"
-                VerticalAlignment="Top"
-                Spacing="12">
-
-                <Button
-                    Content="Kunder"
-                    Click="Customers_Click" />
-
-                <Button
-                    Content="Skapa ärende"
-                    Click="CreateSupportTicket_Click" />
-            </StackPanel>
-
             <Border
                 Grid.Column="1"
                 HorizontalAlignment="Right"

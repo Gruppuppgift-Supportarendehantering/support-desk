@@ -24,15 +24,4 @@ public sealed partial class MainWindow : Window
         //för test av CreateSupportTicket-vyn _navigationService.Navigate(AppPage.CreateSupportTicket);
         //för test av CommentSupportTicket-vyn _navigationService.Navigate(AppPage.CommentSupportTicket);
     }
-
-    private void Customers_Click(object sender, RoutedEventArgs e)
-    {
-        _navigationService.Navigate(AppPage.Customers);
-    }
-
-    private void CreateSupportTicket_Click(
-        object sender, RoutedEventArgs e)
-    {
-        _navigationService.Navigate(AppPage.CreateSupportTicket);
-    }
 }

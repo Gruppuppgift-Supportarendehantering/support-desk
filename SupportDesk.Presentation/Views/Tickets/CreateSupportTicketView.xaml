@@ -1,113 +1,124 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Page
     x:Class="SupportDesk.Presentation.Views.Tickets.CreateSupportTicketView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    RequestedTheme="Dark"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:SupportDesk.Presentation.Views.Tickets"
     xmlns:customers="using:SupportDesk.Application.Dtos.Customers"
-    xmlns:vm="using:SupportDesk.Presentation.ViewModels.Tickets"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:SupportDesk.Presentation.Views.Tickets"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    
-    >
+    xmlns:vm="using:SupportDesk.Presentation.ViewModels.Tickets"
+    RequestedTheme="Dark"
+    mc:Ignorable="d">
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="320" MinWidth="280"/>
-            <ColumnDefinition Width="*" MinWidth="250"/>
-            <ColumnDefinition Width="*" MinWidth="200"/>
+            <ColumnDefinition
+                Width="320"
+                MinWidth="280" />
+            <ColumnDefinition
+                Width="*"
+                MinWidth="250" />
+            <ColumnDefinition
+                Width="*"
+                MinWidth="200" />
 
         </Grid.ColumnDefinitions>
 
         <Border Grid.Column="0">
 
-            <!-- vänsterkolumnen input med knappar -->
-            <Grid Padding="20" RowSpacing="16">
+            <!--  vänsterkolumnen input med knappar  -->
+            <Grid
+                Padding="20"
+                RowSpacing="16">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" Text="Skapa Supportärende"
-                           HorizontalAlignment="Center" 
-                           Padding="20"
-                           Foreground="#F8FAFC"
-                           FontWeight="SemiBold"
-                           FontSize="20"
-                           />
+                <TextBlock
+                    Grid.Row="0"
+                    Padding="20"
+                    HorizontalAlignment="Center"
+                    FontSize="20"
+                    FontWeight="SemiBold"
+                    Foreground="#F8FAFC"
+                    Text="Skapa Supportärende" />
 
-                <ScrollViewer Grid.Row="1" Padding="0,0,12,0">
+                <ScrollViewer
+                    Grid.Row="1"
+                    Padding="0,0,12,0">
                     <StackPanel Spacing="16">
-                        <TextBox 
-                                Header="Rubrik:"
-                                PlaceholderText="Skriv in Rubrik" 
-					            Text="{x:Bind ViewModel.Title, Mode=TwoWay}" 
-                                MinHeight="80" 
-                                TextWrapping="Wrap" 
-                                AcceptsReturn="True"
-                                />
-                        <TextBox 
-                                Header="Beskrivning:" 
-                                PlaceholderText="Beskriv felet" 
-					            Text="{x:Bind ViewModel.Description, Mode=TwoWay}" 
-                                
-                                MinHeight="160" 
-                                TextWrapping="Wrap" 
-                                AcceptsReturn="True" />
-                        <ComboBox 
-                                Header="Välj ärendets prioritetsnivå:"
-                                MinWidth="150" 
-                                ItemsSource="{x:Bind ViewModel.Priorities}" 
-                                SelectedItem="{x:Bind ViewModel.TicketPriority, Mode=TwoWay}">
-                        </ComboBox>
+                        <TextBox
+                            MinHeight="80"
+                            AcceptsReturn="True"
+                            Header="Rubrik:"
+                            PlaceholderText="Skriv in Rubrik"
+                            Text="{x:Bind ViewModel.Title, Mode=TwoWay}"
+                            TextWrapping="Wrap" />
+                        <TextBox
+                            MinHeight="160"
+                            AcceptsReturn="True"
+                            Header="Beskrivning:"
+                            PlaceholderText="Beskriv felet"
+                            Text="{x:Bind ViewModel.Description, Mode=TwoWay}"
+                            TextWrapping="Wrap" />
+                        <ComboBox
+                            MinWidth="150"
+                            Header="Välj ärendets prioritetsnivå:"
+                            ItemsSource="{x:Bind ViewModel.Priorities}"
+                            SelectedItem="{x:Bind ViewModel.TicketPriority, Mode=TwoWay}" />
                     </StackPanel>
                 </ScrollViewer>
 
-                <Button Grid.Row="2" 
-                                Content="Skapa Ärende." 
-                                Style="{StaticResource AccentButtonStyle}"
-                                Padding="10" 
-                                HorizontalAlignment="Stretch" 
-                                Command="{x:Bind ViewModel.UICreateTicketCommand}"/>
+                <Button
+                    Grid.Row="2"
+                    Padding="10"
+                    HorizontalAlignment="Stretch"
+                    Command="{x:Bind ViewModel.UICreateTicketCommand}"
+                    Content="Skapa Ärende."
+                    Style="{StaticResource AccentButtonStyle}" />
             </Grid>
         </Border>
 
         <Border Grid.Column="1">
-            <!-- mittenkolumnen -->
-            <Grid Padding="20" RowSpacing="10">
+            <!--  mittenkolumnen  -->
+            <Grid
+                Padding="20"
+                RowSpacing="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" 
-                               Text="Välj vilken kund ärendet gäller från listan:" 
-                               Foreground="#F8FAFC"
-                               FontWeight="SemiBold"
-                               FontSize="15"
-                               HorizontalAlignment="Center"
-                               TextWrapping="Wrap"/>
-                <ListView  Grid.Row="1"
-                               CornerRadius="8"
-                               ScrollViewer.VerticalScrollBarVisibility="Auto"
-                               ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                               ItemsSource="{x:Bind ViewModel.Customers}" 
-                               SelectedItem="{x:Bind ViewModel.SelectedCustomer, Mode=TwoWay}" 
-                               Background="#0F172A" 
-                               BorderThickness="2" 
-                               BorderBrush="Black" 
-                               MinHeight="200"
-                               
-                               MaxWidth="500" 
-                               HorizontalAlignment="Stretch" >
+                <TextBlock
+                    Grid.Row="0"
+                    HorizontalAlignment="Center"
+                    FontSize="15"
+                    FontWeight="SemiBold"
+                    Foreground="#F8FAFC"
+                    Text="Välj vilken kund ärendet gäller från listan:"
+                    TextWrapping="Wrap" />
+                <ListView
+                    Grid.Row="1"
+                    MinHeight="200"
+                    MaxWidth="500"
+                    HorizontalAlignment="Stretch"
+                    Background="#0F172A"
+                    BorderBrush="Black"
+                    BorderThickness="2"
+                    CornerRadius="8"
+                    ItemsSource="{x:Bind ViewModel.Customers}"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    SelectedItem="{x:Bind ViewModel.SelectedCustomer, Mode=TwoWay}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="customers:CustomerData">
-                            <TextBlock Text="{x:Bind CustomerName}" 
-                                       Foreground="#F8FAFC"
-                                       FontSize="15"
-                                       FontWeight="SemiBold"/>
+                            <TextBlock
+                                FontSize="15"
+                                FontWeight="SemiBold"
+                                Foreground="#F8FAFC"
+                                Text="{x:Bind CustomerName}" />
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
@@ -122,29 +133,33 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel Grid.Row="0">
-                    <TextBlock Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}" 
-                           Margin="20" TextWrapping="Wrap" 
-                           VerticalAlignment="Top" 
-                           HorizontalAlignment="Center"/>
-                    <!-- högerkolumnen input med knappar -->
-                    <TextBlock Text="{x:Bind ViewModel.SuccessMessage, Mode=OneWay}" 
-                           Margin="20" 
-                           TextWrapping="Wrap" 
-                           VerticalAlignment="Top" 
-                           HorizontalAlignment="Center"/>
+                    <TextBlock
+                        Margin="20"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+                        TextWrapping="Wrap" />
+                    <!--  högerkolumnen input med knappar  -->
+                    <TextBlock
+                        Margin="20"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Text="{x:Bind ViewModel.SuccessMessage, Mode=OneWay}"
+                        TextWrapping="Wrap" />
 
 
 
                 </StackPanel>
-                <Button Grid.Row="1"
-                        Content="Gå tillbaka" Command="{x:Bind ViewModel.GoBackCommand}" 
-                        HorizontalAlignment="Stretch" 
-                        Margin="20"
-                        VerticalAlignment="Bottom" 
-                        MinWidth="120"
-                        MaxWidth="300"
-                        Style="{StaticResource AccentButtonStyle}"
-                        />
+                <Button
+                    Grid.Row="1"
+                    MinWidth="120"
+                    MaxWidth="300"
+                    Margin="20"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Bottom"
+                    Command="{x:Bind ViewModel.GoBackCommand}"
+                    Content="Gå tillbaka"
+                    Style="{StaticResource AccentButtonStyle}" />
             </Grid>
         </Border>
     </Grid>

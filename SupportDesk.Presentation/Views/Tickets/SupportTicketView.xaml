@@ -9,12 +9,14 @@
     xmlns:tickets="using:SupportDesk.Domain.Tickets"
     mc:Ignorable="d">
 
-    <Grid
-        Padding="24"
-        RowDefinitions="Auto,*">
+    <Grid Padding="24,0,24,24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
         <StackPanel
             Grid.Row="0"
-            Margin="12">
+            Margin="0,0,0,12">
             <TextBlock
                 Padding="0,0,0,10"
                 FontSize="28"
@@ -44,45 +46,50 @@
 
         <ListView
             Grid.Row="1"
-            MaxWidth="1200"
             HorizontalAlignment="Stretch"
             ItemsSource="{x:Bind ViewModel.Tickets}"
             SelectedItem="{x:Bind ViewModel.SelectedTicket, Mode=TwoWay}"
             SelectionMode="Single">
+            <ListView.ItemContainerStyle>
+                <Style
+                    BasedOn="{StaticResource DefaultListViewItemStyle}"
+                    TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+                    <Setter Property="CornerRadius" Value="8" />
+                    <Setter Property="Margin" Value="0,0,0,12" />
+                    <Setter Property="Padding" Value="12" />
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="tickets:SupportTicket">
-                    <Border
-                        Margin="0,0,0,16"
-                        Padding="16"
-                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                        BorderThickness="1"
-                        CornerRadius="8">
-                        <Grid ColumnDefinitions="*, Auto">
-                            <StackPanel
-                                Grid.Column="0"
-                                Spacing="4">
-                                <TextBlock
-                                    FontSize="14"
-                                    FontWeight="Bold"
-                                    Text="{x:Bind Title}" />
-                                <TextBlock
-                                    FontSize="14"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Text="{x:Bind Description}" />
-                                <TextBlock
-                                    FontSize="12"
-                                    Text="{x:Bind CreatedAt}" />
-                            </StackPanel>
-                            <StackPanel
-                                Grid.Column="1"
-                                HorizontalAlignment="Right">
-                                <TextBlock Text="{x:Bind Status}" />
-                                <TextBlock Text="{x:Bind Priority}" />
-                                <TextBlock Text="{x:Bind AssignedTechnician}" />
-                            </StackPanel>
-                        </Grid>
-                    </Border>
+                    <Grid 
+                        Padding="8"
+                        ColumnDefinitions="*, Auto">
+                        <StackPanel
+                            Grid.Column="0"
+                            Spacing="4">
+                            <TextBlock
+                                FontSize="14"
+                                FontWeight="Bold"
+                                Text="{x:Bind Title}" />
+                            <TextBlock
+                                FontSize="14"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Text="{x:Bind Description}" />
+                            <TextBlock
+                                FontSize="12"
+                                Text="{x:Bind CreatedAt}" />
+                        </StackPanel>
+                        <StackPanel
+                            Grid.Column="1"
+                            HorizontalAlignment="Right">
+                            <TextBlock Text="{x:Bind Status}" />
+                            <TextBlock Text="{x:Bind Priority}" />
+                            <TextBlock Text="{x:Bind AssignedTechnician}" />
+                        </StackPanel>
+                    </Grid>
+
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
