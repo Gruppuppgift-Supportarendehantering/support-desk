@@ -1,4 +1,5 @@
-﻿using SupportDesk.Application.Tickets;
+﻿using SupportDesk.Application.Dtos.Tickets;
+using SupportDesk.Application.Tickets;
 using SupportDesk.Domain.Tickets;
 using System.Diagnostics;
 using System.Text.Json;
@@ -15,7 +16,7 @@ public class SupportTicketRepository : ISupportTicketRepository
     public SupportTicketRepository()
     {
         Debug.WriteLine(_filePath); //ta bort sen
-        LoadFromJson();
+        //LoadFromJson();
     }
 
     private readonly JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
@@ -27,54 +28,71 @@ public class SupportTicketRepository : ISupportTicketRepository
 
     
 
-    public async Task AddTicketToListAsync(SupportTicket ticket)
+    public async Task AddTicketToJsonAsync(SupportTicket ticket)
     {
-        _ticketList.Add(ticket);
-        await SaveToJsonAsync();
+        //_ticketList.Add(ticket);
+
+        List<SupportTicket> tickets = await ReadTicketsAsync();
+        // felsök efter duplicering tickets
+        if (tickets.Any(t => t.Id == ticket.Id))
+        {
+            throw new InvalidOperationException("Ärendet finns redan");
+        }
+
+        tickets.Add(ticket);
+        await SaveToJsonAsync(tickets);
     }
 
     public async Task<IEnumerable<SupportTicket>> GetAllTicketsAsync()
     {
-        //await Task.Yield() ?
-        return _ticketList;
+        
+        var tickets = await ReadTicketsAsync();
+        return tickets;
     }
 
     public async Task<SupportTicket?> GetTicketbyIdAsync(Guid ticketId)
     {
+        List<SupportTicket> tickets = await ReadTicketsAsync();
+
         if (ticketId == Guid.Empty)
         {
             throw new ArgumentException("Supportärendenummer får inte vara tomt",nameof(ticketId));
         }
         
-        return _ticketList.FirstOrDefault(x => x.Id == ticketId);
+        return tickets.FirstOrDefault(x => x.Id == ticketId);
     }
 
-    public async Task SaveToJsonAsync()
+    public async Task SaveToJsonAsync(List<SupportTicket> tickets)
     {
-        string json = JsonSerializer.Serialize(_ticketList, jsonOptions);
+        Directory.CreateDirectory(Path.GetDirectoryName(_filePath)!);
 
-        File.WriteAllText(_filePath, json);
+        string json = JsonSerializer.Serialize(tickets, jsonOptions);
+
+        await File.WriteAllTextAsync(_filePath, json);
+
+        //tempPath = _filePath + ".tmp";
+        //File.WriteAllText(tempPath, json); skydd för filkorruption vid skrivning, men inte implementerat än
 
     }
 
-    public void LoadFromJson()
+    public async Task<List<SupportTicket>> ReadTicketsAsync()
     {
         if (!File.Exists(_filePath))
         {
-            return;
+            return new List<SupportTicket>();
         }
 
-        string json = File.ReadAllText(_filePath);
+        string json = await File.ReadAllTextAsync(_filePath);
 
         List<SupportTicket>? tickets = JsonSerializer.Deserialize<List<SupportTicket>>(json, jsonOptions);
 
         if (tickets is null)
         {
-            return;
+            return new List<SupportTicket>();
         }
 
-        _ticketList.Clear();
-        _ticketList.AddRange(tickets);
+        return tickets;
+        
     }
 
     public Task UpdateTicketAsync(SupportTicket ticket)

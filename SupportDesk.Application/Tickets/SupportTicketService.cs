@@ -26,7 +26,7 @@ public class SupportTicketService : ISupportTicketService
             request.TicketPriority
             );
 
-        await _repository.AddTicketToListAsync(ticket);
+        await _repository.AddTicketToJsonAsync(ticket);
 
         TicketData ticketData = new TicketData(
             ticket.Id,
