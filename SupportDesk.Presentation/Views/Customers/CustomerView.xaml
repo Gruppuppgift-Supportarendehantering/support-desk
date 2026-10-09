@@ -9,20 +9,35 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid
-        Padding="24,0,24,24">
+    <Grid Padding="24">
         <Grid.RowDefinitions>
-            <RowDefinition Height="124" />
+            <RowDefinition Height="100" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Spacing="12"
-                    Grid.Row="1">
+
+        <Button
+            Grid.Row="0"
+            Margin="0,0,0,12"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Command="{x:Bind ViewModel.GoBackCommand}">
+            <FontIcon
+                FontFamily="Segoe Fluent Icons"
+                Glyph="&#xE72B;" />
+        </Button>
+
+
+        <StackPanel
+            Grid.Row="1"
+            Spacing="12">
+
             <TextBlock
                 FontSize="28"
                 Text="Kunder" />
+
 
             <StackPanel
                 Orientation="Horizontal"
@@ -54,8 +69,6 @@
                         HorizontalAlignment="Center"
                         Text="Redigera" />
                 </StackPanel>
-
-
                 <StackPanel Spacing="4">
                     <Button
                         HorizontalAlignment="Center"

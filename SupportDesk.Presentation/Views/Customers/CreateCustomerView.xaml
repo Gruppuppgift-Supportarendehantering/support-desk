@@ -8,79 +8,92 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel
-        MaxWidth="500"
-        Padding="24"
-        Spacing="12">
-        <TextBlock
-            HorizontalAlignment="Center"
-            FontSize="28"
-            Text="Lägg till kund" />
+    <Grid Padding="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
         <Button
+            Grid.Row="0"
+            Margin="0,0,0,12"
             HorizontalAlignment="Left"
+            VerticalAlignment="Top"
             Command="{x:Bind ViewModel.GoBackCommand}">
             <FontIcon
                 FontFamily="Segoe Fluent Icons"
                 Glyph="&#xE72B;" />
         </Button>
 
-        <TextBox
-            Header="Kundnamn"
-            PlaceholderText="Namn"
-            Text="{x:Bind ViewModel.CustomerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <StackPanel
+            Grid.Row="1"
+            MaxWidth="500"
+            Padding="24,0,24,24"
+            Spacing="12">
+            <TextBlock
+                HorizontalAlignment="Center"
+                FontSize="28"
+                Text="Lägg till kund" />
 
-        <TextBox
-            Header="E-postadress"
-            PlaceholderText="namn@exempel.se"
-            Text="{x:Bind ViewModel.EmailAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-        <StackPanel Spacing="8">
-            <TextBlock Text="Kundtyp" />
 
-            <Border
-                HorizontalAlignment="Left"
-                BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
-                BorderThickness="1"
-                CornerRadius="8">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+            <TextBox
+                Header="Kundnamn"
+                PlaceholderText="Namn"
+                Text="{x:Bind ViewModel.CustomerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                    <RadioButton
-                        Grid.Column="0"
-                        HorizontalAlignment="Stretch"
-                        Content="Privatkund"
-                        CornerRadius="7,0,0,7"
-                        GroupName="CustomerType"
-                        IsChecked="True"
-                        Style="{StaticResource SegmentedSwitch}" />
+            <TextBox
+                Header="E-postadress"
+                PlaceholderText="namn@exempel.se"
+                Text="{x:Bind ViewModel.EmailAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                    <RadioButton
-                        Grid.Column="1"
-                        HorizontalAlignment="Stretch"
-                        Content="Företagskund"
-                        CornerRadius="0,7,7,0"
-                        GroupName="CustomerType"
-                        IsChecked="{x:Bind ViewModel.IsCompany, Mode=TwoWay}"
-                        Style="{StaticResource SegmentedSwitch}" />
-                </Grid>
-            </Border>
+            <StackPanel Spacing="8">
+                <TextBlock Text="Kundtyp" />
+
+                <Border
+                    HorizontalAlignment="Left"
+                    BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="8">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <RadioButton
+                            Grid.Column="0"
+                            HorizontalAlignment="Stretch"
+                            Content="Privatkund"
+                            CornerRadius="7,0,0,7"
+                            GroupName="CustomerType"
+                            IsChecked="True"
+                            Style="{StaticResource SegmentedSwitch}" />
+
+                        <RadioButton
+                            Grid.Column="1"
+                            HorizontalAlignment="Stretch"
+                            Content="Företagskund"
+                            CornerRadius="0,7,7,0"
+                            GroupName="CustomerType"
+                            IsChecked="{x:Bind ViewModel.IsCompany, Mode=TwoWay}"
+                            Style="{StaticResource SegmentedSwitch}" />
+                    </Grid>
+                </Border>
+            </StackPanel>
+
+            <TextBlock
+                Text="{x:Bind ViewModel.Message, Mode=OneWay}"
+                TextWrapping="Wrap" />
+
+
+            <Button
+                HorizontalAlignment="Right"
+                Command="{x:Bind ViewModel.SaveCommand}"
+                Content="Lägg till"
+                Style="{StaticResource ActionButton}" />
+
         </StackPanel>
-
-        <TextBlock
-            Text="{x:Bind ViewModel.Message, Mode=OneWay}"
-            TextWrapping="Wrap" />
-
-
-        <Button
-            HorizontalAlignment="Right"
-            Command="{x:Bind ViewModel.SaveCommand}"
-            Content="Lägg till"
-            Style="{StaticResource ActionButton}" />
-
-    </StackPanel>
+    </Grid>
 
 </Page>

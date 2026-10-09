@@ -128,4 +128,10 @@ public partial class CustomerViewModel(
             Message = "Kundfilen innehåller ogiltig data.";
         }
     }
+
+    [RelayCommand]
+    private void GoBack()
+    {
+        _navigationService.Navigate(AppPage.SupportTicketOverview);
+    }
 }
