@@ -2,7 +2,6 @@
 <Page
     x:Class="SupportDesk.Presentation.Views.Tickets.CreateSupportTicketView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    RequestedTheme="Dark"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:SupportDesk.Presentation.Views.Tickets"
     xmlns:customers="using:SupportDesk.Application.Dtos.Customers"
@@ -32,9 +31,9 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0" Text="Skapa Supportärende"
+                           Style="{StaticResource TitleTextBlockStyle}"
                            HorizontalAlignment="Center" 
                            Padding="20"
-                           Foreground="#F8FAFC"
                            FontWeight="SemiBold"
                            FontSize="20"
                            />
@@ -77,14 +76,18 @@
 
         <Border Grid.Column="1">
             <!-- mittenkolumnen -->
-            <Grid Padding="20" RowSpacing="10">
+            <Grid Padding="20" RowSpacing="10" 
+                  Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                  BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                  >
+                
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" 
                                Text="Välj vilken kund ärendet gäller från listan:" 
-                               Foreground="#F8FAFC"
+                               Style="{StaticResource BodyStrongTextBlockStyle}"
                                FontWeight="SemiBold"
                                FontSize="15"
                                HorizontalAlignment="Center"
@@ -95,7 +98,7 @@
                                ScrollViewer.HorizontalScrollBarVisibility="Auto"
                                ItemsSource="{x:Bind ViewModel.Customers}" 
                                SelectedItem="{x:Bind ViewModel.SelectedCustomer, Mode=TwoWay}" 
-                               Background="#0F172A" 
+                               
                                BorderThickness="2" 
                                BorderBrush="Black" 
                                MinHeight="200"
@@ -105,7 +108,7 @@
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="customers:CustomerData">
                             <TextBlock Text="{x:Bind CustomerName}" 
-                                       Foreground="#F8FAFC"
+                                       
                                        FontSize="15"
                                        FontWeight="SemiBold"/>
                         </DataTemplate>
@@ -123,11 +126,13 @@
 
                 <StackPanel Grid.Row="0">
                     <TextBlock Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}" 
+                           Foreground="{ThemeResource SystemFillColorCriticalBrush}"
                            Margin="20" TextWrapping="Wrap" 
                            VerticalAlignment="Top" 
                            HorizontalAlignment="Center"/>
                     <!-- högerkolumnen input med knappar -->
                     <TextBlock Text="{x:Bind ViewModel.SuccessMessage, Mode=OneWay}" 
+                           Foreground="{ThemeResource SystemFillColorSuccessBrush}"
                            Margin="20" 
                            TextWrapping="Wrap" 
                            VerticalAlignment="Top" 
