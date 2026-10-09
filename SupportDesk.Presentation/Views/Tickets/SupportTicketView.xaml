@@ -12,10 +12,109 @@
     <Grid Padding="24,0,24,24">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackPanel
+
+        <!--  Ticket status summary  -->
+
+        <Grid
             Grid.Row="0"
+            Margin="16"
+            ColumnSpacing="24">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Border
+                Grid.Column="1"
+                Padding="12"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="8">
+
+                <StackPanel
+                    Orientation="Horizontal"
+                    Spacing="16">
+
+                    <StackPanel Spacing="6">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            Text="Nytt" />
+
+                        <Border
+                            Width="40"
+                            Height="40"
+                            HorizontalAlignment="Center"
+                            Background="{ThemeResource CardStrokeColorDefaultBrush}"
+                            CornerRadius="4">
+
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="20"
+                                FontWeight="SemiBold"
+                                Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                                Text="8" />
+                        </Border>
+                    </StackPanel>
+
+                    <StackPanel Spacing="6">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            Text="Pågående" />
+
+                        <Border
+                            Width="40"
+                            Height="40"
+                            HorizontalAlignment="Center"
+                            Background="{ThemeResource CardStrokeColorDefaultBrush}"
+                            CornerRadius="4">
+
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="20"
+                                FontWeight="SemiBold"
+                                Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                                Text="5" />
+                        </Border>
+                    </StackPanel>
+
+                    <StackPanel Spacing="6">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            Text="Löst" />
+
+                        <Border
+                            Width="40"
+                            Height="40"
+                            HorizontalAlignment="Center"
+                            Background="{ThemeResource CardStrokeColorDefaultBrush}"
+                            CornerRadius="4">
+
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="20"
+                                FontWeight="SemiBold"
+                                Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                                Text="5" />
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!--  Heading  -->
+
+        <StackPanel
+            Grid.Row="1"
             Margin="0,0,0,12">
             <TextBlock
                 Padding="0,0,0,10"
@@ -44,8 +143,10 @@
             </StackPanel>
         </StackPanel>
 
+        <!--  Ticket list  -->
+
         <ListView
-            Grid.Row="1"
+            Grid.Row="2"
             HorizontalAlignment="Stretch"
             ItemsSource="{x:Bind ViewModel.Tickets}"
             SelectedItem="{x:Bind ViewModel.SelectedTicket, Mode=TwoWay}"
@@ -63,7 +164,7 @@
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="tickets:SupportTicket">
-                    <Grid 
+                    <Grid
                         Padding="8"
                         ColumnDefinitions="*, Auto">
                         <StackPanel
