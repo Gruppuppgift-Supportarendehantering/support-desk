@@ -16,6 +16,7 @@ public partial class EditCustomerViewModel(
 {
     private readonly ICustomerService _customerService = customerService;
     private readonly INavigationService _navigationService = navigationService;
+    public bool HasMessage => !string.IsNullOrWhiteSpace(Message);
 
     private Guid _customerId;
 
@@ -24,6 +25,7 @@ public partial class EditCustomerViewModel(
     [ObservableProperty]
     public partial string EmailAddress { get; set; } = string.Empty;
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasMessage))]
     public partial string Message { get; set; } = string.Empty;
 
     public async Task LoadCustomerAsync(Guid customerId)

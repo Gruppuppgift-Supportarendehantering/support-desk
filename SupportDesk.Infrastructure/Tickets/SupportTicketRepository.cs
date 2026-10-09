@@ -11,7 +11,7 @@ public class SupportTicketRepository : ISupportTicketRepository
 {
     
 
-    private readonly string _filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SupportDesk", "supporttickets.json");
+    private readonly string _filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SupportDesk", "supporttickets.json");
 
     public SupportTicketRepository()
     {

@@ -17,10 +17,13 @@ public partial class CustomerViewModel(
 {
     private readonly ICustomerService _customerService = customerService;
     private readonly INavigationService _navigationService = navigationService;
+    public bool HasMessage => !string.IsNullOrWhiteSpace(Message);
+
 
     public ObservableCollection<CustomerData> Customers { get; } = [];
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasMessage))]
     public partial string Message { get; set; } = string.Empty;
     [ObservableProperty]
     public partial CustomerData? SelectedCustomer { get; set; }

@@ -16,6 +16,7 @@ public partial class CreateCustomerViewModel(
 {
     private readonly ICustomerService _customerService = customerService;
     private readonly INavigationService _navigationService = navigationService;
+    public bool HasMessage => !string.IsNullOrWhiteSpace(Message);
 
     [ObservableProperty]
     public partial string CustomerName { get; set; } = string.Empty;
@@ -24,6 +25,7 @@ public partial class CreateCustomerViewModel(
     [ObservableProperty]
     public partial bool IsCompany { get; set; }
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasMessage))]
     public partial string Message { get; set; } = string.Empty;
 
     [RelayCommand]

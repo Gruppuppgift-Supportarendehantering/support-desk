@@ -7,7 +7,7 @@ namespace SupportDesk.Infrastructure.Customers;
 
 internal class JsonFileCustomerRepository : ICustomerRepository
 {
-    private readonly string _filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+    private readonly string _filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
         "SupportDesk",
         "customers.json"
         );
