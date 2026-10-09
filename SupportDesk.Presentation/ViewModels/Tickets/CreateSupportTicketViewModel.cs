@@ -1,5 +1,4 @@
-﻿
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SupportDesk.Application.Customers;
 using SupportDesk.Application.Dtos.Customers;
@@ -81,8 +80,8 @@ public partial class CreateSupportTicketViewModel : ObservableObject
             ErrorMessage = result.ErrorMessage ?? "Kunde inte skapa ärendet.";
             return;
         }
-        
-        
+
+
         SuccessMessage = $"Ärendet har skapats!";
 
         Title = string.Empty;

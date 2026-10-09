@@ -14,9 +14,12 @@
 		<StackPanel Grid.Row="0" Margin="12">
 			<TextBlock Text="Supportärenden" FontSize="28" FontWeight="Bold" Padding="0,0,0,10" />
 			<StackPanel Orientation="Horizontal" Spacing="12">
-				<Button Content="Öppna markerat ärende" Click="OpenTicketButton_Click" Command="{x:Bind ViewModel.OpenTicketCommand}" Style="{StaticResource AccentButtonStyle}"/>
+				<Button Content="Öppna markerat ärende" Click="OpenTicketButton_Click" Style="{StaticResource AccentButtonStyle}"/>
 
 				<Button Content="Skapa ett ärende" Click ="CreateTicketButton_Click"/>
+
+				<Button x:Name="CustomerViewButton" Content="Kunder" Click="CustomerViewButton_Click" MinWidth="120" Margin="20,0,0,0"/>
+				
 			</StackPanel>
 		</StackPanel>
 

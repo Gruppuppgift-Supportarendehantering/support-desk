@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using SupportDesk.Presentation.ViewModels.Tickets;
 
@@ -19,6 +20,9 @@ public sealed partial class CreateSupportTicketView : Page
         
     }
 
-    
+    private void CancelButton_Click(object sender, RoutedEventArgs e)
+    {
+        Frame.GoBack();
+    }
 
 }

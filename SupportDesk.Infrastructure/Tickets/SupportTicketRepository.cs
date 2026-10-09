@@ -9,14 +9,13 @@ namespace SupportDesk.Infrastructure.Tickets;
 
 public class SupportTicketRepository : ISupportTicketRepository
 {
-    private readonly List<SupportTicket> _ticketList = new List<SupportTicket>();
+    
 
     private readonly string _filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SupportDesk", "supporttickets.json");
 
     public SupportTicketRepository()
     {
-        Debug.WriteLine(_filePath); //ta bort sen
-        //LoadFromJson();
+        Debug.WriteLine(_filePath);
     }
 
     private readonly JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
@@ -26,7 +25,6 @@ public class SupportTicketRepository : ISupportTicketRepository
         PropertyNameCaseInsensitive = true,
     };
 
-    
 
     public async Task AddTicketToJsonAsync(SupportTicket ticket)
     {
@@ -45,7 +43,7 @@ public class SupportTicketRepository : ISupportTicketRepository
 
     public async Task<IEnumerable<SupportTicket>> GetAllTicketsAsync()
     {
-        
+
         var tickets = await ReadTicketsAsync();
         return tickets;
     }
@@ -56,9 +54,9 @@ public class SupportTicketRepository : ISupportTicketRepository
 
         if (ticketId == Guid.Empty)
         {
-            throw new ArgumentException("Supportärendenummer får inte vara tomt",nameof(ticketId));
+            throw new ArgumentException("Supportärendenummer får inte vara tomt", nameof(ticketId));
         }
-        
+
         return tickets.FirstOrDefault(x => x.Id == ticketId);
     }
 
@@ -92,7 +90,7 @@ public class SupportTicketRepository : ISupportTicketRepository
         }
 
         return tickets;
-        
+
     }
 
     public Task UpdateTicketAsync(SupportTicket ticket)

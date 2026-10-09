@@ -37,7 +37,7 @@ public class SupportTicketService : ISupportTicketService
             ticket.Status,
             ticket.CreatedAt
             );
-        
+
 
         return new SupportTicketResult
             (
@@ -45,5 +45,9 @@ public class SupportTicketService : ISupportTicketService
             ticketData,
             null
             );
+    }
+    public async Task<IReadOnlyList<SupportTicket>> GetAllTicketsAsync()
+    {
+        return await _repository.GetAllTicketsAsync();
     }
 }

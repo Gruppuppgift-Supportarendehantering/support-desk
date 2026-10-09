@@ -22,7 +22,7 @@
         </Grid.ColumnDefinitions>
 
         <Border Grid.Column="0" Background="#243042">
-            
+
             <!-- vänsterkolumnen input med knappar -->
             <Grid Padding="20" RowSpacing="16">
                 <Grid.RowDefinitions>
@@ -30,7 +30,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                
+
                 <TextBlock Grid.Row="0" Text="Skapa Supportärende"
                            HorizontalAlignment="Center" 
                            Padding="20"
@@ -65,8 +65,8 @@
                         </ComboBox>
                     </StackPanel>
                 </ScrollViewer>
-                
-                        <Button Grid.Row="2" 
+
+                <Button Grid.Row="2" 
                                 Content="Skapa Ärende." 
                                 Style="{StaticResource AccentButtonStyle}"
                                 Padding="10" 
@@ -82,7 +82,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" 
+                <TextBlock Grid.Row="0" 
                                Text="Välj vilken kund ärendet gäller från listan:" 
                                Foreground="#F8FAFC"
                                FontWeight="SemiBold"
@@ -112,7 +112,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </Grid>
-            
+
         </Border>
         <Border Grid.Column="2" Background="#243042">
             <Grid>
@@ -122,20 +122,20 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel Grid.Row="0">
-                <TextBlock Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}" 
+                    <TextBlock Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}" 
                            Margin="20" TextWrapping="Wrap" 
                            VerticalAlignment="Top" 
                            HorizontalAlignment="Center"/>
-                <!-- högerkolumnen input med knappar -->
-                <TextBlock Text="{x:Bind ViewModel.SuccessMessage, Mode=OneWay}" 
+                    <!-- högerkolumnen input med knappar -->
+                    <TextBlock Text="{x:Bind ViewModel.SuccessMessage, Mode=OneWay}" 
                            Margin="20" 
                            TextWrapping="Wrap" 
                            VerticalAlignment="Top" 
                            HorizontalAlignment="Center"/>
-                
 
 
-            </StackPanel>
+
+                </StackPanel>
                 <Button Grid.Row="1"
                         Content="Gå tillbaka" Command="{x:Bind ViewModel.GoBackCommand}" 
                         HorizontalAlignment="Stretch" 
