@@ -41,7 +41,7 @@ public class SupportTicketRepository : ISupportTicketRepository
         await SaveToJsonAsync(tickets);
     }
 
-    public async Task<IEnumerable<SupportTicket>> GetAllTicketsAsync()
+    public async Task<IReadOnlyList<SupportTicket>> GetAllTicketsAsync()
     {
 
         var tickets = await ReadTicketsAsync();

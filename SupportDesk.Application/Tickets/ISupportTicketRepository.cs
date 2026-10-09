@@ -11,7 +11,7 @@ public interface ISupportTicketRepository //flytta över till domain lagret vid 
 
     Task<SupportTicket?> GetTicketbyIdAsync(Guid ticketId);
 
-    Task<IEnumerable<SupportTicket>> GetAllTicketsAsync();
+    Task<IReadOnlyList<SupportTicket>> GetAllTicketsAsync();
 
     Task UpdateTicketAsync(SupportTicket ticket);
     Task DeleteTicketAsync(Guid ticketId);

@@ -15,12 +15,12 @@ public static class SupportTicketFilter
 
         if (status.HasValue)
         {
-            result = result.Where(t => t.TicketStatus == status.Value);
+            result = result.Where(t => t.Status == status.Value);
         }
 
         if (priority.HasValue)
         {
-            result = result.Where(t => t.TicketPriority == priority.Value);
+            result = result.Where(t => t.Priority == priority.Value);
         }
 
         return result.ToList();
