@@ -22,12 +22,12 @@ public class TicketComment
     [JsonConstructor]
     public TicketComment(string text, DateTime createdAt)
     {
-        if (!string.IsNullOrWhiteSpace(text))
+        if (string.IsNullOrWhiteSpace(text))
         {
             throw new ArgumentException("Kommentarstext kan inte vara tom.", nameof(text));
         }
 
         Text = text;
-        CreatedAt = CreatedAt;
+        CreatedAt = createdAt;
     }
 }
