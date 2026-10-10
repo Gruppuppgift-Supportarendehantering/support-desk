@@ -1,4 +1,6 @@
-﻿namespace SupportDesk.Domain.Tickets;
+﻿using System.Text.Json.Serialization;
+
+namespace SupportDesk.Domain.Tickets;
 
 public class TicketComment
 {
@@ -15,5 +17,17 @@ public class TicketComment
             Text = text;
             CreatedAt = DateTime.UtcNow;
         }
+    }
+
+    [JsonConstructor]
+    public TicketComment(string text, DateTime createdAt)
+    {
+        if (!string.IsNullOrWhiteSpace(text))
+        {
+            throw new ArgumentException("Kommentarstext kan inte vara tom.", nameof(text));
+        }
+
+        Text = text;
+        CreatedAt = CreatedAt;
     }
 }

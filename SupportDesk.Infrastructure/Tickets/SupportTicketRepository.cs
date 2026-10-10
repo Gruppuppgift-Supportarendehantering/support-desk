@@ -16,6 +16,8 @@ public class SupportTicketRepository : ISupportTicketRepository
     public SupportTicketRepository()
     {
         Debug.WriteLine(_filePath);
+        bool directoryExists = Directory.Exists(Path.GetDirectoryName(_filePath));
+        System.Diagnostics.Debug.WriteLine($"Finns mappen verkligen? {directoryExists}");
     }
 
     private readonly JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
