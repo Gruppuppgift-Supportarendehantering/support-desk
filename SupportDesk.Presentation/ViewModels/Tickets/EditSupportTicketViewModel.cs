@@ -4,6 +4,7 @@ using SupportDesk.Application.Customers;
 using SupportDesk.Domain.Tickets;
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Windows.Networking.BackgroundTransfer;
 
 namespace SupportDesk.Presentation.ViewModels.Tickets;

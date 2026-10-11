@@ -165,10 +165,11 @@
 
             <!--  Status filer  -->
 
-            <ComboBox 
+            <ComboBox
                 Grid.Column="1"
                 MinWidth="160"
-                PlaceholderText="Filter"/>
+                ItemsSource="{x:Bind ViewModel.StatusFilters}"
+                SelectedItem="{x:Bind ViewModel.SelectedStatusFilter, Mode=TwoWay}" />
 
         </Grid>
 

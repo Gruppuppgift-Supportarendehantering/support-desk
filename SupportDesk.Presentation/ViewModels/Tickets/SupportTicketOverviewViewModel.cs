@@ -19,7 +19,7 @@ public partial class SupportTicketOverviewViewModel : ObservableObject
 
     private List<SupportTicket> _allTickets = [];
     private List<CustomerData> _customers = [];
-
+    public string[] StatusFilters { get; } = ["Alla", "Nytt", "Pågående", "Löst"];
     public SupportTicketOverviewViewModel(
         ISupportTicketService supportTicketService,
         ICustomerService customerService)
@@ -35,7 +35,15 @@ public partial class SupportTicketOverviewViewModel : ObservableObject
     public partial SupportTicket? SelectedTicket { get; set; }
 
     [ObservableProperty]
-    private string searchText = string.Empty;
+    public partial string SelectedStatusFilter { get; set; } = "Alla";
+
+    partial void OnSelectedStatusFilterChanged(string value)
+    {
+        ApplyFilters();
+    }
+
+    [ObservableProperty]
+    public partial string SearchText { get; set; } = string.Empty;
 
     partial void OnSearchTextChanged(string value)
     {
@@ -46,9 +54,18 @@ public partial class SupportTicketOverviewViewModel : ObservableObject
     {
         var query = SearchText.Trim();
 
+        TicketStatus? status = SelectedStatusFilter switch
+        {
+            "Nytt" => TicketStatus.New,
+            "Pågående" => TicketStatus.InProgress,
+            "Löst" => TicketStatus.Resolved,
+            _ => null
+        };
+
         var filtered = _allTickets
             .Where(t => t.Title.Contains(query, StringComparison.OrdinalIgnoreCase)
             || _customers.Any(c => c.CustomerId == t.CustomerId && c.CustomerName.Contains(query, StringComparison.OrdinalIgnoreCase)))
+            .Where(t => status == null || t.Status == status)
             .OrderByDescending(t => t.CreatedAt);
 
         SelectedTicket = null;
