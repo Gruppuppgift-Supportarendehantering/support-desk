@@ -160,7 +160,7 @@
 
             <TextBox
                 Grid.Column="0"
-                PlaceholderText="Sök ärenderubrik eller kundnamn"
+                PlaceholderText="Sök efter ärenderubrik eller kundnamn"
                 Text="{x:Bind ViewModel.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
             <!--  Status filer  -->
@@ -215,8 +215,8 @@
                         <StackPanel
                             Grid.Column="1"
                             HorizontalAlignment="Right">
-                            <TextBlock Text="{x:Bind Status}" />
-                            <TextBlock Text="{x:Bind Priority}" />
+                            <TextBlock Text="{x:Bind StatusText}" />
+                            <TextBlock Text="{x:Bind PriorityText}" />
                             <TextBlock Text="{x:Bind AssignedTechnician}" />
                         </StackPanel>
                     </Grid>

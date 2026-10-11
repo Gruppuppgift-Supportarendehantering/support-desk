@@ -100,4 +100,23 @@ public class SupportTicket
         }
     }
 
+    // Status and priority text converted to swedish
+
+    [JsonIgnore]
+    public string StatusText => Status switch
+    {
+        TicketStatus.New => "Nytt",
+        TicketStatus.InProgress => "Pågående",
+        TicketStatus.Resolved => "Löst",
+        _ => Status.ToString()
+    };
+    [JsonIgnore]
+    public string PriorityText => Priority switch
+    {
+        TicketPriority.Low => "Låg",
+        TicketPriority.Medium => "Medel",
+        TicketPriority.High => "Hög",
+        _ => Priority.ToString()
+    };
+
 }
