@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SupportDesk.Domain.Tickets;
+using SupportDesk.Presentation.Navigation;
 using System;
 using System.Collections.ObjectModel;
 
@@ -9,6 +10,13 @@ namespace SupportDesk.Presentation.ViewModels.Tickets;
 public partial class EditSupportTicketViewModel : ObservableObject
 {
     private SupportTicket? _ticket;
+
+    private readonly INavigationService _navigationService;
+
+    public EditSupportTicketViewModel(INavigationService navigationService)
+    {
+        _navigationService = navigationService;
+    }
 
     [ObservableProperty]
     public partial string Title { get; set; } = string.Empty;
@@ -111,5 +119,11 @@ public partial class EditSupportTicketViewModel : ObservableObject
         }
         Comments.Add(new TicketComment(NewCommentText));
         NewCommentText = string.Empty;
+    }
+
+    [RelayCommand]
+    public void GoBack()
+    {
+        _navigationService.Navigate(AppPage.SupportTicketOverview);
     }
 }

@@ -15,7 +15,9 @@
             Color="{ThemeResource TextFillColorSecondary}" />
     </Page.Resources>
 
+	<Grid>
     <ScrollViewer Padding="24">
+		
         <StackPanel
             MaxWidth="600"
             HorizontalAlignment="Center"
@@ -140,6 +142,12 @@
 
         </StackPanel>
     </ScrollViewer>
-
-
+		<Button
+        Margin="8"
+        HorizontalAlignment="Left"
+        VerticalAlignment="Top"
+        Command="{x:Bind ViewModel.GoBackCommand}">
+			<FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE72B;" />
+		</Button>
+	</Grid>
 </Page>

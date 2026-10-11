@@ -1,4 +1,5 @@
 using Microsoft.UI.Xaml;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using SupportDesk.Domain.Tickets;
@@ -8,11 +9,13 @@ namespace SupportDesk.Presentation.Views.Tickets;
 
 public sealed partial class EditSupportTicketView : Page
 {
-    public EditSupportTicketViewModel ViewModel { get; } = new();
+    public EditSupportTicketViewModel ViewModel { get; }
 
     public EditSupportTicketView()
     {
+        ViewModel = ((App)Microsoft.UI.Xaml.Application.Current).Services.GetRequiredService<EditSupportTicketViewModel>();
         InitializeComponent();
+        
     }
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
