@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -8,10 +9,11 @@ namespace SupportDesk.Presentation.Views.Tickets;
 
 public sealed partial class CommentSupportTicketView : Page
 {
-    public CommentSupportTicketViewModel ViewModel { get; } = new();
+    public CommentSupportTicketViewModel ViewModel { get; }
 
     public CommentSupportTicketView()
     {
+        ViewModel = ((App)Microsoft.UI.Xaml.Application.Current).Services.GetRequiredService<CommentSupportTicketViewModel>();
         InitializeComponent();
     }
 

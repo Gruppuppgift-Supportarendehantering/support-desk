@@ -3,6 +3,7 @@ using SupportDesk.Presentation.Navigation;
 using SupportDesk.Presentation.ViewModels;
 using SupportDesk.Presentation.ViewModels.Customers;
 using SupportDesk.Presentation.ViewModels.Tickets;
+using SupportDesk.Presentation.Views.Tickets;
 
 namespace SupportDesk.Presentation;
 
@@ -22,6 +23,7 @@ public static class PresentationRegistrationExtension
         services.AddTransient<CreateSupportTicketViewModel>();
         services.AddTransient<SupportTicketOverviewViewModel>();
         services.AddTransient<EditSupportTicketViewModel>();
+        services.AddTransient<CommentSupportTicketViewModel>();
 
         return services;
     }

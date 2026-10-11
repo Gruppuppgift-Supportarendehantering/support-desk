@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SupportDesk.Domain.Tickets;
+using SupportDesk.Presentation.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,6 +10,13 @@ namespace SupportDesk.Presentation.ViewModels.Tickets;
 
 public partial class CommentSupportTicketViewModel : ObservableObject
 {
+    private readonly INavigationService _navigationService;
+
+    public CommentSupportTicketViewModel(INavigationService navigationService)
+    {
+        _navigationService = navigationService;
+    }
+
     [ObservableProperty]
     public partial string CommentText { get; set; } = string.Empty;
 
@@ -47,4 +55,10 @@ public partial class CommentSupportTicketViewModel : ObservableObject
         SuccessMessage = "Kommentaren har lagts till.";
         CommentText = string.Empty;
     }
+    [RelayCommand]
+    public void GoBack()
+    {
+        _navigationService.Navigate(AppPage.SupportTicketOverview);
+    }
 }
+

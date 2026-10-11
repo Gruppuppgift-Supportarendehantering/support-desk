@@ -12,8 +12,17 @@
 		<SolidColorBrush x:Key="PlaceholderBrush" Color="{ThemeResource TextFillColorSecondary}" Opacity="0.4"/>
 	</Page.Resources>
 	<!--för att sänka opacity på placeholder-text-->
-	
-	
+
+	<Grid>
+		<Button
+             Grid.Column="0"
+             Margin="8"
+             HorizontalAlignment="Left"
+             VerticalAlignment="Top"
+             Command="{x:Bind ViewModel.GoBackCommand}">		
+			<FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE72B;" />
+			</Button>
+		
 		<StackPanel  Margin="32" Spacing="20"
 					MaxWidth="700"
 					HorizontalAlignment="Stretch">
@@ -55,5 +64,6 @@
 					   TextWrapping="Wrap"/>
 
 		</StackPanel>
+		</Grid>
 	
 </Page>
