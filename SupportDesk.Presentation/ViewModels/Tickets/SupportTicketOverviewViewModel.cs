@@ -4,102 +4,116 @@ using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using SupportDesk.Application.Tickets;
 using System.Threading.Tasks;
 using System.Linq;
+using SupportDesk.Application.Customers;
+using SupportDesk.Application.Dtos.Customers;
 
-namespace SupportDesk.Presentation.ViewModels.Tickets
+namespace SupportDesk.Presentation.ViewModels.Tickets;
+
+public partial class SupportTicketOverviewViewModel : ObservableObject
 {
-    public partial class SupportTicketOverviewViewModel : ObservableObject
+    private readonly ISupportTicketService _supportTicketService;
+    private readonly ICustomerService _customerService;
+
+    private List<SupportTicket> _allTickets = [];
+    private List<CustomerData> _customers = [];
+
+    public SupportTicketOverviewViewModel(
+        ISupportTicketService supportTicketService,
+        ICustomerService customerService)
     {
-        private readonly ISupportTicketService _supportTicketService;
+        _supportTicketService = supportTicketService;
+        _customerService = customerService;
+    }
 
-        private List<SupportTicket> _allTickets = [];
+    [ObservableProperty]
+    public partial ObservableCollection<SupportTicket> Tickets { get; set; } = new();
 
-        public SupportTicketOverviewViewModel(ISupportTicketService supportTicketService)
+    [ObservableProperty]
+    public partial SupportTicket? SelectedTicket { get; set; }
+
+    [ObservableProperty]
+    private string searchText = string.Empty;
+
+    partial void OnSearchTextChanged(string value)
+    {
+        ApplyFilters();
+    }
+
+    private void ApplyFilters()
+    {
+        var query = SearchText.Trim();
+
+        var filtered = _allTickets
+            .Where(t => t.Title.Contains(query, StringComparison.OrdinalIgnoreCase)
+            || _customers.Any(c => c.CustomerId == t.CustomerId && c.CustomerName.Contains(query, StringComparison.OrdinalIgnoreCase)))
+            .OrderByDescending(t => t.CreatedAt);
+
+        SelectedTicket = null;
+        Tickets.Clear();
+
+        foreach (var ticket in filtered)
         {
-            _supportTicketService = supportTicketService;
-        }
-
-        [ObservableProperty]
-        public partial ObservableCollection<SupportTicket> Tickets { get; set; } = new();
-
-        [ObservableProperty]
-        public partial SupportTicket? SelectedTicket { get; set; }
-
-        [ObservableProperty]
-        private string searchText = string.Empty;
-
-        partial void OnSearchTextChanged(string value)
-        {
-            ApplyFilters();
-        }
-
-        private void ApplyFilters()
-        {
-            var query = SearchText.Trim();
-
-            var filtered = _allTickets
-                .Where(t => t.Title.Contains(query, StringComparison.OrdinalIgnoreCase))
-                .OrderByDescending(t => t.CreatedAt);
-
-            SelectedTicket = null;
-            Tickets.Clear();
-
-            foreach (var ticket in filtered)
-            {
-                Tickets.Add(ticket);
-            }
-        }
-
-        public int NewCount => _allTickets.Count(t => t.Status == TicketStatus.New);
-
-        public int InProgressCount => _allTickets.Count(t => t.Status == TicketStatus.InProgress);
-
-        public int ResolvedCount => _allTickets.Count(t => t.Status == TicketStatus.Resolved);
-
-        [RelayCommand]
-        private async Task LoadTicketsAsync()
-        {
-            var tickets = await _supportTicketService.GetAllTicketsAsync();
-
-            _allTickets = tickets.ToList();
-            ApplyFilters();
-
-            OnPropertyChanged(nameof(NewCount));
-            OnPropertyChanged(nameof(InProgressCount));
-            OnPropertyChanged(nameof(ResolvedCount));
-        }
-
-        [RelayCommand]
-        private void OpenTicket()
-        {
-            if (SelectedTicket == null)
-            {
-                return;
-            }
-            // Logic to open the selected ticket, e.g., navigate to a detailed view
-        }
-       /* public SupportTicketOverviewViewModel()
-        {
-            // Sample data for demonstration purposes
-            /* Tickets.Add(new SupportTicket(Guid.NewGuid(), "Inloggning fungerar inte", "Kunden kan inte logga in efter uppdatering.", TicketPriority.High));
-             Tickets.Add(new SupportTicket(Guid.NewGuid(), "Skrivarstrul", "Skrivaren på våning 3 svarar inte.", TicketPriority.Low));
-             Tickets.Add(new SupportTicket(Guid.NewGuid(), "Skärmen Trasig", "Skärmen vill inte starta.", TicketPriority.Low));
-             Tickets.Add(new SupportTicket(Guid.NewGuid(), "Internet nere", "Internet fungerar ej på maskinen.", TicketPriority.Medium));
-             Tickets.Add(new SupportTicket(Guid.NewGuid(), "Internet nere", "Internet fungerar ej på maskinen.", TicketPriority.Medium));
-             Tickets.Add(new SupportTicket(Guid.NewGuid(), "Internet nere", "Internet fungerar ej på maskinen.", TicketPriority.Medium));
-             Tickets.Add(new SupportTicket(Guid.NewGuid(), "Internet nere", "Internet fungerar ej på maskinen.", TicketPriority.Medium));
-             Tickets.Add(new SupportTicket(Guid.NewGuid(), "Internet nere", "Internet fungerar ej på maskinen.", TicketPriority.Medium));
-             Tickets.Add(new SupportTicket(Guid.NewGuid(), "Internet nere", "Internet fungerar ej på maskinen.", TicketPriority.Medium));
-             Tickets.Add(new SupportTicket(Guid.NewGuid(), "Internet nere", "Internet fungerar ej på maskinen.", TicketPriority.Medium));
-             Tickets.Add(new SupportTicket(Guid.NewGuid(), "Internet nere", "Internet fungerar ej på maskinen.", TicketPriority.Medium));
-             Tickets.Add(new SupportTicket(Guid.NewGuid(), "Internet nere", "Internet fungerar ej på maskinen.", TicketPriority.Medium));
-             Tickets.Add(new SupportTicket(Guid.NewGuid(), "Internet nere", "Internet fungerar ej på maskinen.", TicketPriority.Medium));
-             Tickets.Add(new SupportTicket(Guid.NewGuid(), "Internet nere", "Internet fungerar ej på maskinen.", TicketPriority.Medium));
-             Tickets.Add(new SupportTicket(Guid.NewGuid(), "Internet nere", "Internet fungerar ej på maskinen.", TicketPriority.Medium));
-         }*/
-
+            Tickets.Add(ticket);
         }
     }
+
+    public int NewCount => _allTickets.Count(t => t.Status == TicketStatus.New);
+
+    public int InProgressCount => _allTickets.Count(t => t.Status == TicketStatus.InProgress);
+
+    public int ResolvedCount => _allTickets.Count(t => t.Status == TicketStatus.Resolved);
+
+    [RelayCommand]
+    private async Task LoadTicketsAsync()
+    {
+        var tickets = await _supportTicketService.GetAllTicketsAsync();
+        var customerResponse = await _customerService.GetAllCustomersAsync();
+
+        _allTickets = tickets.ToList();
+
+        _customers = customerResponse.Succeeded
+            ? customerResponse.Customers.ToList()
+            : [];
+            
+
+        ApplyFilters();
+
+        OnPropertyChanged(nameof(NewCount));
+        OnPropertyChanged(nameof(InProgressCount));
+        OnPropertyChanged(nameof(ResolvedCount));
+    }
+
+    [RelayCommand]
+    private void OpenTicket()
+    {
+        if (SelectedTicket == null)
+        {
+            return;
+        }
+        // Logic to open the selected ticket, e.g., navigate to a detailed view
+    }
+    /* public SupportTicketOverviewViewModel()
+     {
+         // Sample data for demonstration purposes
+         /* Tickets.Add(new SupportTicket(Guid.NewGuid(), "Inloggning fungerar inte", "Kunden kan inte logga in efter uppdatering.", TicketPriority.High));
+          Tickets.Add(new SupportTicket(Guid.NewGuid(), "Skrivarstrul", "Skrivaren på våning 3 svarar inte.", TicketPriority.Low));
+          Tickets.Add(new SupportTicket(Guid.NewGuid(), "Skärmen Trasig", "Skärmen vill inte starta.", TicketPriority.Low));
+          Tickets.Add(new SupportTicket(Guid.NewGuid(), "Internet nere", "Internet fungerar ej på maskinen.", TicketPriority.Medium));
+          Tickets.Add(new SupportTicket(Guid.NewGuid(), "Internet nere", "Internet fungerar ej på maskinen.", TicketPriority.Medium));
+          Tickets.Add(new SupportTicket(Guid.NewGuid(), "Internet nere", "Internet fungerar ej på maskinen.", TicketPriority.Medium));
+          Tickets.Add(new SupportTicket(Guid.NewGuid(), "Internet nere", "Internet fungerar ej på maskinen.", TicketPriority.Medium));
+          Tickets.Add(new SupportTicket(Guid.NewGuid(), "Internet nere", "Internet fungerar ej på maskinen.", TicketPriority.Medium));
+          Tickets.Add(new SupportTicket(Guid.NewGuid(), "Internet nere", "Internet fungerar ej på maskinen.", TicketPriority.Medium));
+          Tickets.Add(new SupportTicket(Guid.NewGuid(), "Internet nere", "Internet fungerar ej på maskinen.", TicketPriority.Medium));
+          Tickets.Add(new SupportTicket(Guid.NewGuid(), "Internet nere", "Internet fungerar ej på maskinen.", TicketPriority.Medium));
+          Tickets.Add(new SupportTicket(Guid.NewGuid(), "Internet nere", "Internet fungerar ej på maskinen.", TicketPriority.Medium));
+          Tickets.Add(new SupportTicket(Guid.NewGuid(), "Internet nere", "Internet fungerar ej på maskinen.", TicketPriority.Medium));
+          Tickets.Add(new SupportTicket(Guid.NewGuid(), "Internet nere", "Internet fungerar ej på maskinen.", TicketPriority.Medium));
+          Tickets.Add(new SupportTicket(Guid.NewGuid(), "Internet nere", "Internet fungerar ej på maskinen.", TicketPriority.Medium));
+      }*/
+
+}
+
