@@ -1,14 +1,23 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using SupportDesk.Application.Customers;
 using SupportDesk.Domain.Tickets;
 using System;
 using System.Collections.ObjectModel;
+using Windows.Networking.BackgroundTransfer;
 
 namespace SupportDesk.Presentation.ViewModels.Tickets;
 
 public partial class EditSupportTicketViewModel : ObservableObject
 {
+    private readonly ICustomerService _customerService;
+
     private SupportTicket? _ticket;
+
+    public EditSupportTicketViewModel(ICustomerService customerService)
+    {
+        _customerService = customerService;
+    }
 
     [ObservableProperty]
     public partial string Title { get; set; } = string.Empty;
@@ -54,11 +63,13 @@ public partial class EditSupportTicketViewModel : ObservableObject
         "Technician C"
     };
 
-    public void Load(SupportTicket ticket)
+    public async Task LoadAsync(SupportTicket ticket)
     {
         _ticket = ticket;
 
-        CustomerName = $"Kund-id: {ticket.CustomerId}"; // tillfälligt, tills kunduppslag finns
+        var response = await _customerService.GetCustomerByIdAsync(ticket.CustomerId);
+
+        CustomerName = response.Customer?.CustomerName ?? "Kund saknas";
         OriginalTitle = ticket.Title;
         Title = ticket.Title;
         Description = ticket.Description;
