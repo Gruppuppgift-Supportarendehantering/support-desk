@@ -215,8 +215,14 @@
                         <StackPanel
                             Grid.Column="1"
                             HorizontalAlignment="Right">
-                            <TextBlock Text="{x:Bind StatusText}" />
-                            <TextBlock Text="{x:Bind PriorityText}" />
+                            <TextBlock>
+                                <Run Text="Status: " />
+                                <Run Text="{x:Bind StatusText}" />
+                            </TextBlock>
+                            <TextBlock>
+                                <Run Text="Prioritet: " />
+                                <Run Text="{x:Bind PriorityText}" />
+                            </TextBlock>
                             <TextBlock Text="{x:Bind AssignedTechnician}" />
                         </StackPanel>
                     </Grid>
