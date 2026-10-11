@@ -4,6 +4,8 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using SupportDesk.Domain.Tickets;
 using SupportDesk.Presentation.ViewModels.Tickets;
+using SupportDesk.Application.Tickets;
+using SupportDesk.Presentation.Navigation;
 
 namespace SupportDesk.Presentation.Views.Tickets;
 

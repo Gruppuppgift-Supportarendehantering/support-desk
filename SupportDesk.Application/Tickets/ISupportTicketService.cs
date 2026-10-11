@@ -7,4 +7,5 @@ public interface ISupportTicketService
 {
     Task<SupportTicketResult> CreateTicketAsync(SupportTicketRequest request);
     Task<IReadOnlyList<SupportTicket>> GetAllTicketsAsync();
+    Task<SupportTicketResult> UpdateTicketAsync(SupportTicket ticket);
 }

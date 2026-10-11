@@ -7,6 +7,7 @@
     xmlns:local="using:SupportDesk.Presentation.Views.Tickets"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tickets="using:SupportDesk.Domain.Tickets"
+	xmlns:helpers="using:SupportDesk.Presentation.Helpers"
     mc:Ignorable="d">
 
     <Grid Padding="24,0,24,24">
@@ -182,13 +183,36 @@
                                 FontSize="12"
                                 Text="{x:Bind CreatedAt}" />
                         </StackPanel>
-                        <StackPanel
+						<StackPanel
                             Grid.Column="1"
-                            HorizontalAlignment="Right">
-                            <TextBlock Text="{x:Bind Status}" />
-                            <TextBlock Text="{x:Bind Priority}" />
-                            <TextBlock Text="{x:Bind AssignedTechnician}" />
-                        </StackPanel>
+                            HorizontalAlignment="Right"
+                            Spacing="6">
+							<Border
+								Padding="10,2"
+								HorizontalAlignment="Right"
+								Background="{x:Bind helpers:TicketDisplay.StatusBrush(Status)}"
+								CornerRadius="10">
+								<TextBlock
+									FontSize="12"
+									Foreground="White"
+									Text="{x:Bind helpers:TicketDisplay.StatusText(Status)}" />
+							</Border>
+							<Border
+								Padding="10,2"
+								HorizontalAlignment="Right"
+								Background="{x:Bind helpers:TicketDisplay.PriorityBrush(Priority)}"
+								CornerRadius="10">
+								<TextBlock
+									FontSize="12"
+									Foreground="White"
+									Text="{x:Bind helpers:TicketDisplay.PriorityText(Priority)}" />
+							</Border>
+							<TextBlock
+								HorizontalAlignment="Right"
+								FontSize="12"
+								Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+								Text="{x:Bind AssignedTechnician}" />
+						</StackPanel>
                     </Grid>
 
                 </DataTemplate>

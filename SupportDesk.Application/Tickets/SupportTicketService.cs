@@ -50,4 +50,20 @@ public class SupportTicketService : ISupportTicketService
     {
         return await _repository.GetAllTicketsAsync();
     }
+    public async Task<SupportTicketResult> UpdateTicketAsync(SupportTicket ticket)
+    {
+        await _repository.UpdateTicketAsync(ticket);
+
+        TicketData ticketData = new TicketData(
+            ticket.Id,
+            ticket.Title,
+            ticket.Description,
+            ticket.CustomerId,
+            ticket.Priority,
+            ticket.Status,
+            ticket.CreatedAt
+            );
+
+        return new SupportTicketResult(true, ticketData, null);
+    }
 }

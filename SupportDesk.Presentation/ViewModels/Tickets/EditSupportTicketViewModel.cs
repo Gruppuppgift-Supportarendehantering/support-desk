@@ -1,9 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using SupportDesk.Application.Tickets;
 using SupportDesk.Domain.Tickets;
 using SupportDesk.Presentation.Navigation;
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace SupportDesk.Presentation.ViewModels.Tickets;
 
@@ -12,10 +14,14 @@ public partial class EditSupportTicketViewModel : ObservableObject
     private SupportTicket? _ticket;
 
     private readonly INavigationService _navigationService;
+    private readonly ISupportTicketService _supportTicketService;
 
-    public EditSupportTicketViewModel(INavigationService navigationService)
+    public EditSupportTicketViewModel(
+        INavigationService navigationService,
+        ISupportTicketService supportTicketService)
     {
         _navigationService = navigationService;
+        _supportTicketService = supportTicketService;
     }
 
     [ObservableProperty]
@@ -57,9 +63,9 @@ public partial class EditSupportTicketViewModel : ObservableObject
     public ObservableCollection<TicketStatus> StatusOptions { get; } = new(Enum.GetValues<TicketStatus>());
     public ObservableCollection<string> TechnicianOptions { get; } = new()
     {
-        "Technician A",
-        "Technician B",
-        "Technician C"
+        "Handläggare A",
+        "Handläggare B",
+        "Handläggare C"
     };
 
     public void Load(SupportTicket ticket)
@@ -77,7 +83,7 @@ public partial class EditSupportTicketViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void SaveChanges()
+    private async Task SaveChangesAsync()
     {
         ErrorMessage = string.Empty;
         SuccessMessage = string.Empty;
@@ -105,6 +111,13 @@ public partial class EditSupportTicketViewModel : ObservableObject
         if (!string.IsNullOrWhiteSpace(AssignedTechnician))
         {
             _ticket.AssignTechnician(AssignedTechnician);
+        }
+
+        var result = await _supportTicketService.UpdateTicketAsync(_ticket);
+        if (!result.Succeeded)
+        {
+            ErrorMessage = result.ErrorMessage ?? "Kunde inte spara ändringarna.";
+            return;
         }
 
         SuccessMessage = "Ändringarna har sparats.";
