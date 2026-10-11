@@ -15,6 +15,8 @@ namespace SupportDesk.Presentation.ViewModels.Tickets
     {
         private readonly ISupportTicketService _supportTicketService;
 
+        private List<SupportTicket> _allTickets = [];
+
         public SupportTicketOverviewViewModel(ISupportTicketService supportTicketService)
         {
             _supportTicketService = supportTicketService;
@@ -26,21 +28,44 @@ namespace SupportDesk.Presentation.ViewModels.Tickets
         [ObservableProperty]
         public partial SupportTicket? SelectedTicket { get; set; }
 
-        public int NewCount => Tickets.Count(t => t.Status == TicketStatus.New);
+        [ObservableProperty]
+        private string searchText = string.Empty;
 
-        public int InProgressCount => Tickets.Count(t => t.Status == TicketStatus.InProgress);
+        partial void OnSearchTextChanged(string value)
+        {
+            ApplyFilters();
+        }
 
-        public int ResolvedCount => Tickets.Count(t => t.Status == TicketStatus.Resolved);
+        private void ApplyFilters()
+        {
+            var query = SearchText.Trim();
+
+            var filtered = _allTickets
+                .Where(t => t.Title.Contains(query, StringComparison.OrdinalIgnoreCase))
+                .OrderByDescending(t => t.CreatedAt);
+
+            SelectedTicket = null;
+            Tickets.Clear();
+
+            foreach (var ticket in filtered)
+            {
+                Tickets.Add(ticket);
+            }
+        }
+
+        public int NewCount => _allTickets.Count(t => t.Status == TicketStatus.New);
+
+        public int InProgressCount => _allTickets.Count(t => t.Status == TicketStatus.InProgress);
+
+        public int ResolvedCount => _allTickets.Count(t => t.Status == TicketStatus.Resolved);
 
         [RelayCommand]
         private async Task LoadTicketsAsync()
         {
             var tickets = await _supportTicketService.GetAllTicketsAsync();
-            Tickets.Clear();
-            foreach (var ticket in tickets.OrderByDescending(t => t.CreatedAt))
-            {
-                Tickets.Add(ticket);
-            }
+
+            _allTickets = tickets.ToList();
+            ApplyFilters();
 
             OnPropertyChanged(nameof(NewCount));
             OnPropertyChanged(nameof(InProgressCount));

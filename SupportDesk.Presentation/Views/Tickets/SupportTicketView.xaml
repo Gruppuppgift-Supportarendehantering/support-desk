@@ -13,6 +13,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="124" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -143,10 +144,38 @@
             </StackPanel>
         </StackPanel>
 
+        <!--  Search & Filter  -->
+
+        <Grid
+            Grid.Row="2"
+            Margin="0,0,0,12"
+            ColumnSpacing="12">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!--  Search bar  -->
+
+            <TextBox
+                Grid.Column="0"
+                PlaceholderText="Sök ärenderubrik eller kundnamn"
+                Text="{x:Bind ViewModel.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <!--  Status filer  -->
+
+            <ComboBox 
+                Grid.Column="1"
+                MinWidth="160"
+                PlaceholderText="Filter"/>
+
+        </Grid>
+
         <!--  Ticket list  -->
 
         <ListView
-            Grid.Row="2"
+            Grid.Row="3"
             HorizontalAlignment="Stretch"
             ItemsSource="{x:Bind ViewModel.Tickets}"
             SelectedItem="{x:Bind ViewModel.SelectedTicket, Mode=TwoWay}"
