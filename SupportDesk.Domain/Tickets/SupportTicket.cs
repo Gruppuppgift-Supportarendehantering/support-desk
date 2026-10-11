@@ -1,5 +1,7 @@
 ﻿namespace SupportDesk.Domain.Tickets;
 
+using System.Text.Json.Serialization;
+
 public class SupportTicket
 {
     private readonly List<TicketComment> _comments = new();
@@ -32,6 +34,27 @@ public class SupportTicket
         Status = TicketStatus.New;
         CreatedAt = DateTime.UtcNow;
     }
+
+    //
+    [JsonConstructor]
+    public SupportTicket(Guid id, Guid customerId, string title, string description, TicketPriority priority, 
+        TicketStatus status, string assignedTechnician, DateTime createdAt, IReadOnlyList<TicketComment> comments)
+    {
+        Id = id;
+        CustomerId = customerId;
+        Title = title;
+        Description = description;
+        Priority = priority;
+        Status = status;
+        AssignedTechnician = assignedTechnician;
+        CreatedAt = createdAt;
+
+        if (comments != null)
+        {
+            _comments.AddRange(comments);
+        }
+    }
+    //
 
     public void UpdateDetails(string title, string description)
     {
