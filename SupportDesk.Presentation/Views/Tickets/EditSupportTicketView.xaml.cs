@@ -1,11 +1,9 @@
-using Microsoft.UI.Xaml;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using SupportDesk.Domain.Tickets;
 using SupportDesk.Presentation.ViewModels.Tickets;
-using SupportDesk.Application.Tickets;
-using SupportDesk.Presentation.Navigation;
 
 namespace SupportDesk.Presentation.Views.Tickets;
 
@@ -16,17 +14,17 @@ public sealed partial class EditSupportTicketView : Page
     public EditSupportTicketView()
     {
         ViewModel = ((App)Microsoft.UI.Xaml.Application.Current).Services.GetRequiredService<EditSupportTicketViewModel>();
+
         InitializeComponent();
-        
     }
 
-    protected override void OnNavigatedTo(NavigationEventArgs e)
+    protected override async void OnNavigatedTo(NavigationEventArgs e)
     {
         base.OnNavigatedTo(e);
 
         if (e.Parameter is SupportTicket ticket)
         {
-            ViewModel.Load(ticket);
+            await ViewModel.LoadAsync(ticket);
         }
     }
 

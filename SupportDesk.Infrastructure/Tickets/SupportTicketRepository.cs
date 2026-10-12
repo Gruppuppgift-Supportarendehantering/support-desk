@@ -16,6 +16,8 @@ public class SupportTicketRepository : ISupportTicketRepository
     public SupportTicketRepository()
     {
         Debug.WriteLine(_filePath);
+        bool directoryExists = Directory.Exists(Path.GetDirectoryName(_filePath));
+        System.Diagnostics.Debug.WriteLine($"Finns mappen verkligen? {directoryExists}");
     }
 
     private readonly JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
@@ -93,9 +95,20 @@ public class SupportTicketRepository : ISupportTicketRepository
 
     }
 
-    public Task UpdateTicketAsync(SupportTicket ticket)
+    public async Task UpdateTicketAsync(SupportTicket ticket)
     {
-        throw new NotImplementedException();
+        var tickets = await ReadTicketsAsync();
+
+        var existingTicket = tickets.FirstOrDefault(t => t.Id == ticket.Id);
+
+        if (existingTicket is null)
+        {
+            throw new KeyNotFoundException($"Ärendet med ID {ticket.Id} hittades inte.");
+        }
+
+        var updatedTicket = tickets.Select(t => t.Id == ticket.Id ? ticket : t).ToList();
+
+        await SaveToJsonAsync(updatedTicket);
     }
 
     public Task DeleteTicketAsync(Guid ticketId)

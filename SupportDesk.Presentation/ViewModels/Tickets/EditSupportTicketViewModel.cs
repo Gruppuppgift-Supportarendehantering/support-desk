@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using SupportDesk.Application.Customers;
 using SupportDesk.Application.Tickets;
 using SupportDesk.Domain.Tickets;
 using SupportDesk.Presentation.Navigation;
@@ -11,15 +12,18 @@ namespace SupportDesk.Presentation.ViewModels.Tickets;
 
 public partial class EditSupportTicketViewModel : ObservableObject
 {
-    private SupportTicket? _ticket;
-
+    private readonly ICustomerService _customerService;
     private readonly INavigationService _navigationService;
     private readonly ISupportTicketService _supportTicketService;
 
+    private SupportTicket? _ticket;
+
     public EditSupportTicketViewModel(
+        ICustomerService customerService,
         INavigationService navigationService,
         ISupportTicketService supportTicketService)
     {
+        _customerService = customerService;
         _navigationService = navigationService;
         _supportTicketService = supportTicketService;
     }
@@ -68,11 +72,13 @@ public partial class EditSupportTicketViewModel : ObservableObject
         "Handläggare C"
     };
 
-    public void Load(SupportTicket ticket)
+    public async Task LoadAsync(SupportTicket ticket)
     {
         _ticket = ticket;
 
-        CustomerName = $"Kund-id: {ticket.CustomerId}"; // tillfälligt, tills kunduppslag finns
+        var response = await _customerService.GetCustomerByIdAsync(ticket.CustomerId);
+
+        CustomerName = response.Customer?.CustomerName ?? "Kund saknas";
         OriginalTitle = ticket.Title;
         Title = ticket.Title;
         Description = ticket.Description;

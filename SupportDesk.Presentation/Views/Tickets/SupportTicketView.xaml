@@ -9,10 +9,20 @@
     xmlns:tickets="using:SupportDesk.Domain.Tickets"
 	xmlns:helpers="using:SupportDesk.Presentation.Helpers"
     mc:Ignorable="d">
+	
+	<!--för mindre opacity på placeholder-text-->
+	
+	<Page.Resources>
+		<SolidColorBrush
+            x:Key="PlaceholderBrush"
+            Opacity="0.4"
+            Color="{ThemeResource TextFillColorSecondary}" />
+	</Page.Resources>
 
     <Grid Padding="24,0,24,24">
         <Grid.RowDefinitions>
             <RowDefinition Height="124" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -144,10 +154,40 @@
             </StackPanel>
         </StackPanel>
 
+        <!--  Search & Filter  -->
+
+        <Grid
+            Grid.Row="2"
+            Margin="0,0,0,12"
+            ColumnSpacing="12">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!--  Search bar  -->
+
+            <TextBox
+                Grid.Column="0"
+				PlaceholderForeground="{StaticResource PlaceholderBrush}"
+                PlaceholderText="Sök efter ärenderubrik eller kundnamn"
+                Text="{x:Bind ViewModel.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <!--  Status filter  -->
+
+            <ComboBox
+                Grid.Column="1"
+                MinWidth="160"
+                ItemsSource="{x:Bind ViewModel.StatusFilters}"
+                SelectedItem="{x:Bind ViewModel.SelectedStatusFilter, Mode=TwoWay}" />
+
+        </Grid>
+
         <!--  Ticket list  -->
 
         <ListView
-            Grid.Row="2"
+            Grid.Row="3"
             HorizontalAlignment="Stretch"
             ItemsSource="{x:Bind ViewModel.Tickets}"
             SelectedItem="{x:Bind ViewModel.SelectedTicket, Mode=TwoWay}"
@@ -167,7 +207,8 @@
                 <DataTemplate x:DataType="tickets:SupportTicket">
                     <Grid
                         Padding="8"
-                        ColumnDefinitions="*, Auto">
+                        ColumnDefinitions="*, Auto"
+						ColumnSpacing="16">
                         <StackPanel
                             Grid.Column="0"
                             Spacing="4">
@@ -183,36 +224,51 @@
                                 FontSize="12"
                                 Text="{x:Bind CreatedAt}" />
                         </StackPanel>
+						<!--Byt ut denna del för prio/status delen-->
+						<!--<StackPanel
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                Spacing="6">
+                                <Border
+                                    Padding="10,2"
+                                    HorizontalAlignment="Right"
+                                    Background="{x:Bind helpers:TicketDisplay.StatusBrush(Status)}"
+                                    CornerRadius="10">
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="White"
+                                        Text="{x:Bind helpers:TicketDisplay.StatusText(Status)}" />
+                                        </Border>
+                                    <Border
+        Padding="10,2"
+        HorizontalAlignment="Right"
+        Background="{x:Bind helpers:TicketDisplay.PriorityBrush(Priority)}"
+        CornerRadius="10">
+        <TextBlock
+            FontSize="12"
+            Foreground="White"
+            Text="{x:Bind helpers:TicketDisplay.PriorityText(Priority)}" />
+    </Border>
+    <TextBlock
+        HorizontalAlignment="Right"
+        FontSize="12"
+        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+        Text="{x:Bind AssignedTechnician}" />
+</StackPanel>-->
 						<StackPanel
                             Grid.Column="1"
                             HorizontalAlignment="Right"
-                            Spacing="6">
-							<Border
-								Padding="10,2"
-								HorizontalAlignment="Right"
-								Background="{x:Bind helpers:TicketDisplay.StatusBrush(Status)}"
-								CornerRadius="10">
-								<TextBlock
-									FontSize="12"
-									Foreground="White"
-									Text="{x:Bind helpers:TicketDisplay.StatusText(Status)}" />
-							</Border>
-							<Border
-								Padding="10,2"
-								HorizontalAlignment="Right"
-								Background="{x:Bind helpers:TicketDisplay.PriorityBrush(Priority)}"
-								CornerRadius="10">
-								<TextBlock
-									FontSize="12"
-									Foreground="White"
-									Text="{x:Bind helpers:TicketDisplay.PriorityText(Priority)}" />
-							</Border>
-							<TextBlock
-								HorizontalAlignment="Right"
-								FontSize="12"
-								Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-								Text="{x:Bind AssignedTechnician}" />
-						</StackPanel>
+							>
+                            <TextBlock>
+                                <Run Text="Status: " />
+                                <Run Text="{x:Bind StatusText}" />
+                            </TextBlock>
+                            <TextBlock>
+                                <Run Text="Prioritet: " />
+                                <Run Text="{x:Bind PriorityText}" />
+                            </TextBlock>
+                            <TextBlock Text="{x:Bind AssignedTechnician}" />
+                        </StackPanel>
                     </Grid>
 
                 </DataTemplate>
