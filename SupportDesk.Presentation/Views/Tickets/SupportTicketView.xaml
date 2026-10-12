@@ -224,8 +224,8 @@
                                 FontSize="12"
                                 Text="{x:Bind CreatedAt}" />
                         </StackPanel>
-						<!--Byt ut denna del för prio/status delen-->
-						<!--<StackPanel
+						
+						<StackPanel
                                 Grid.Column="1"
                                 HorizontalAlignment="Right"
                                 Spacing="6">
@@ -254,8 +254,9 @@
         FontSize="12"
         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
         Text="{x:Bind AssignedTechnician}" />
-</StackPanel>-->
-						<StackPanel
+</StackPanel>
+						<!--Byt ut denna del för äldre prio/status-->
+						<!--<StackPanel
                             Grid.Column="1"
                             HorizontalAlignment="Right"
 							>
@@ -268,7 +269,7 @@
                                 <Run Text="{x:Bind PriorityText}" />
                             </TextBlock>
                             <TextBlock Text="{x:Bind AssignedTechnician}" />
-                        </StackPanel>
+                        </StackPanel>-->
                     </Grid>
 
                 </DataTemplate>
