@@ -3,9 +3,11 @@ using CommunityToolkit.Mvvm.Input;
 using SupportDesk.Application.Customers;
 using SupportDesk.Application.Tickets;
 using SupportDesk.Domain.Tickets;
+using SupportDesk.Presentation.Helpers;
 using SupportDesk.Presentation.Navigation;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SupportDesk.Presentation.ViewModels.Tickets;
