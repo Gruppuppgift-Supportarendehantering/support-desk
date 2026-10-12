@@ -477,8 +477,3 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-
-# Vim temporary swap files
-*.swp
-/SupportDesk.Presentation/ViewModels/Tickets/SupportTicketOverviewViewModel.cs
-/SupportDesk.Domain/Tickets/SupportTicket.cs
