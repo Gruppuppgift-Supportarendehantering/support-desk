@@ -54,6 +54,7 @@
                 Text="Lägg till kund" />
 
 
+            <!--  Customer name & email  -->
 
             <TextBox
                 Header="Kundnamn"
@@ -65,8 +66,12 @@
                 PlaceholderText="namn@exempel.se"
                 Text="{x:Bind ViewModel.EmailAddress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
+            <!--  Customer type (SegmentedSwitch)  -->
+
             <StackPanel Spacing="8">
                 <TextBlock Text="Kundtyp" />
+
+                <!--  Outer border  -->
 
                 <Border
                     HorizontalAlignment="Left"
@@ -79,29 +84,24 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
+                        <!--  Segmented switches  -->
+
                         <RadioButton
                             Grid.Column="0"
-                            HorizontalAlignment="Stretch"
                             Content="Privatkund"
                             CornerRadius="7,0,0,7"
-                            GroupName="CustomerType"
                             IsChecked="True"
                             Style="{StaticResource SegmentedSwitch}" />
 
                         <RadioButton
                             Grid.Column="1"
-                            HorizontalAlignment="Stretch"
                             Content="Företagskund"
                             CornerRadius="0,7,7,0"
-                            GroupName="CustomerType"
                             IsChecked="{x:Bind ViewModel.IsCompany, Mode=TwoWay}"
                             Style="{StaticResource SegmentedSwitch}" />
                     </Grid>
                 </Border>
             </StackPanel>
-
-
-
 
             <Button
                 HorizontalAlignment="Right"
@@ -110,6 +110,7 @@
                 Style="{StaticResource ActionButton}" />
 
         </StackPanel>
+
     </Grid>
 
 </Page>

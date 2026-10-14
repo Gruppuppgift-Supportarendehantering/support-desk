@@ -67,6 +67,7 @@ public partial class EditCustomerViewModel(
         {
             Message = "Kunden har ogiltigt namn eller e-postadress.";
         }
+        
     }
     [RelayCommand]
     private async Task UpdateAsync()
@@ -92,8 +93,6 @@ public partial class EditCustomerViewModel(
                 return;
             }
 
-            CustomerName = response.Customer.CustomerName;
-            EmailAddress = response.Customer.EmailAddress;
             GoBack();
         }
         catch (IOException)
@@ -112,6 +111,7 @@ public partial class EditCustomerViewModel(
         {
             Message = "En kund i filen har ogiltiga uppgifter.";
         }
+        
     }
     [RelayCommand]
     private void GoBack()

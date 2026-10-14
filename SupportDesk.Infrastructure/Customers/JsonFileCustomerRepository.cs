@@ -29,12 +29,7 @@ internal class JsonFileCustomerRepository : ICustomerRepository
             return false;
         }
 
-        var storageModel = new CustomerStorageModel(
-            customer.CustomerId,
-            customer.CustomerName.Value,
-            customer.EmailAddress.Value,
-            customer.IsCompany
-            );
+        var storageModel = ToStorageModel(customer);
 
         customers.Add(storageModel);
 
@@ -77,12 +72,7 @@ internal class JsonFileCustomerRepository : ICustomerRepository
             return false;
         }
 
-        customers[index] = new CustomerStorageModel(
-            customer.CustomerId,
-            customer.CustomerName.Value,
-            customer.EmailAddress.Value,
-            customer.IsCompany
-            );
+        customers[index] = ToStorageModel(customer);
 
         await SaveCustomersAsync(customers);
 
@@ -136,10 +126,21 @@ internal class JsonFileCustomerRepository : ICustomerRepository
 
     private static Customer ToCustomerObject(CustomerStorageModel storageModel)
     {
+
         return new Customer(
             storageModel.CustomerId,
             new Name(storageModel.CustomerName),
             new EmailAddress(storageModel.EmailAddress),
             storageModel.IsCompany);
+
+    }
+
+    private static CustomerStorageModel ToStorageModel(Customer customer)
+    {
+        return new CustomerStorageModel(
+            customer.CustomerId,
+            customer.CustomerName.Value,
+            customer.EmailAddress.Value,
+            customer.IsCompany);
     }
 }

@@ -13,5 +13,8 @@
     <Platform Solution="*|x86" Project="x86" />
     <Deploy />
   </Project>
-  <Project Path="SupportDesk.Tests/SupportDesk.Tests.csproj" Id="5f2f2df4-a326-418e-b201-facaad0fec40" />
+  <Project Path="SupportDesk.Tests/SupportDesk.Tests.csproj" Id="5f2f2df4-a326-418e-b201-facaad0fec40">
+    <Platform Solution="Debug|x64" Project="x64" />
+    <Build Solution="Debug|x64" Project="false" />
+  </Project>
 </Solution>

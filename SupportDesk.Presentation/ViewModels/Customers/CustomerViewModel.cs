@@ -72,6 +72,7 @@ public partial class CustomerViewModel(
         {
             Message = "En kund i filen har ogiltigt namn eller e-postadress.";
         }
+        
     }
 
     [RelayCommand]
