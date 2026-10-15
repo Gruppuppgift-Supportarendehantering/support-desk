@@ -11,7 +11,7 @@ public static class TicketDisplay
 {
     public static string StatusText(TicketStatus status) => status switch
     {
-        TicketStatus.New => "Ny",
+        TicketStatus.New => "Nytt",
         TicketStatus.InProgress => "Pågående",
         TicketStatus.Resolved => "Löst",
         _ => status.ToString()
