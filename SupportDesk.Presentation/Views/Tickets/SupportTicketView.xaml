@@ -256,7 +256,8 @@
 								Background="{ThemeResource ControlFillColorDefaultBrush}"
 								BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
 								BorderThickness="1"
-								CornerRadius="10">
+								CornerRadius="10"
+								Visibility="{x:Bind helpers:TicketDisplay.VisibleIfNotEmpty(AssignedTechnician)}">
 								<StackPanel
 									Orientation="Horizontal"
 									Spacing="6">
