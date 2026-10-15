@@ -124,6 +124,15 @@ internal class JsonFileCustomerRepository : ICustomerRepository
         File.Move(tempPath, _filePath, overwrite: true);
     }
 
+    private static CustomerStorageModel ToStorageModel(Customer customer)
+    {
+        return new CustomerStorageModel(
+            customer.CustomerId,
+            customer.CustomerName.Value,
+            customer.EmailAddress.Value,
+            customer.IsCompany);
+    }
+
     private static Customer ToCustomerObject(CustomerStorageModel storageModel)
     {
 
@@ -135,12 +144,5 @@ internal class JsonFileCustomerRepository : ICustomerRepository
 
     }
 
-    private static CustomerStorageModel ToStorageModel(Customer customer)
-    {
-        return new CustomerStorageModel(
-            customer.CustomerId,
-            customer.CustomerName.Value,
-            customer.EmailAddress.Value,
-            customer.IsCompany);
-    }
+   
 }
