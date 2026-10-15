@@ -9,15 +9,17 @@ namespace SupportDesk.Infrastructure.Tickets;
 
 public class SupportTicketRepository : ISupportTicketRepository
 {
-    
 
-    private readonly string _filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SupportDesk", "supporttickets.json");
 
-    public SupportTicketRepository()
+    private readonly string _filePath;
+
+    public SupportTicketRepository() : this(GetDefaultFilePath()) { }
+
+    public SupportTicketRepository(string filePath)
     {
+        _filePath = filePath;
         Debug.WriteLine(_filePath);
-        bool directoryExists = Directory.Exists(Path.GetDirectoryName(_filePath));
-        System.Diagnostics.Debug.WriteLine($"Finns mappen verkligen? {directoryExists}");
+        
     }
 
     private readonly JsonSerializerOptions jsonOptions = new JsonSerializerOptions()
@@ -27,6 +29,10 @@ public class SupportTicketRepository : ISupportTicketRepository
         PropertyNameCaseInsensitive = true,
     };
 
+    public static string GetDefaultFilePath()
+    {
+        return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "SupportDesk", "supporttickets.json");
+    }
 
     public async Task AddTicketToJsonAsync(SupportTicket ticket)
     {
@@ -68,10 +74,10 @@ public class SupportTicketRepository : ISupportTicketRepository
 
         string json = JsonSerializer.Serialize(tickets, jsonOptions);
 
-        await File.WriteAllTextAsync(_filePath, json);
+        string tempPath = _filePath + ".tmp";
 
-        //tempPath = _filePath + ".tmp";
-        //File.WriteAllText(tempPath, json); skydd för filkorruption vid skrivning, men inte implementerat än
+        await File.WriteAllTextAsync(tempPath, json);
+        File.Move(tempPath, _filePath, overwrite: true);
 
     }
 
@@ -84,15 +90,8 @@ public class SupportTicketRepository : ISupportTicketRepository
 
         string json = await File.ReadAllTextAsync(_filePath);
 
-        List<SupportTicket>? tickets = JsonSerializer.Deserialize<List<SupportTicket>>(json, jsonOptions);
-
-        if (tickets is null)
-        {
-            return new List<SupportTicket>();
-        }
-
-        return tickets;
-
+        return JsonSerializer.Deserialize<List<SupportTicket>>(json, jsonOptions)
+            ?? throw new JsonException("Ticket file does not contain a valid ticket list.");
     }
 
     public async Task UpdateTicketAsync(SupportTicket ticket)
