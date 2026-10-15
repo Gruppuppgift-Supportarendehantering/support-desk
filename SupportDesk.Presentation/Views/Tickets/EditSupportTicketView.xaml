@@ -107,38 +107,36 @@
                     Click="CancelButton_Click"
                     Content="Avbryt" />
             </StackPanel>
+<!--under här-->
+			<StackPanel Margin="0,24,0,0" Spacing="8">
+				<Grid ColumnDefinitions="*,Auto">
+					<TextBlock
+						Grid.Column="0"
+						VerticalAlignment="Center"
+						FontSize="20"
+						FontWeight="Bold"
+						Text="Kommentarer" />
+					<Button
+						Grid.Column="1"
+						Click="AddCommentButton_Click"
+						Content="Lägg till kommentar"
+						Style="{StaticResource AccentButtonStyle}" />
+				</Grid>
 
-            <TextBlock
-                Margin="0,24,0,0"
-                FontSize="20"
-                FontWeight="Bold"
-                Text="Kommentarer" />
-
-            <ListView
-                MaxHeight="200"
-                ItemsSource="{x:Bind ViewModel.Comments}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Margin="0,4">
-                            <TextBlock
-                                FontWeight="Bold"
-                                Text="{Binding Author}" />
-                            <TextBlock
-                                Text="{Binding Text}"
-                                TextWrapping="Wrap" />
-                            <TextBlock
-                                FontSize="12"
-                                Text="{Binding CreatedAt}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-
-            <!--<TextBox Header="Ny kommentar" Text="{x:Bind ViewModel.NewCommentText, Mode=TwoWay}"/>-->
-            <Button
-                HorizontalAlignment="Left"
-                Click="AddCommentButton_Click"
-                Content="Lägg till kommentar" />
+				<ListView
+					MaxHeight="200"
+					ItemsSource="{x:Bind ViewModel.Comments}">
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<StackPanel Margin="0,4">
+								<TextBlock FontWeight="Bold" Text="{Binding Author}" />
+								<TextBlock Text="{Binding Text}" TextWrapping="Wrap" />
+								<TextBlock FontSize="12" Text="{Binding CreatedAt}" />
+							</StackPanel>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+			</StackPanel>
 
 
         </StackPanel>
