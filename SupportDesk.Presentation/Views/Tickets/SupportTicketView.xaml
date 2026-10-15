@@ -250,11 +250,26 @@
 									Foreground="White"
 									Text="{x:Bind helpers:TicketDisplay.PriorityText(Priority)}" />
 							</Border>
-							<TextBlock
+							<Border
+								Padding="10,2"
 								HorizontalAlignment="Right"
-								FontSize="12"
-								Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-								Text="{x:Bind AssignedTechnician}" />
+								Background="{ThemeResource ControlFillColorDefaultBrush}"
+								BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
+								BorderThickness="1"
+								CornerRadius="10">
+								<StackPanel
+									Orientation="Horizontal"
+									Spacing="6">
+									<FontIcon
+										FontFamily="Segoe Fluent Icons"
+										FontSize="12"
+										Glyph="&#xE77B;" />
+									<TextBlock
+										FontSize="12"
+										Text="{x:Bind AssignedTechnician}" />
+								</StackPanel>
+							</Border>
+
 
 							<Button
 								Padding="8,2"
