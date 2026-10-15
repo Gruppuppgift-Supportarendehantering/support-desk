@@ -18,14 +18,24 @@
             x:Name="NavView"
             IsBackButtonVisible="Collapsed"
             IsSettingsVisible="False"
+            OpenPaneLength="180"
             PaneDisplayMode="Left"
             SelectionChanged="NavView_SelectionChanged">
 
-		<NavigationView.MenuItems>
-			<NavigationViewItem Content="Ärenden" Icon="Home" Tag="SupportTicketOverview" />
-			<NavigationViewItem Content="Kunder" Icon="People" Tag="Customers" />
-			<NavigationViewItem Content="Skapa ärende" Icon="Document" Tag="CreateSupportTicket" />
-		</NavigationView.MenuItems>
+            <NavigationView.MenuItems>
+                <NavigationViewItem
+                    Content="Ärenden"
+                    Icon="Home"
+                    Tag="SupportTicketOverview" />
+                <NavigationViewItem
+                    Content="Kunder"
+                    Icon="People"
+                    Tag="Customers" />
+                <NavigationViewItem
+                    Content="Skapa ärende"
+                    Icon="Document"
+                    Tag="CreateSupportTicket" />
+            </NavigationView.MenuItems>
 
             <Frame x:Name="RootFrame" />
         </NavigationView>
