@@ -41,9 +41,6 @@ public partial class EditSupportTicketViewModel : ObservableObject
     public partial TicketStatus Status { get; set; }
 
     [ObservableProperty]
-    public partial string NewCommentText { get; set; } = string.Empty;
-
-    [ObservableProperty]
     public partial ObservableCollection<TicketComment> Comments { get; set; } = new();
 
     [ObservableProperty]
