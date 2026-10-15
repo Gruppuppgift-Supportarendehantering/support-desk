@@ -9,6 +9,7 @@ using SupportDesk.Presentation.Navigation;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace SupportDesk.Presentation.ViewModels.Tickets;
@@ -73,14 +74,36 @@ public partial class CreateSupportTicketViewModel : ObservableObject
         }
         var request = new SupportTicketRequest(Title, Description, SelectedCustomer.CustomerId, TicketPriority);
 
-        SupportTicketResult result = await _supportTicketService.CreateTicketAsync(request);
+        SupportTicketResult result;
 
-        if (!result.Succeeded)
+        try
         {
-            ErrorMessage = result.ErrorMessage ?? "Kunde inte skapa ärendet.";
+            result = await _supportTicketService.CreateTicketAsync(request);
+        }
+        catch (IOException)
+        {
+            ErrorMessage = "Ärendefilen kunde inte läsas eller sparas.";
             return;
         }
-
+        catch (UnauthorizedAccessException)
+        {
+            ErrorMessage = "Applikationen saknar behörighet till ärendefilen";
+            return;
+        }
+        catch (JsonException)
+        {
+            ErrorMessage = "Ärendefilen innehåller ogiltig data. Ärendet sparas inte.";
+            return;
+        }
+        catch (ArgumentException ex)
+        {
+            ErrorMessage = ex.Message;
+        }
+        catch (InvalidOperationException)
+        {
+            ErrorMessage = "Ärendet finns redan.";
+            return;
+        }
 
         SuccessMessage = $"Ärendet har skapats!";
 
@@ -110,9 +133,21 @@ public partial class CreateSupportTicketViewModel : ObservableObject
                 Customers.Add(customer);
             }
         }
-        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or ArgumentException)
+        catch (IOException)
         {
-            ErrorMessage = "Kunderna kunde inte läsas in";
+            ErrorMessage = "Kundfilen kunde inte läsas in";
+        }
+        catch(UnauthorizedAccessException)
+        {
+            ErrorMessage = "Applikationen saknar behörighet till kundfilen.";
+        }
+        catch (JsonException)
+        {
+            ErrorMessage = "Kundfilen innehåller ogiltig data.";
+        }
+        catch (ArgumentException)
+        {
+            ErrorMessage = "En kund i filen har ogiltigt namn eller e-postadress.";
         }
     }
 
