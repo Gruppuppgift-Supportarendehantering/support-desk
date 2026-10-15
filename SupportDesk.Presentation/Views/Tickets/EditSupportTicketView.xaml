@@ -129,7 +129,7 @@
 					<ListView.ItemTemplate>
 						<DataTemplate>
 							<StackPanel Margin="0,4">
-								<TextBlock FontWeight="Bold" Text="{Binding Author}" />
+								<!--<TextBlock FontWeight="Bold" Text="{Binding Author}" />-->
 								<TextBlock Text="{Binding Text}" TextWrapping="Wrap" />
 								<TextBlock FontSize="12" Text="{Binding CreatedAt}" />
 							</StackPanel>
