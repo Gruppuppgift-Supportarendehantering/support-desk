@@ -15,7 +15,7 @@ public class TicketComment
 
         {
             Text = text;
-            CreatedAt = DateTime.UtcNow;
+            CreatedAt = DateTime.Now;
         }
     }
 

@@ -32,7 +32,7 @@ public class SupportTicket
         Description = description.Trim();
         Priority = priority;
         Status = TicketStatus.New;
-        CreatedAt = DateTime.UtcNow;
+        CreatedAt = DateTime.Now;
     }
 
     
