@@ -1,4 +1,5 @@
 ﻿using Microsoft.UI;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using SupportDesk.Domain.Tickets;
 using System;
@@ -43,4 +44,7 @@ public static class TicketDisplay
 
     private static SolidColorBrush Solid(byte r, byte g, byte b)
         => new(ColorHelper.FromArgb(255, r, g, b));
+
+    public static Visibility VisibleIfNotEmpty(string value)
+    => string.IsNullOrWhiteSpace(value) ? Visibility.Collapsed : Visibility.Visible;
 }
