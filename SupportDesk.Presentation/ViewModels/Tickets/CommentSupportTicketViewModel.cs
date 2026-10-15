@@ -1,20 +1,21 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using SupportDesk.Application.Tickets;
 using SupportDesk.Domain.Tickets;
 using SupportDesk.Presentation.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace SupportDesk.Presentation.ViewModels.Tickets;
 
 public partial class CommentSupportTicketViewModel : ObservableObject
 {
     private readonly INavigationService _navigationService;
+    private readonly ISupportTicketService _supportTicketService;
 
-    public CommentSupportTicketViewModel(INavigationService navigationService)
+    public CommentSupportTicketViewModel(INavigationService navigationService, ISupportTicketService supportTicketService)
     {
         _navigationService = navigationService;
+        _supportTicketService = supportTicketService;
     }
 
     [ObservableProperty]
@@ -34,7 +35,7 @@ public partial class CommentSupportTicketViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void AddComment()
+    private async Task AddCommentAsync()
     {
         ErrorMessage = string.Empty;
         SuccessMessage = string.Empty;
@@ -52,6 +53,13 @@ public partial class CommentSupportTicketViewModel : ObservableObject
         }
 
         _ticket.AddComment(CommentText);
+
+        var result = await _supportTicketService.UpdateTicketAsync(_ticket);
+        if (!result.Succeeded)
+        {
+            ErrorMessage = result.ErrorMessage ?? "Kunde inte spara kommentaren.";
+            return;
+        }
         SuccessMessage = "Kommentaren har lagts till.";
         CommentText = string.Empty;
     }

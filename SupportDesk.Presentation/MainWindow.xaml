@@ -21,52 +21,11 @@
             PaneDisplayMode="Left"
             SelectionChanged="NavView_SelectionChanged">
 
-            <NavigationView.MenuItems>
-                <NavigationViewItem
-                    Content="Ärenden"
-                    Icon="Home"
-                    Tag="SupportTicketOverview" />
-                <NavigationViewItem
-                    Content="Kunder"
-                    Icon="People"
-                    Tag="Customers" />
-                <NavigationViewItem
-                    Content="Skapa ärende"
-                    Icon="PostUpdate"
-                    Tag="CreateSupportTicket" />
-                <NavigationViewItem
-                    Content="Skapa ärende"
-                    Icon="Tag"
-                    Tag="CreateSupportTicket" />
-                <NavigationViewItem
-                    Content="Skapa ärende"
-                    Icon="List"
-                    Tag="CreateSupportTicket" />
-                <NavigationViewItem
-                    Content="Skapa ärende"
-                    Icon="Document"
-                    Tag="CreateSupportTicket" />
-                <NavigationViewItem
-                    Content="Skapa ärende"
-                    Icon="Mail"
-                    Tag="CreateSupportTicket" />
-                <NavigationViewItem
-                    Content="Skapa ärende"
-                    Icon="PostUpdate"
-                    Tag="CreateSupportTicket" />
-                <NavigationViewItem
-                    Content="Skapa ärende"
-                    Icon="Comment"
-                    Tag="CreateSupportTicket" />
-                <NavigationViewItem
-                    Content="Skapa ärende"
-                    Icon="Flag"
-                    Tag="CreateSupportTicket" />
-                <NavigationViewItem
-                    Content="Skapa ärende"
-                    Icon="Help"
-                    Tag="CreateSupportTicket" />
-            </NavigationView.MenuItems>
+		<NavigationView.MenuItems>
+			<NavigationViewItem Content="Ärenden" Icon="Home" Tag="SupportTicketOverview" />
+			<NavigationViewItem Content="Kunder" Icon="People" Tag="Customers" />
+			<NavigationViewItem Content="Skapa ärende" Icon="Document" Tag="CreateSupportTicket" />
+		</NavigationView.MenuItems>
 
             <Frame x:Name="RootFrame" />
         </NavigationView>
