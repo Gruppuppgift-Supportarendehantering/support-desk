@@ -66,11 +66,13 @@
                 <ComboBox
                     MinWidth="100"
                     Header="Prioritet"
+					ItemTemplate="{StaticResource EnumTextTemplate}"
                     ItemsSource="{x:Bind ViewModel.PriorityOptions}"
                     SelectedItem="{x:Bind ViewModel.Priority, Mode=TwoWay}" />
                 <ComboBox
                     MinWidth="100"
                     Header="Status"
+					ItemTemplate="{StaticResource EnumTextTemplate}"
                     ItemsSource="{x:Bind ViewModel.StatusOptions}"
                     SelectedItem="{x:Bind ViewModel.Status, Mode=TwoWay}" />
                 <ComboBox
@@ -118,7 +120,6 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Margin="0,4">
-                            <!--<TextBlock Text="{Binding Author}" FontWeight="Bold"/>-->
                             <TextBlock
                                 FontWeight="Bold"
                                 Text="{Binding Author}" />
