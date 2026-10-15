@@ -76,6 +76,24 @@ public partial class SupportTicketOverviewViewModel : ObservableObject
             Tickets.Add(ticket);
         }
     }
+    //testar kommentar på overview
+    public async Task AddQuickCommentAsync(SupportTicket ticket, string text)
+    {
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            return;
+        }
+
+        ticket.AddComment(text);
+
+        var result = await _supportTicketService.UpdateTicketAsync(ticket);
+        if (!result.Succeeded)
+        {
+            return;
+        }
+
+        await LoadTicketsAsync();
+    }
 
     public int NewCount => _allTickets.Count(t => t.Status == TicketStatus.New);
 

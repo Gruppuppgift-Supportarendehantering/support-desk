@@ -9,9 +9,9 @@
     xmlns:tickets="using:SupportDesk.Domain.Tickets"
 	xmlns:helpers="using:SupportDesk.Presentation.Helpers"
     mc:Ignorable="d">
-	
+
 	<!--för mindre opacity på placeholder-text-->
-	
+
 	<Page.Resources>
 		<SolidColorBrush
             x:Key="PlaceholderBrush"
@@ -19,27 +19,27 @@
             Color="{ThemeResource TextFillColorSecondary}" />
 	</Page.Resources>
 
-    <Grid Padding="24,0,24,24">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="124" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+	<Grid Padding="24,0,24,24">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="124" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
 
-        <!--  Ticket status summary  -->
+		<!--  Ticket status summary  -->
 
-        <Grid
+		<Grid
             Grid.Row="0"
             Margin="16"
             ColumnSpacing="24">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
 
-            <Border
+			<Border
                 Grid.Column="1"
                 Padding="12"
                 HorizontalAlignment="Right"
@@ -49,231 +49,254 @@
                 BorderThickness="1"
                 CornerRadius="8">
 
-                <StackPanel
+				<StackPanel
                     Orientation="Horizontal"
                     Spacing="16">
 
-                    <StackPanel Spacing="6">
-                        <TextBlock
+					<StackPanel Spacing="6">
+						<TextBlock
                             HorizontalAlignment="Center"
                             Text="Nytt" />
 
-                        <Border
+						<Border
                             Width="40"
                             Height="40"
                             HorizontalAlignment="Center"
                             Background="{ThemeResource CardStrokeColorDefaultBrush}"
                             CornerRadius="4">
 
-                            <TextBlock
+							<TextBlock
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 FontSize="20"
                                 FontWeight="SemiBold"
                                 Foreground="{ThemeResource TextFillColorPrimaryBrush}"
                                 Text="{x:Bind ViewModel.NewCount, Mode=OneWay}" />
-                        </Border>
-                    </StackPanel>
+						</Border>
+					</StackPanel>
 
-                    <StackPanel Spacing="6">
-                        <TextBlock
+					<StackPanel Spacing="6">
+						<TextBlock
                             HorizontalAlignment="Center"
                             Text="Pågående" />
 
-                        <Border
+						<Border
                             Width="40"
                             Height="40"
                             HorizontalAlignment="Center"
                             Background="{ThemeResource CardStrokeColorDefaultBrush}"
                             CornerRadius="4">
 
-                            <TextBlock
+							<TextBlock
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 FontSize="20"
                                 FontWeight="SemiBold"
                                 Foreground="{ThemeResource TextFillColorPrimaryBrush}"
                                 Text="{x:Bind ViewModel.InProgressCount, Mode=OneWay}" />
-                        </Border>
-                    </StackPanel>
+						</Border>
+					</StackPanel>
 
-                    <StackPanel Spacing="6">
-                        <TextBlock
+					<StackPanel Spacing="6">
+						<TextBlock
                             HorizontalAlignment="Center"
                             Text="Löst" />
 
-                        <Border
+						<Border
                             Width="40"
                             Height="40"
                             HorizontalAlignment="Center"
                             Background="{ThemeResource CardStrokeColorDefaultBrush}"
                             CornerRadius="4">
 
-                            <TextBlock
+							<TextBlock
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 FontSize="20"
                                 FontWeight="SemiBold"
                                 Foreground="{ThemeResource TextFillColorPrimaryBrush}"
                                 Text="{x:Bind ViewModel.ResolvedCount, Mode=OneWay}" />
-                        </Border>
-                    </StackPanel>
-                </StackPanel>
-            </Border>
-        </Grid>
+						</Border>
+					</StackPanel>
+				</StackPanel>
+			</Border>
+		</Grid>
 
-        <!--  Heading  -->
+		<!--  Heading  -->
 
-        <StackPanel
+		<StackPanel
             Grid.Row="1"
             Margin="0,0,0,12">
-            <TextBlock
+			<TextBlock
                 Padding="0,0,0,10"
                 FontSize="28"
                 FontWeight="Bold"
                 Text="Supportärenden" />
-            <StackPanel
+			<StackPanel
                 Orientation="Horizontal"
                 Spacing="12">
-                <Button
+				<Button
                     Click="OpenTicketButton_Click"
                     Content="Öppna markerat ärende"
                     Style="{StaticResource AccentButtonStyle}" />
 
-                <Button
+				<Button
                     Click="CreateTicketButton_Click"
                     Content="Skapa ett ärende" />
 
-                <Button
+				<Button
                     x:Name="CustomerViewButton"
                     MinWidth="120"
                     Margin="20,0,0,0"
                     Click="CustomerViewButton_Click"
                     Content="Kunder" />
 
-            </StackPanel>
-        </StackPanel>
+			</StackPanel>
+		</StackPanel>
 
-        <!--  Search & Filter  -->
+		<!--  Search & Filter  -->
 
-        <Grid
+		<Grid
             Grid.Row="2"
             Margin="0,0,0,12"
             ColumnSpacing="12">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
 
-            <!--  Search bar  -->
+			<!--  Search bar  -->
 
-            <TextBox
+			<TextBox
                 Grid.Column="0"
 				PlaceholderForeground="{StaticResource PlaceholderBrush}"
                 PlaceholderText="Sök efter ärenderubrik eller kundnamn"
                 Text="{x:Bind ViewModel.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-            <!--  Status filter  -->
+			<!--  Status filter  -->
 
-            <ComboBox
+			<ComboBox
                 Grid.Column="1"
                 MinWidth="160"
                 ItemsSource="{x:Bind ViewModel.StatusFilters}"
                 SelectedItem="{x:Bind ViewModel.SelectedStatusFilter, Mode=TwoWay}" />
 
-        </Grid>
+		</Grid>
 
-        <!--  Ticket list  -->
+		<!--  Ticket list  -->
 
-        <ListView
+		<ListView
             Grid.Row="3"
             HorizontalAlignment="Stretch"
             ItemsSource="{x:Bind ViewModel.Tickets}"
             SelectedItem="{x:Bind ViewModel.SelectedTicket, Mode=TwoWay}"
             SelectionMode="Single">
-            <ListView.ItemContainerStyle>
-                <Style
+			<ListView.ItemContainerStyle>
+				<Style
                     BasedOn="{StaticResource DefaultListViewItemStyle}"
                     TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
-                    <Setter Property="CornerRadius" Value="8" />
-                    <Setter Property="Margin" Value="0,0,0,12" />
-                    <Setter Property="Padding" Value="12" />
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="tickets:SupportTicket">
-                    <Grid
+					<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+					<Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+					<Setter Property="CornerRadius" Value="8" />
+					<Setter Property="Margin" Value="0,0,0,12" />
+					<Setter Property="Padding" Value="12" />
+				</Style>
+			</ListView.ItemContainerStyle>
+			<ListView.ItemTemplate>
+
+				<DataTemplate x:DataType="tickets:SupportTicket">
+					<Grid
                         Padding="8"
                         ColumnDefinitions="*, Auto"
 						ColumnSpacing="16">
-                        <StackPanel
+						<StackPanel
                             Grid.Column="0"
                             Spacing="4">
-                            <TextBlock
+							<TextBlock
                                 FontSize="14"
                                 FontWeight="Bold"
                                 Text="{x:Bind Title}" />
-                            <TextBlock
+							<TextBlock
                                 FontSize="14"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Text="{x:Bind Description}" />
-                            <TextBlock
+							<TextBlock
                                 FontSize="12"
                                 Text="{x:Bind CreatedAt}" />
-                        </StackPanel>
-						
+						</StackPanel>
+
 						<StackPanel
                                 Grid.Column="1"
                                 HorizontalAlignment="Right"
                                 Spacing="6">
-                                <Border
-                                    Padding="10,2"
-                                    HorizontalAlignment="Right"
-                                    Background="{x:Bind helpers:TicketDisplay.StatusBrush(Status)}"
-                                    CornerRadius="10">
-                                    <TextBlock
-                                        FontSize="12"
-                                        Foreground="White"
-                                        Text="{x:Bind helpers:TicketDisplay.StatusText(Status)}" />
-                                        </Border>
-                                    <Border
-        Padding="10,2"
-        HorizontalAlignment="Right"
-        Background="{x:Bind helpers:TicketDisplay.PriorityBrush(Priority)}"
-        CornerRadius="10">
-        <TextBlock
-            FontSize="12"
-            Foreground="White"
-            Text="{x:Bind helpers:TicketDisplay.PriorityText(Priority)}" />
-    </Border>
-    <TextBlock
-        HorizontalAlignment="Right"
-        FontSize="12"
-        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-        Text="{x:Bind AssignedTechnician}" />
-</StackPanel>
-						<!--Byt ut denna del för äldre prio/status-->
-						<!--<StackPanel
-                            Grid.Column="1"
-                            HorizontalAlignment="Right"
-							>
-                            <TextBlock>
-                                <Run Text="Status: " />
-                                <Run Text="{x:Bind StatusText}" />
-                            </TextBlock>
-                            <TextBlock>
-                                <Run Text="Prioritet: " />
-                                <Run Text="{x:Bind PriorityText}" />
-                            </TextBlock>
-                            <TextBlock Text="{x:Bind AssignedTechnician}" />
-                        </StackPanel>-->
-                    </Grid>
+							<Border
+								Padding="10,2"
+								HorizontalAlignment="Right"
+								Background="{x:Bind helpers:TicketDisplay.StatusBrush(Status)}"
+								CornerRadius="10">
+								<TextBlock
+									FontSize="12"
+									Foreground="White"
+									Text="{x:Bind helpers:TicketDisplay.StatusText(Status)}" />
+							</Border>
+							<Border
+							Padding="10,2"
+							HorizontalAlignment="Right"
+							Background="{x:Bind helpers:TicketDisplay.PriorityBrush(Priority)}"
+							CornerRadius="10">
+								<TextBlock
+									FontSize="12"
+									Foreground="White"
+									Text="{x:Bind helpers:TicketDisplay.PriorityText(Priority)}" />
+							</Border>
+							<TextBlock
+								HorizontalAlignment="Right"
+								FontSize="12"
+								Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+								Text="{x:Bind AssignedTechnician}" />
 
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </Grid>
+							<Button
+								Padding="8,2"
+								HorizontalAlignment="Right"
+								Style="{StaticResource SubtleButtonStyle}"
+								Tag="{x:Bind}">
+  
+								<StackPanel
+									Orientation="Horizontal"
+									Spacing="6">
+									<SymbolIcon Symbol="Comment" />
+									<TextBlock
+										FontSize="12"
+										Text="{x:Bind Comments.Count}" />
+								</StackPanel>
+
+								<Button.Flyout>
+									<Flyout>
+										<StackPanel
+											Width="300"
+											Spacing="8">
+											<TextBox
+												MinHeight="80"
+												AcceptsReturn="True"
+												PlaceholderText="Skriv en kommentar..."
+												TextWrapping="Wrap" />
+											<Button
+												HorizontalAlignment="Right"
+												Click="QuickCommentButton_Click"
+												Content="Lägg till"
+												Style="{StaticResource AccentButtonStyle}"
+												Tag="{x:Bind}" />
+										</StackPanel>
+									</Flyout>
+								</Button.Flyout>
+							</Button>
+						</StackPanel>
+
+					</Grid>
+
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+	</Grid>
 </Page>
