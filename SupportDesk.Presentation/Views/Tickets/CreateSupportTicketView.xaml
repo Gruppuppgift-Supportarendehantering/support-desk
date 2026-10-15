@@ -57,27 +57,31 @@
                     Grid.Row="1"
                     Padding="0,0,12,0">
                     <StackPanel Spacing="16">
-                        <TextBox
-                            MinHeight="80"
-                            AcceptsReturn="True"
-                            Header="Rubrik:"
-                            PlaceholderForeground="{StaticResource PlaceholderBrush}"
-                            PlaceholderText="Skriv in Rubrik"
-                            Text="{x:Bind ViewModel.Title, Mode=TwoWay}"
-                            TextWrapping="Wrap" />
-                        <TextBox
-                            MinHeight="160"
-                            AcceptsReturn="True"
-                            Header="Beskrivning:"
-                            PlaceholderForeground="{StaticResource PlaceholderBrush}"
-                            PlaceholderText="Beskriv felet"
-                            Text="{x:Bind ViewModel.Description, Mode=TwoWay}"
-                            TextWrapping="Wrap" />
-                        <ComboBox
-                            MinWidth="150"
-                            Header="Välj ärendets prioritetsnivå:"
-                            ItemsSource="{x:Bind ViewModel.Priorities}"
-                            SelectedItem="{x:Bind ViewModel.TicketPriority, Mode=TwoWay}" />
+                        <TextBox 
+                                Header="Rubrik:"
+								PlaceholderForeground="{StaticResource PlaceholderBrush}"
+                                PlaceholderText="Skriv in Rubrik" 
+					            Text="{x:Bind ViewModel.Title, Mode=TwoWay}" 
+                                MinHeight="80" 
+                                TextWrapping="Wrap" 
+                                AcceptsReturn="True"
+                                />
+                        <TextBox 
+                                Header="Beskrivning:" 
+								PlaceholderForeground="{StaticResource PlaceholderBrush}"
+                                PlaceholderText="Beskriv felet" 
+					            Text="{x:Bind ViewModel.Description, Mode=TwoWay}" 
+                                
+                                MinHeight="160" 
+                                TextWrapping="Wrap" 
+                                AcceptsReturn="True" />
+                        <ComboBox 
+                                Header="Välj ärendets prioritetsnivå:"
+                                MinWidth="150" 
+								ItemTemplate="{StaticResource EnumTextTemplate}"
+                                ItemsSource="{x:Bind ViewModel.Priorities}" 
+                                SelectedItem="{x:Bind ViewModel.TicketPriority, Mode=TwoWay}">
+                        </ComboBox>
                     </StackPanel>
                 </ScrollViewer>
 

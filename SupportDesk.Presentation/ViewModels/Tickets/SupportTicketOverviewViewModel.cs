@@ -120,17 +120,5 @@ public partial class SupportTicketOverviewViewModel : ObservableObject
         OnPropertyChanged(nameof(InProgressCount));
         OnPropertyChanged(nameof(ResolvedCount));
     }
-
-    [RelayCommand]
-    private void OpenTicket()
-    {
-        if (SelectedTicket == null)
-        {
-            return;
-        }
-
-    }
-  
-
 }
 

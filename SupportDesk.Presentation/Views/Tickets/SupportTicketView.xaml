@@ -226,35 +226,51 @@
                                 Text="{x:Bind CreatedAt}" />
                         </StackPanel>
 
-                        <StackPanel
-                            Grid.Column="1"
-                            HorizontalAlignment="Right"
-                            Spacing="6">
-                            <Border
-                                Padding="10,2"
+						<StackPanel
+                                Grid.Column="1"
                                 HorizontalAlignment="Right"
-                                Background="{x:Bind helpers:TicketDisplay.StatusBrush(Status)}"
-                                CornerRadius="10">
-                                <TextBlock
-                                    FontSize="12"
-                                    Foreground="White"
-                                    Text="{x:Bind helpers:TicketDisplay.StatusText(Status)}" />
-                            </Border>
-                            <Border
-                                Padding="10,2"
-                                HorizontalAlignment="Right"
-                                Background="{x:Bind helpers:TicketDisplay.PriorityBrush(Priority)}"
-                                CornerRadius="10">
-                                <TextBlock
-                                    FontSize="12"
-                                    Foreground="White"
-                                    Text="{x:Bind helpers:TicketDisplay.PriorityText(Priority)}" />
-                            </Border>
-                            <TextBlock
-                                HorizontalAlignment="Right"
-                                FontSize="12"
-                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                Text="{x:Bind AssignedTechnician}" />
+                                Spacing="6">
+							<Border
+								Padding="10,2"
+								HorizontalAlignment="Right"
+								Background="{x:Bind helpers:TicketDisplay.StatusBrush(Status)}"
+								CornerRadius="10">
+								<TextBlock
+									FontSize="12"
+									Foreground="White"
+									Text="{x:Bind helpers:TicketDisplay.StatusText(Status)}" />
+							</Border>
+							<Border
+							Padding="10,2"
+							HorizontalAlignment="Right"
+							Background="{x:Bind helpers:TicketDisplay.PriorityBrush(Priority)}"
+							CornerRadius="10">
+								<TextBlock
+									FontSize="12"
+									Foreground="White"
+									Text="{x:Bind helpers:TicketDisplay.PriorityText(Priority)}" />
+							</Border>
+							<Border
+								Padding="10,2"
+								HorizontalAlignment="Right"
+								Background="{ThemeResource ControlFillColorDefaultBrush}"
+								BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
+								BorderThickness="1"
+								CornerRadius="10"
+								Visibility="{x:Bind helpers:TicketDisplay.VisibleIfNotEmpty(AssignedTechnician)}">
+								<StackPanel
+									Orientation="Horizontal"
+									Spacing="6">
+									<FontIcon
+										FontFamily="Segoe Fluent Icons"
+										FontSize="12"
+										Glyph="&#xE77B;" />
+									<TextBlock
+										FontSize="12"
+										Text="{x:Bind AssignedTechnician}" />
+								</StackPanel>
+							</Border>
+
 
                             <Button
                                 Padding="8,2"

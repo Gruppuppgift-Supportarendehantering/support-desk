@@ -60,25 +60,27 @@
                     Text="{x:Bind ViewModel.Description, Mode=TwoWay}"
                     TextWrapping="Wrap" />
 
-                <StackPanel
-                    Orientation="Horizontal"
-                    Spacing="120">
-                    <ComboBox
-                        MinWidth="100"
-                        Header="Prioritet"
-                        ItemsSource="{x:Bind ViewModel.PriorityOptions}"
-                        SelectedItem="{x:Bind ViewModel.Priority, Mode=TwoWay}" />
-                    <ComboBox
-                        MinWidth="100"
-                        Header="Status"
-                        ItemsSource="{x:Bind ViewModel.StatusOptions}"
-                        SelectedItem="{x:Bind ViewModel.Status, Mode=TwoWay}" />
-                    <ComboBox
-                        Width="150"
-                        Header="Handläggare"
-                        ItemsSource="{x:Bind ViewModel.TechnicianOptions}"
-                        SelectedItem="{x:Bind ViewModel.AssignedTechnician, Mode=TwoWay}" />
-                </StackPanel>
+            <StackPanel
+                Orientation="Horizontal"
+                Spacing="120">
+                <ComboBox
+                    MinWidth="100"
+                    Header="Prioritet"
+					ItemTemplate="{StaticResource EnumTextTemplate}"
+                    ItemsSource="{x:Bind ViewModel.PriorityOptions}"
+                    SelectedItem="{x:Bind ViewModel.Priority, Mode=TwoWay}" />
+                <ComboBox
+                    MinWidth="100"
+                    Header="Status"
+					ItemTemplate="{StaticResource EnumTextTemplate}"
+                    ItemsSource="{x:Bind ViewModel.StatusOptions}"
+                    SelectedItem="{x:Bind ViewModel.Status, Mode=TwoWay}" />
+                <ComboBox
+                    Width="150"
+                    Header="Handläggare"
+                    ItemsSource="{x:Bind ViewModel.TechnicianOptions}"
+                    SelectedItem="{x:Bind ViewModel.AssignedTechnician, Mode=TwoWay}" />
+            </StackPanel>
 
                 <TextBlock
                     Foreground="{ThemeResource SystemFillColorCriticalBrush}"
@@ -106,50 +108,48 @@
                         Content="Avbryt" />
                 </StackPanel>
 
-                <TextBlock
-                    Margin="0,24,0,0"
-                    FontSize="20"
-                    FontWeight="Bold"
-                    Text="Kommentarer" />
+			<StackPanel Margin="0,24,0,0" Spacing="8">
+				<Grid ColumnDefinitions="*,Auto">
+					<TextBlock
+						Grid.Column="0"
+						VerticalAlignment="Center"
+						FontSize="20"
+						FontWeight="Bold"
+						Text="Kommentarer" />
+					<Button
+						Grid.Column="1"
+						Click="AddCommentButton_Click"
+						Content="Lägg till kommentar"
+						Style="{StaticResource AccentButtonStyle}" />
+				</Grid>
 
-                <ListView
-                    MaxHeight="200"
-                    ItemsSource="{x:Bind ViewModel.Comments}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="0,4">
-                                <!--<TextBlock Text="{Binding Author}" FontWeight="Bold"/>-->
-                                <TextBlock
-                                    FontWeight="Bold"
-                                    Text="{Binding Author}" />
-                                <TextBlock
-                                    Text="{Binding Text}"
-                                    TextWrapping="Wrap" />
-                                <TextBlock
-                                    FontSize="12"
-                                    Text="{Binding CreatedAt}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-
-                <!--<TextBox Header="Ny kommentar" Text="{x:Bind ViewModel.NewCommentText, Mode=TwoWay}"/>-->
-                <Button
-                    HorizontalAlignment="Left"
-                    Click="AddCommentButton_Click"
-                    Content="Lägg till kommentar" />
+				<ListView
+					MaxHeight="200"
+					ItemsSource="{x:Bind ViewModel.Comments}">
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<StackPanel Margin="0,4">
+								<!--<TextBlock FontWeight="Bold" Text="{Binding Author}" />-->
+								<TextBlock Text="{Binding Text}" TextWrapping="Wrap" />
+								<TextBlock FontSize="12" Text="{Binding CreatedAt}" />
+							</StackPanel>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+			</StackPanel>
 
 
-            </StackPanel>
-        </ScrollViewer>
-        <Button
-            Margin="8"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Command="{x:Bind ViewModel.GoBackCommand}">
-            <FontIcon
-                FontFamily="Segoe Fluent Icons"
-                Glyph="&#xE72B;" />
-        </Button>
-    </Grid>
+		</StackPanel>
+
+
+        
+    </ScrollViewer>
+		<Button
+        Margin="8"
+        HorizontalAlignment="Left"
+        VerticalAlignment="Top"
+        Command="{x:Bind ViewModel.GoBackCommand}">
+			<FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE72B;" />
+		</Button>
+	</Grid>
 </Page>

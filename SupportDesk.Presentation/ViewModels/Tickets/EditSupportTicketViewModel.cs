@@ -3,11 +3,9 @@ using CommunityToolkit.Mvvm.Input;
 using SupportDesk.Application.Customers;
 using SupportDesk.Application.Tickets;
 using SupportDesk.Domain.Tickets;
-using SupportDesk.Presentation.Helpers;
 using SupportDesk.Presentation.Navigation;
 using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SupportDesk.Presentation.ViewModels.Tickets;
@@ -41,9 +39,6 @@ public partial class EditSupportTicketViewModel : ObservableObject
 
     [ObservableProperty]
     public partial TicketStatus Status { get; set; }
-
-    [ObservableProperty]
-    public partial string NewCommentText { get; set; } = string.Empty;
 
     [ObservableProperty]
     public partial ObservableCollection<TicketComment> Comments { get; set; } = new();
@@ -129,17 +124,6 @@ public partial class EditSupportTicketViewModel : ObservableObject
         }
 
         SuccessMessage = "Ändringarna har sparats.";
-    }
-
-    [RelayCommand]
-    private void AddComment()
-    {
-        if (string.IsNullOrWhiteSpace(NewCommentText))
-        {
-            return;
-        }
-        Comments.Add(new TicketComment(NewCommentText));
-        NewCommentText = string.Empty;
     }
 
     [RelayCommand]
