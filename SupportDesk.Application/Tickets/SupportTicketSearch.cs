@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SupportDesk.Presentation.Helpers;
+namespace SupportDesk.Application.Tickets;
 
 public static class SupportTicketSearch
 {
