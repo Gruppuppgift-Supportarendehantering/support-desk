@@ -79,6 +79,11 @@ public class SupportTicket
 
     public void ChangeStatus(TicketStatus status)
     {
+        if (status == TicketStatus.InProgress && Status != TicketStatus.InProgress && string.IsNullOrWhiteSpace(AssignedTechnician))
+        {
+            throw new InvalidOperationException("Ett ärende måste ha en handläggare innan det kan bli pågående.");
+        }
+
         Status = status;
     }
 

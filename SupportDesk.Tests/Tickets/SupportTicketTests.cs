@@ -65,4 +65,26 @@ public class SupportTicketTests
         Assert.Equal(originalCommentTime, restored.Comments[0].CreatedAt);
     }
 
+    //3
+    [Fact]
+    public void PreventChangeStatus_ToInProgress_WithoutTechnician()
+    {
+        var ticket = new SupportTicket(Guid.NewGuid(), "Skärmen trasig", "Skärmen startar", TicketPriority.Medium);
+
+        Assert.Throws<InvalidOperationException>(() => ticket.ChangeStatus(TicketStatus.InProgress));
+        Assert.Equal(TicketStatus.New, ticket.Status);
+    }
+
+    //4
+    [Fact]
+    public void ChangeStatus_ToInProgress_WithTechnician_UpdateStatus()
+    {
+        var ticket = new SupportTicket(Guid.NewGuid(), "Skärmen trasig", "Skärmen startar", TicketPriority.Medium);
+        ticket.AssignTechnician("Anna Andersson");
+
+        ticket.ChangeStatus(TicketStatus.InProgress);
+
+        Assert.Equal(TicketStatus.InProgress, ticket.Status);
+    }
+
 }
