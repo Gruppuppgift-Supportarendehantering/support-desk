@@ -76,6 +76,7 @@
                         <ComboBox
                             MinWidth="150"
                             Header="Välj ärendets prioritetsnivå:"
+							ItemTemplate="{StaticResource EnumTextTemplate}"
                             ItemsSource="{x:Bind ViewModel.Priorities}"
                             SelectedItem="{x:Bind ViewModel.TicketPriority, Mode=TwoWay}" />
                     </StackPanel>
