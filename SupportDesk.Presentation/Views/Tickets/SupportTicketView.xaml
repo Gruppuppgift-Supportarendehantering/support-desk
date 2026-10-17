@@ -183,11 +183,17 @@
                 SelectedItem="{x:Bind ViewModel.SelectedStatusFilter, Mode=TwoWay}" />
 
 		</Grid>
-
+		
+		<!-- Error messagee -->
+		<TextBlock Grid.Row="3"
+				   Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+				   Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+				   TextWrapping="Wrap"
+				   Visibility="{x:Bind helpers:TicketDisplay.VisibleIfNotEmpty(ViewModel.ErrorMessage), Mode=OneWay}"/>
 		<!--  Ticket list  -->
 
 		<ListView
-            Grid.Row="3"
+            Grid.Row="4"
             HorizontalAlignment="Stretch"
             ItemsSource="{x:Bind ViewModel.Tickets}"
             SelectedItem="{x:Bind ViewModel.SelectedTicket, Mode=TwoWay}"
