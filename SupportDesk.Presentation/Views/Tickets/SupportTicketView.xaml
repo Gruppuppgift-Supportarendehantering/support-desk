@@ -24,6 +24,7 @@
 			<RowDefinition Height="124" />
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 
@@ -183,13 +184,18 @@
                 SelectedItem="{x:Bind ViewModel.SelectedStatusFilter, Mode=TwoWay}" />
 
 		</Grid>
-		
-		<!-- Error messagee -->
-		<TextBlock Grid.Row="3"
-				   Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-				   Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
-				   TextWrapping="Wrap"
-				   Visibility="{x:Bind helpers:TicketDisplay.VisibleIfNotEmpty(ViewModel.ErrorMessage), Mode=OneWay}"/>
+
+		<!-- Error messagee, hidden if no error message with Visibility... -->
+		<InfoBar
+			Grid.Row="3"
+			Margin="0,0,0,12"
+			IsOpen="True"
+			IsClosable="False"
+			Severity="Error"
+			Title="Kunde inte läsa in ärendena"
+			Message="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+			Visibility="{x:Bind helpers:TicketDisplay.VisibleIfNotEmpty(ViewModel.ErrorMessage), Mode=OneWay}" />
+
 		<!--  Ticket list  -->
 
 		<ListView
