@@ -47,13 +47,13 @@ internal class CustomerService(ICustomerRepository customerRepository) : ICustom
 
         return new CustomerResponse(true, ToCustomerData(customer), null);
     }
-    public async Task<GetCustomerResponse> GetAllCustomersAsync()
+    public async Task<GetCustomersResponse> GetAllCustomersAsync()
     {
         var customers = await customerRepository.GetAllAsync();
 
         var customerData = customers.Select(ToCustomerData).ToList();
 
-        return new GetCustomerResponse(true, customerData, null);
+        return new GetCustomersResponse(true, customerData, null);
     }
     public async Task<CustomerResponse> UpdateCustomerAsync(UpdateCustomerRequest request)
     {

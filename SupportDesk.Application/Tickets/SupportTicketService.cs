@@ -9,16 +9,31 @@ namespace SupportDesk.Application.Tickets;
 public class SupportTicketService : ISupportTicketService
 {
     private readonly ISupportTicketRepository _repository;
+    private readonly ICustomerRepository _customerRepository;
 
 
-    public SupportTicketService(ISupportTicketRepository repository)
+    public SupportTicketService(ISupportTicketRepository repository, ICustomerRepository customerRepository)
     {
         _repository = repository;
+        _customerRepository = customerRepository;
     }
 
 
     public async Task<SupportTicketResult> CreateTicketAsync(SupportTicketRequest request)
     {
+        if (request.CustomerId == Guid.Empty)
+        {
+            return new SupportTicketResult(false, null, "Du måste välja en kund.");
+                
+        }
+
+        var customer = await _customerRepository.GetByIdAsync(request.CustomerId);
+
+        if (customer == null)
+        {
+            return new SupportTicketResult(false, null, "Kunden hittades inte. Välj en registrerad kund.");
+        }
+
         SupportTicket ticket = new SupportTicket
             (
             request.CustomerId,

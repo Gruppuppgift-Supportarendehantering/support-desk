@@ -3,15 +3,16 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <!--  Segmented switch  -->
+
     <Style
         x:Key="SegmentedSwitch"
         TargetType="RadioButton">
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RadioButton">
                     <Grid>
+                        <!--  Button allignment and bindings  -->
                         <Border
                             x:Name="ButtonBackground"
                             Padding="20,12"
@@ -23,6 +24,7 @@
                                 VerticalAlignment="Center"
                                 Content="{TemplateBinding Content}" />
                         </Border>
+                        <!--  Change color when checked  -->
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CheckStates">
                                 <VisualState x:Name="Unchecked" />

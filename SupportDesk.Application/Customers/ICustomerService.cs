@@ -6,7 +6,7 @@ public interface ICustomerService
 {
     Task<CustomerResponse> CreateCustomerAsync(CreateCustomerRequest request);
     Task<CustomerResponse> GetCustomerByIdAsync(Guid customerId);
-    Task<GetCustomerResponse> GetAllCustomersAsync();
+    Task<GetCustomersResponse> GetAllCustomersAsync();
     Task<CustomerResponse> UpdateCustomerAsync(UpdateCustomerRequest request);
     Task<DeleteCustomerResponse> DeleteCustomerAsync(Guid customerId);
 }

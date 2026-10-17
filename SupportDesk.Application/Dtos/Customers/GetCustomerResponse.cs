@@ -1,6 +1,6 @@
 ﻿namespace SupportDesk.Application.Dtos.Customers;
 
-public record GetCustomerResponse
+public record GetCustomersResponse
     (
         bool Succeeded,
         IReadOnlyList<CustomerData> Customers,

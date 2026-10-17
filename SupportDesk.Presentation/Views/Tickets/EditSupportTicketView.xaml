@@ -15,50 +15,50 @@
             Color="{ThemeResource TextFillColorSecondary}" />
     </Page.Resources>
 
-	<Grid>
-    <ScrollViewer Padding="24">
-		
-        <StackPanel
-            MaxWidth="600"
-            HorizontalAlignment="Center"
-            Spacing="16">
-            <!--  ändra horizontalalignment till vänster kanske  -->
-            <TextBlock
-                FontSize="24"
-                FontWeight="Bold"
-                Text="Redigera Ärende" />
+    <Grid>
+        <ScrollViewer Padding="24">
 
-            <StackPanel Spacing="4">
+            <StackPanel
+                MaxWidth="600"
+                HorizontalAlignment="Center"
+                Spacing="16">
+                <!--  ändra horizontalalignment till vänster kanske  -->
                 <TextBlock
-                    FontWeight="SemiBold"
-                    Text="Kund" />
-                <TextBlock Text="{x:Bind ViewModel.CustomerName, Mode=OneWay}" />
+                    FontSize="24"
+                    FontWeight="Bold"
+                    Text="Redigera Ärende" />
 
-                <TextBlock
-                    Margin="0,8,0,0"
-                    FontWeight="SemiBold"
-                    Text="Ärende" />
-                <TextBlock
-                    Text="{x:Bind ViewModel.OriginalTitle, Mode=OneWay}"
+                <StackPanel Spacing="4">
+                    <TextBlock
+                        FontWeight="SemiBold"
+                        Text="Kund" />
+                    <TextBlock Text="{x:Bind ViewModel.CustomerName, Mode=OneWay}" />
+
+                    <TextBlock
+                        Margin="0,8,0,0"
+                        FontWeight="SemiBold"
+                        Text="Ärende" />
+                    <TextBlock
+                        Text="{x:Bind ViewModel.OriginalTitle, Mode=OneWay}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+
+                <TextBox
+                    Header="Rubrik"
+                    PlaceholderForeground="{StaticResource PlaceholderBrush}"
+                    PlaceholderText="Exempel: Internet fungerar inte"
+                    Text="{x:Bind ViewModel.Title, Mode=TwoWay}" />
+
+
+
+                <TextBox
+                    Height="100"
+                    AcceptsReturn="True"
+                    Header="Beskrivning"
+                    PlaceholderForeground="{StaticResource PlaceholderBrush}"
+                    PlaceholderText="Beskriv problemet och vad som redan har provats."
+                    Text="{x:Bind ViewModel.Description, Mode=TwoWay}"
                     TextWrapping="Wrap" />
-            </StackPanel>
-
-            <TextBox
-                Header="Rubrik"
-                PlaceholderForeground="{StaticResource PlaceholderBrush}"
-                PlaceholderText="Exempel: Internet fungerar inte"
-                Text="{x:Bind ViewModel.Title, Mode=TwoWay}" />
-
-
-
-            <TextBox
-                Height="100"
-                AcceptsReturn="True"
-                Header="Beskrivning"
-                PlaceholderForeground="{StaticResource PlaceholderBrush}"
-                PlaceholderText="Beskriv problemet och vad som redan har provats."
-                Text="{x:Bind ViewModel.Description, Mode=TwoWay}"
-                TextWrapping="Wrap" />
 
             <StackPanel
                 Orientation="Horizontal"
@@ -82,15 +82,15 @@
                     SelectedItem="{x:Bind ViewModel.AssignedTechnician, Mode=TwoWay}" />
             </StackPanel>
 
-            <TextBlock
-                Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-                Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
-                TextWrapping="Wrap" />
+                <TextBlock
+                    Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                    Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+                    TextWrapping="Wrap" />
 
-            <TextBlock
-                Foreground="{ThemeResource SystemFillColorSuccessBrush}"
-                Text="{x:Bind ViewModel.SuccessMessage, Mode=OneWay}"
-                TextWrapping="Wrap" />
+                <TextBlock
+                    Foreground="{ThemeResource SystemFillColorSuccessBrush}"
+                    Text="{x:Bind ViewModel.SuccessMessage, Mode=OneWay}"
+                    TextWrapping="Wrap" />
 
 
             <StackPanel
@@ -138,14 +138,16 @@
 			</StackPanel>
 
 
-        </StackPanel>
-    </ScrollViewer>
-		<Button
-        Margin="8"
-        HorizontalAlignment="Left"
-        VerticalAlignment="Top"
-        Command="{x:Bind ViewModel.GoBackCommand}">
-			<FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE72B;" />
-		</Button>
-	</Grid>
+            </StackPanel>
+        </ScrollViewer>
+        <Button
+            Margin="8"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Command="{x:Bind ViewModel.GoBackCommand}">
+            <FontIcon
+                FontFamily="Segoe Fluent Icons"
+                Glyph="&#xE72B;" />
+        </Button>
+    </Grid>
 </Page>
