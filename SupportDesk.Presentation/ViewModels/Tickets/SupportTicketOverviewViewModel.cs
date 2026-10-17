@@ -31,6 +31,8 @@ public partial class SupportTicketOverviewViewModel : ObservableObject
     {
         _supportTicketService = supportTicketService;
         _customerService = customerService;
+
+        ErrorMessage = "Testfel: kan inte läsa ärenden.";
     }
 
     [ObservableProperty]
