@@ -79,9 +79,9 @@ public class SupportTicket
 
     public void ChangeStatus(TicketStatus status)
     {
-        if (status == TicketStatus.InProgress && Status != TicketStatus.InProgress && string.IsNullOrWhiteSpace(AssignedTechnician))
+        if ((status == TicketStatus.InProgress || status == TicketStatus.Resolved) && Status != status && string.IsNullOrWhiteSpace(AssignedTechnician))
         {
-            throw new InvalidOperationException("Ett ärende måste ha en handläggare innan det kan bli pågående.");
+            throw new InvalidOperationException("Ett ärende måste ha en handläggare innan det kan bli pågående eller löst.");
         }
 
         Status = status;
@@ -118,7 +118,7 @@ public class SupportTicket
     public string PriorityText => Priority switch
     {
         TicketPriority.Low => "Låg",
-        TicketPriority.Medium => "Medel",
+        TicketPriority.Medium => "Normal",
         TicketPriority.High => "Hög",
         _ => Priority.ToString()
     };

@@ -28,7 +28,7 @@ public static class TicketDisplay
     public static string PriorityText(TicketPriority priority) => priority switch
     {
         TicketPriority.Low => "Låg",
-        TicketPriority.Medium => "Medel",
+        TicketPriority.Medium => "Normal",
         TicketPriority.High => "Hög",
         _ => priority.ToString()
     };
