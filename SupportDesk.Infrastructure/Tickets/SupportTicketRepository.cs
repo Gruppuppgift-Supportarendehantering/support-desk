@@ -36,10 +36,7 @@ public class SupportTicketRepository : ISupportTicketRepository
 
     public async Task AddTicketToJsonAsync(SupportTicket ticket)
     {
-        //_ticketList.Add(ticket);
-
         List<SupportTicket> tickets = await ReadTicketsAsync();
-        // felsök efter duplicering tickets
         if (tickets.Any(t => t.Id == ticket.Id))
         {
             throw new InvalidOperationException("Ärendet finns redan");
@@ -58,17 +55,17 @@ public class SupportTicketRepository : ISupportTicketRepository
 
     public async Task<SupportTicket?> GetTicketbyIdAsync(Guid ticketId)
     {
-        List<SupportTicket> tickets = await ReadTicketsAsync();
-
         if (ticketId == Guid.Empty)
         {
             throw new ArgumentException("Supportärendenummer får inte vara tomt", nameof(ticketId));
         }
 
+        List<SupportTicket> tickets = await ReadTicketsAsync();
+
         return tickets.FirstOrDefault(x => x.Id == ticketId);
     }
 
-    public async Task SaveToJsonAsync(List<SupportTicket> tickets)
+    private async Task SaveToJsonAsync(List<SupportTicket> tickets)
     {
         Directory.CreateDirectory(Path.GetDirectoryName(_filePath)!);
 
@@ -81,7 +78,7 @@ public class SupportTicketRepository : ISupportTicketRepository
 
     }
 
-    public async Task<List<SupportTicket>> ReadTicketsAsync()
+    private async Task<List<SupportTicket>> ReadTicketsAsync()
     {
         if (!File.Exists(_filePath))
         {

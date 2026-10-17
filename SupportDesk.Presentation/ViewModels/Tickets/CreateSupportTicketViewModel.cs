@@ -98,10 +98,21 @@ public partial class CreateSupportTicketViewModel : ObservableObject
         catch (ArgumentException ex)
         {
             ErrorMessage = ex.Message;
+            return;
         }
         catch (InvalidOperationException)
         {
             ErrorMessage = "Ärendet finns redan.";
+            return;
+        }
+
+
+        if (!result.Succeeded)
+        {
+            await LoadCustomersAsync();
+            SelectedCustomer = null;
+
+            ErrorMessage = result.ErrorMessage ?? "Ärendet kunde inte skapas.";
             return;
         }
 

@@ -77,10 +77,33 @@ public class JsonStorageIntegrationTests : IDisposable
         Assert.Equal(loadedCustomer.CustomerId, loadedTicket.CustomerId);
     }
 
+
+    [Fact]
+    public async Task UpdatedTicket_KeepsTechnicianStatusAndCommentAfterReload ()
+    {
+        var ticket = new SupportTicket(Guid.NewGuid(), "Titel", "Beskrivning", TicketPriority.Medium);
+        await new SupportTicketRepository(_ticketsTestFilePath).AddTicketToJsonAsync(ticket);
+
+        ticket.AssignTechnician("Anna Andersson");
+        ticket.ChangeStatus(TicketStatus.InProgress);
+        ticket.AddComment("Felsökning har påbörjats.");
+        await new SupportTicketRepository(_ticketsTestFilePath).UpdateTicketAsync(ticket);
+
+        var loaded = await new SupportTicketRepository(_ticketsTestFilePath).GetTicketbyIdAsync(ticket.Id);
+
+        Assert.NotNull(loaded);
+        Assert.Equal("Anna Andersson", loaded.AssignedTechnician);
+        Assert.Equal(TicketStatus.InProgress, loaded.Status);
+        Assert.Single(loaded.Comments);
+    }
+
+
     [Theory]
     [InlineData("{ detta är inte giltig json [")]
     [InlineData("null")]
     [InlineData("")]
+    [InlineData("""[{"Id":""}]""")]
+    [InlineData("""[{"Id":"inte-ett-guid"}]""")]
     public async Task CorruptTicketFile_ThrowsJsonException_AndIsNotOverwritten(string fileContent)
     {
         // Arrange
@@ -103,6 +126,8 @@ public class JsonStorageIntegrationTests : IDisposable
     [InlineData("{ detta är inte giltig json [")]
     [InlineData("null")]
     [InlineData("")]
+    [InlineData("""[{"CustomerId":"","CustomerName":"Kalle Kula","EmailAddress":"kalle@example.com","IsCompany":false}]""")]
+    [InlineData("""[{"CustomerId":"inte-ett-guid","CustomerName":"Kalle Kula","EmailAddress":"kalle@example.com","IsCompany":false}]""")]
     public async Task CorruptCustomerFile_ThrowsJsonException_AndIsNotOverwritten(string fileContent)
     {
         // Arrange
@@ -119,4 +144,6 @@ public class JsonStorageIntegrationTests : IDisposable
         Assert.Equal(fileContent, await File.ReadAllTextAsync(_customersTestFilePath));
         Assert.False(File.Exists(_customersTestFilePath + ".tmp"));
     }
+
+
 }
