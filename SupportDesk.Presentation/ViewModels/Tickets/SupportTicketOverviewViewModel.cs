@@ -1,14 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using SupportDesk.Domain.Tickets;
 using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
-using System;
-using System.Collections.Generic;
-using SupportDesk.Application.Tickets;
-using System.Threading.Tasks;
-using System.Linq;
 using SupportDesk.Application.Customers;
 using SupportDesk.Application.Dtos.Customers;
+using SupportDesk.Application.Tickets;
+using SupportDesk.Domain.Tickets;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.JavaScript;
+using System.Text.Json;
+using System.Threading.Tasks;
+
 
 namespace SupportDesk.Presentation.ViewModels.Tickets;
 
@@ -20,6 +24,7 @@ public partial class SupportTicketOverviewViewModel : ObservableObject
     private List<SupportTicket> _allTickets = [];
     private List<CustomerData> _customers = [];
     public string[] StatusFilters { get; } = ["Alla", "Nytt", "Pågående", "Löst"];
+
     public SupportTicketOverviewViewModel(
         ISupportTicketService supportTicketService,
         ICustomerService customerService)
@@ -37,17 +42,51 @@ public partial class SupportTicketOverviewViewModel : ObservableObject
     [ObservableProperty]
     public partial string SelectedStatusFilter { get; set; } = "Alla";
 
+    [ObservableProperty]
+    public partial string ErrorMessage { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string SearchText { get; set; } = string.Empty;
+
     partial void OnSelectedStatusFilterChanged(string value)
     {
         ApplyFilters();
     }
 
-    [ObservableProperty]
-    public partial string SearchText { get; set; } = string.Empty;
-
     partial void OnSearchTextChanged(string value)
     {
         ApplyFilters();
+    }
+
+    public int NewCount => _allTickets.Count(t => t.Status == TicketStatus.New);
+
+    public int InProgressCount => _allTickets.Count(t => t.Status == TicketStatus.InProgress);
+
+    public int ResolvedCount => _allTickets.Count(t => t.Status == TicketStatus.Resolved);
+
+    [RelayCommand]
+    private async Task LoadTicketsAsync()
+    {
+        ErrorMessage = string.Empty;
+
+        try
+        {
+            var tickets = await _supportTicketService.GetAllTicketsAsync();
+            var customerResponse = await _customerService.GetAllCustomersAsync();
+
+            _allTickets = tickets.ToList();
+            _customers = customerResponse.Succeeded ? customerResponse.Customers.ToList() : [];
+
+            ApplyFilters();
+
+            OnPropertyChanged(nameof(NewCount));
+            OnPropertyChanged(nameof(InProgressCount));
+            OnPropertyChanged(nameof(ResolvedCount));
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or JsonException)
+        {
+            ErrorMessage = "Kunde inte läsa in ärendena.";
+        }
     }
 
     private void ApplyFilters()
@@ -76,7 +115,7 @@ public partial class SupportTicketOverviewViewModel : ObservableObject
             Tickets.Add(ticket);
         }
     }
-    //testar kommentar på overview
+
     public async Task AddQuickCommentAsync(SupportTicket ticket, string text)
     {
         if (string.IsNullOrWhiteSpace(text))
@@ -89,36 +128,11 @@ public partial class SupportTicketOverviewViewModel : ObservableObject
         var result = await _supportTicketService.UpdateTicketAsync(ticket);
         if (!result.Succeeded)
         {
+            ErrorMessage = result.ErrorMessage ?? "Kunde inte spara kommentaren.";
             return;
         }
 
         await LoadTicketsAsync();
-    }
-
-    public int NewCount => _allTickets.Count(t => t.Status == TicketStatus.New);
-
-    public int InProgressCount => _allTickets.Count(t => t.Status == TicketStatus.InProgress);
-
-    public int ResolvedCount => _allTickets.Count(t => t.Status == TicketStatus.Resolved);
-
-    [RelayCommand]
-    private async Task LoadTicketsAsync()
-    {
-        var tickets = await _supportTicketService.GetAllTicketsAsync();
-        var customerResponse = await _customerService.GetAllCustomersAsync();
-
-        _allTickets = tickets.ToList();
-
-        _customers = customerResponse.Succeeded
-            ? customerResponse.Customers.ToList()
-            : [];
-            
-
-        ApplyFilters();
-
-        OnPropertyChanged(nameof(NewCount));
-        OnPropertyChanged(nameof(InProgressCount));
-        OnPropertyChanged(nameof(ResolvedCount));
     }
 
     [RelayCommand]
@@ -128,9 +142,6 @@ public partial class SupportTicketOverviewViewModel : ObservableObject
         {
             return;
         }
-
     }
-  
-
 }
 

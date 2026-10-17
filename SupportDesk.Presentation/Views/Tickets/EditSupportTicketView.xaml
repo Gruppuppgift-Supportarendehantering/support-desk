@@ -125,11 +125,10 @@
 
 				<ListView
 					MaxHeight="200"
-					ItemsSource="{x:Bind ViewModel.Comments}">
+					ItemsSource="{x:Bind ViewModel.Comments, Mode=OneWay}">
 					<ListView.ItemTemplate>
 						<DataTemplate>
 							<StackPanel Margin="0,4">
-								<TextBlock FontWeight="Bold" Text="{Binding Author}" />
 								<TextBlock Text="{Binding Text}" TextWrapping="Wrap" />
 								<TextBlock FontSize="12" Text="{Binding CreatedAt}" />
 							</StackPanel>
