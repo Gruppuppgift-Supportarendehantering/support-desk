@@ -1,17 +1,38 @@
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using SupportDesk.Presentation.Navigation;
+using System;
 
 namespace SupportDesk.Presentation;
 
 public sealed partial class MainWindow : Window
 {
     private readonly INavigationService _navigationService;
+
     public MainWindow(INavigationService navigationService)
     {
         InitializeComponent();
 
         _navigationService = navigationService;
         _navigationService.Initialize(RootFrame);
-        _navigationService.Navigate(AppPage.Home);
+
+        // Börja på kundlistan.
+        _navigationService.Navigate(AppPage.SupportTicketOverview);
+    }
+        // _navigationService.Navigate(AppPage.Customers);
+
+        // _navigationService.Navigate(AppPage.Home);
+        //för test av SupportTicketOverview-vyn _navigationService.Navigate(AppPage.SupportTicketOverview);
+        //för test av EditSupportTicket-vyn _navigationService.Navigate(AppPage.EditSupportTicket);
+        //för test av CreateSupportTicket-vyn _navigationService.Navigate(AppPage.CreateSupportTicket);
+        //för test av CommentSupportTicket-vyn _navigationService.Navigate(AppPage.CommentSupportTicket);
+
+        private void NavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+    {
+        if (args.SelectedItemContainer?.Tag is string tag &&
+            Enum.TryParse<AppPage>(tag, out var page))
+        {
+            _navigationService.Navigate(page);
+        }
     }
 }

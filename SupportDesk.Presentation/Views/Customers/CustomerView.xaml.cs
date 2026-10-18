@@ -1,29 +1,55 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
+using SupportDesk.Presentation.ViewModels.Customers;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace SupportDesk.Presentation.Views.Customers;
-/// <summary>
-/// An empty page that can be used on its own or navigated to within a Frame.
-/// </summary>
+
 public sealed partial class CustomerView : Page
 {
+    public CustomerViewModel ViewModel { get; }
+
     public CustomerView()
     {
+        ViewModel = ((App)Microsoft.UI.Xaml.Application.Current)
+            .Services.GetRequiredService<CustomerViewModel>();
+
         InitializeComponent();
+
+        Loaded += CustomerView_Loaded;
+    }
+
+    private async void CustomerView_Loaded(object sender, RoutedEventArgs e)
+    {
+        await ViewModel.LoadCustomersCommand.ExecuteAsync(null);
+    }
+
+    private async void DeleteCustomer_Click(object sender, RoutedEventArgs e)
+    {
+        var customer = ViewModel.SelectedCustomer;
+
+        if (customer is null)
+        {
+            ViewModel.Message = "Välj en kund att ta bort.";
+            return;
+        }
+
+        var dialog = new ContentDialog
+        {
+            XamlRoot = this.XamlRoot,
+            Title = "Ta bort kund",
+            Content = $"Vill du ta bort {customer.CustomerName}?",
+            PrimaryButtonText = "Ta bort",
+            CloseButtonText = "Avbryt",
+            DefaultButton = ContentDialogButton.Close
+        };
+
+        var result = await dialog.ShowAsync();
+
+        if (result == ContentDialogResult.Primary)
+        {
+            await ViewModel.DeleteCustomerCommand.ExecuteAsync(null);
+        }
     }
 }

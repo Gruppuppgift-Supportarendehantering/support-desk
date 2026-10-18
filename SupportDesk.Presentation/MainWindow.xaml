@@ -1,19 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Window
     x:Class="SupportDesk.Presentation.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:SupportDesk.Presentation"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:SupportDesk.Presentation"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Title="SupportDesk.Presentation">
+    Title="SupportDesk.Presentation"
+    mc:Ignorable="d">
 
     <Window.SystemBackdrop>
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
     <Grid>
-        <Frame x:Name="RootFrame" />
+        <NavigationView
+            x:Name="NavView"
+            IsBackButtonVisible="Collapsed"
+            IsSettingsVisible="False"
+            OpenPaneLength="180"
+            PaneDisplayMode="Left"
+            SelectionChanged="NavView_SelectionChanged">
+
+            <NavigationView.MenuItems>
+                <NavigationViewItem
+                    Content="Ärenden"
+                    Icon="Home"
+                    Tag="SupportTicketOverview" />
+                <NavigationViewItem
+                    Content="Kunder"
+                    Icon="People"
+                    Tag="Customers" />
+                <NavigationViewItem
+                    Content="Skapa ärende"
+                    Icon="Document"
+                    Tag="CreateSupportTicket" />
+            </NavigationView.MenuItems>
+
+            <Frame x:Name="RootFrame" />
+        </NavigationView>
     </Grid>
 </Window>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="SupportDesk.Presentation.Views.Tickets.CommentSupportTicketView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SupportDesk.Presentation.Views.Tickets"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+	<Page.Resources>
+		<SolidColorBrush x:Key="PlaceholderBrush" Color="{ThemeResource TextFillColorSecondary}" Opacity="0.4"/>
+	</Page.Resources>
+	<!--för att sänka opacity på placeholder-text-->
+
+	<Grid>
+		<Button
+             Grid.Column="0"
+             Margin="8"
+             HorizontalAlignment="Left"
+             VerticalAlignment="Top"
+             Command="{x:Bind ViewModel.GoBackCommand}">		
+			<FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE72B;" />
+			</Button>
+		
+		<StackPanel  Margin="32" Spacing="20"
+					MaxWidth="700"
+					HorizontalAlignment="Stretch">
+
+			<TextBlock Text="Lägg till kommentar"
+					   FontSize="24"
+					   FontWeight="Bold"/>
+
+			<TextBlock Text="Beskriv exempelvis vad som har gjorts eller nästa steg i ärendet."
+					   Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+					   TextWrapping="Wrap"/>
+
+			<TextBox Header="Kommentar"
+					 PlaceholderText="Skriv din kommentar här..."
+					 PlaceholderForeground="{StaticResource PlaceholderBrush}"
+					 Text="{x:Bind ViewModel.CommentText, Mode=TwoWay}"
+					 AcceptsReturn="True"
+					 TextWrapping="Wrap"
+					 MinHeight="150"
+					 HorizontalAlignment="Stretch"/>
+
+			<TextBlock Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+					   Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+					   TextWrapping="Wrap"/>
+
+
+				<StackPanel Orientation="Horizontal" Spacing="20">
+					<Button Content="Lägg till kommentar"
+							Command="{x:Bind ViewModel.AddCommentCommand}"
+							HorizontalAlignment="Left"
+							Padding="20,10"
+							Style="{StaticResource AccentButtonStyle}"/>
+
+					<Button Content="Avbryt" Width="170" Click="CancelButton_Click" Padding="20,10"/>
+				</StackPanel>
+
+			<TextBlock Text="{x:Bind ViewModel.SuccessMessage, Mode=OneWay}"
+					   Foreground="{ThemeResource SystemFillColorSuccessBrush}"
+					   TextWrapping="Wrap"/>
+
+		</StackPanel>
+		</Grid>
+	
+</Page>

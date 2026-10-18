@@ -1,14 +1,191 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Page
     x:Class="SupportDesk.Presentation.Views.Tickets.CreateSupportTicketView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:SupportDesk.Presentation.Views.Tickets"
+    xmlns:customers="using:SupportDesk.Application.Dtos.Customers"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:SupportDesk.Presentation.Views.Tickets"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:SupportDesk.Presentation.ViewModels.Tickets"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <SolidColorBrush
+            x:Key="PlaceholderBrush"
+            Opacity="0.4"
+            Color="{ThemeResource TextFillColorSecondary}" />
+    </Page.Resources>
+
     <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                Width="320"
+                MinWidth="280" />
+            <ColumnDefinition
+                Width="*"
+                MinWidth="250" />
+            <ColumnDefinition
+                Width="*"
+                MinWidth="200" />
+
+        </Grid.ColumnDefinitions>
+
+        <Border
+            Grid.Column="0"
+            Padding="20">
+
+            <!--  vänsterkolumnen input med knappar  -->
+            <Grid RowSpacing="16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock
+                    Grid.Row="0"
+                    Padding="20"
+                    HorizontalAlignment="Center"
+                    FontSize="20"
+                    FontWeight="SemiBold"
+                    Style="{StaticResource TitleTextBlockStyle}"
+                    Text="Skapa Supportärende" />
+
+                <ScrollViewer
+                    Grid.Row="1"
+                    Padding="0,0,12,0">
+                    <StackPanel Spacing="16">
+                        <TextBox
+                            MinHeight="80"
+                            AcceptsReturn="True"
+                            Header="Rubrik:"
+                            PlaceholderForeground="{StaticResource PlaceholderBrush}"
+                            PlaceholderText="Skriv in Rubrik"
+                            Text="{x:Bind ViewModel.Title, Mode=TwoWay}"
+                            TextWrapping="Wrap" />
+                        <TextBox
+                            MinHeight="160"
+                            AcceptsReturn="True"
+                            Header="Beskrivning:"
+                            PlaceholderForeground="{StaticResource PlaceholderBrush}"
+                            PlaceholderText="Beskriv felet"
+                            Text="{x:Bind ViewModel.Description, Mode=TwoWay}"
+                            TextWrapping="Wrap" />
+                        <ComboBox
+                            MinWidth="150"
+                            Header="Välj ärendets prioritetsnivå:"
+							ItemTemplate="{StaticResource EnumTextTemplate}"
+                            ItemsSource="{x:Bind ViewModel.Priorities}"
+                            SelectedItem="{x:Bind ViewModel.TicketPriority, Mode=TwoWay}" />
+                    </StackPanel>
+                </ScrollViewer>
+
+                <Button
+                    Grid.Row="2"
+                    Padding="10"
+                    HorizontalAlignment="Stretch"
+                    Command="{x:Bind ViewModel.UICreateTicketCommand}"
+                    Content="Skapa Ärende"
+                    Style="{StaticResource AccentButtonStyle}" />
+            </Grid>
+        </Border>
+
+        <Border
+            Grid.Column="1"
+            Margin="8"
+            Padding="20"
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="8">
+            <!--  mittenkolumnen  -->
+            <Grid RowSpacing="10">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    HorizontalAlignment="Center"
+                    FontSize="15"
+                    FontWeight="SemiBold"
+                    Style="{StaticResource BodyStrongTextBlockStyle}"
+                    Text="Välj vilken kund ärendet gäller från listan:"
+                    TextWrapping="Wrap" />
+                <ListView
+                    Grid.Row="1"
+                    MinHeight="200"
+                    HorizontalAlignment="Stretch"
+                    CornerRadius="8"
+                    ItemsSource="{x:Bind ViewModel.Customers}"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    SelectedItem="{x:Bind ViewModel.SelectedCustomer, Mode=TwoWay}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="customers:CustomerData">
+                            <TextBlock
+                                FontSize="15"
+                                FontWeight="SemiBold"
+                                Text="{x:Bind CustomerName}" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+
+        </Border>
+        <Border Grid.Column="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0">
+                    <TextBlock
+                        Margin="20"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                        Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+                        TextWrapping="Wrap" />
+                    <!--  högerkolumnen input med knappar  -->
+                    <TextBlock
+                        Margin="20"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Foreground="{ThemeResource SystemFillColorSuccessBrush}"
+                        Text="{x:Bind ViewModel.SuccessMessage, Mode=OneWay}"
+                        TextWrapping="Wrap" />
+
+
+
+                </StackPanel>
+                <Button
+                    Grid.Row="1"
+                    MinWidth="120"
+                    MaxWidth="300"
+                    Margin="20"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Bottom"
+                    Command="{x:Bind ViewModel.GoBackCommand}"
+                    Content="Gå tillbaka"
+                    Style="{StaticResource AccentButtonStyle}" />
+            </Grid>
+        </Border>
+
+        <Button
+            Grid.Column="0"
+            Margin="8"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Command="{x:Bind ViewModel.GoBackCommand}">
+            <FontIcon
+                FontFamily="Segoe Fluent Icons"
+                Glyph="&#xE72B;" />
+        </Button>
 
     </Grid>
 </Page>

@@ -3,7 +3,7 @@
 public enum AppPage
 {
     Home,                   // Överblick
-
+    Login,
 
     Customers,
     CreateCustomer,         // Kundhantering
