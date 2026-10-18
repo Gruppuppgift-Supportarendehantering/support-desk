@@ -59,12 +59,11 @@ Applikationen använder påhittade kunduppgifter och handläggare.
 Enhetstesterna körs i Test Explorer eller med:
 ```bash
 dotnet test
+```
 
 Testerna kontrollerar bland annat att ett nytt ärende får status Nytt, att tom rubrik avvisas, att ett ärende utan handläggare inte kan bli Pågående, att en tillåten statusändring fungerar, att sökningen ignorerar stora och små bokstäver och att statusfiltret bara visar vald status.
 
 Senaste körning: 24 av 24 tester godkända.
-
-```
 
 ## Manuell kontroll
 
