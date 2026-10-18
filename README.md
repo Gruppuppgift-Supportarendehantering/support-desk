@@ -11,12 +11,6 @@ SupportDesk är en skrivbordsapplikation för att registrera och hantera kunders
 - Lägga till och visa kommentarer på ärenden, antingen på redigeringssidan eller direkt på ärendekortet.
 - Översikt med antal ärenden per status och filter på status.
 - Spara och läsa data lokalt i JSON-format.
-//den över eller den under?
-- Skapa, redigera och söka bland supportärenden
-- Ärenden har status (Nytt, Pågående, Löst), prioritet (Låg, Normal, Hög), handläggare och kommentarer
-- Översikt med antal ärenden per status och filter på status
-- Snabbkommentar direkt på ärendekortet
-- Hantera kunder (skapa, redigera, lista)
 
 ## Regler
 
@@ -33,7 +27,7 @@ Projektet använder C# och WinUI. Lösningen är uppdelad i lagren Presentation,
 - **Infrastructure** innehåller implementationen av repository, som serialiserar objekten till JSON och sparar dem i en fil. Vid hämtning läser repositoryt filen och deserialiserar JSON-datan tillbaks till ett objekt.
 - **Domain** innehåller de centrala modellerna och deras affärsregler. Dessa objekt används när Application utför sit arbete.
 
-**Anropsflöde vid hämtning:**:
+**Anropsflöde vid hämtning:**
 
 **Presentation** -> **Application** -> **Repository** -> **JSON**
 
@@ -68,7 +62,9 @@ dotnet test
 
 Testerna kontrollerar bland annat att ett nytt ärende får status Nytt, att tom rubrik avvisas, att ett ärende utan handläggare inte kan bli Pågående, att en tillåten statusändring fungerar, att sökningen ignorerar stora och små bokstäver och att statusfiltret bara visar vald status.
 
-Senaste körning: 24 av 24 tester godkända. //Uppdatera antal och datum
+Senaste körning: 24 av 24 tester godkända.
+
+```
 
 ## Manuell kontroll
 
