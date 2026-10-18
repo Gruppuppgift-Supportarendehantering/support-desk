@@ -46,6 +46,10 @@ Kunder och supportärenden sparas lokalt i JSON-filer. I den aktuella implementa
 `supporttickets.json` - supportärenden och deras kommentarer.
 `customers.json` - kunder.
 
+## AI-använding
+
+Vi har använt oss av både ChatGPT och Claude som ett bollplank och felsökning under projekts gång. Koden har alltid granskats och begripits innan implementation. 
+
 
 ## Komma igång
 
