@@ -8,7 +8,8 @@ SupportDesk är en skrivbordsapplikation för att registrera och hantera kunders
 - Skapa och visa supportärenden kopplade till kunder.
 - Söka och filtrera supportärenden.
 - Ändra ett ärendes prioritet, status och ansvarig handläggare.
-- Lägga till och visa kommentarer på ärenden.
+- Lägga till och visa kommentarer på ärenden, antingen på redigeringssidan eller direkt på ärendekortet.
+- Översikt med antal ärenden per status och filter på status.
 - Spara och läsa data lokalt i JSON-format.
 //den över eller den under?
 - Skapa, redigera och söka bland supportärenden
@@ -25,20 +26,19 @@ SupportDesk är en skrivbordsapplikation för att registrera och hantera kunders
 
 ## Teknik och struktur
 
-Projektet använder C# och WinUI. Lösningen är uppdelad i lager:
+Projektet använder C# och WinUI. Lösningen är uppdelad i lagren Presentation, Application, Infrastructure och Domain enligt DDD-struktur:
 
-- **Domain** – centrala modeller och verksamhetsregler.
-- **Application** – applikationens tjänster och DTO:er.
-- **Infrastructure** – lagring och repository-implementationer.
-- **Presentation** – användargränssnitt, vyer och ViewModels.
-//den över eller den under?
-| Projekt | Innehåll |
-|---|---|
-| `SupportDesk.Domain` | Entiteter och affärsregler (`SupportTicket`, `TicketComment`) |
-| `SupportDesk.Application` | Tjänster och gränssnitt, sök- och filterlogik |
-| `SupportDesk.Infrastructure` | Lagring i JSON-filer |
-| `SupportDesk.Presentation` | WinUI-gränssnittet (vyer och ViewModels) |
-| `SupportDesk.Tests` | Enhetstester (xUnit) |
+- **Presentation** tar emot användarens inmatning och anropar relevant service i Application.
+- **Application** samordnar arbetet, exempelvis att skapa ett objekt och be relevant repository att spara det.
+- **Infrastructure** innehåller implementationen av repository, som serialiserar objekten till JSON och sparar dem i en fil. Vid hämtning läser repositoryt filen och deserialiserar JSON-datan tillbaks till ett objekt.
+- **Domain** innehåller de centrala modellerna och deras affärsregler. Dessa objekt används när Application utför sit arbete.
+
+**Anropsflöde vid hämtning:**:
+
+**Presentation** -> **Application** -> **Repository** -> **JSON**
+
+Repositoryt läser filen och omvandlar JSON-datan till objekt. Objekten returneras till Application, som skickar resultatet vidare till Presentation för att visas i gränssnittet.
+
 
 
 ## Lagring
@@ -69,6 +69,14 @@ dotnet test
 Testerna kontrollerar bland annat att ett nytt ärende får status Nytt, att tom rubrik avvisas, att ett ärende utan handläggare inte kan bli Pågående, att en tillåten statusändring fungerar, att sökningen ignorerar stora och små bokstäver och att statusfiltret bara visar vald status.
 
 Senaste körning: 24 av 24 tester godkända. //Uppdatera antal och datum
+
+## Manuell kontroll
+
+1. **Skapa en kund** - går till Kunder, antingen med knappen "Kunder" eller via navigeringsmenyn till vänster. Klickar på plusknappen, skriver in namn och e-post och väljer Lägg till.
+2. **Skapa ett ärende** - klickar på "Skapa ett ärende" i ärendeöversikten eller väljer det i menyn till vänster. Skriver rubrik och beskrivning, väljer kund i listan och en prioritet, och klickar på Skapa ärende.
+3. **Hantera ärendet** - markerar ärendet i översikten och klickar på "Öppna markerat ärende". Väljer en handläggare och sätter status till Pågående. Utan handläggare visas ett felmeddelande.
+4. **Avsluta ärendet** - redigerar ärendet och sätter status till Löst. Status-sammanställningen högst upp i översikten visar att ett ärende till är löst.
+5. **Övrigt** - kunder kan redigeras om namn eller e-post blivit fel. Kommentarer läggs till antingen med snabbfunktionen på ärendekortet eller med knappen "Lägg till kommentar" i Redigera ärende.
 
 ## Utvecklare
 
