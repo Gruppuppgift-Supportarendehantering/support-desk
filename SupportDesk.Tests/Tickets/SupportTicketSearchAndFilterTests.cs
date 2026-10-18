@@ -1,5 +1,5 @@
-﻿using SupportDesk.Domain.Tickets;
-using SupportDesk.Presentation.Helpers;
+﻿using SupportDesk.Application.Tickets;
+using SupportDesk.Domain.Tickets;
 
 namespace SupportDesk.Tests.Tickets;
 
@@ -57,6 +57,9 @@ public class TicketFilteringTests
             "Tangentbord kopplar ifrån",
             TicketPriority.High);
 
+        firstTicket.AssignTechnician("Anna Andersson");
+        secondTicket.AssignTechnician("Anna Andersson");
+
         firstTicket.ChangeStatus(status);
         secondTicket.ChangeStatus(status);
 
@@ -77,6 +80,7 @@ public class TicketFilteringTests
             otherStatus = TicketStatus.New;
         }
 
+        thirdTicket.AssignTechnician("Anna Andersson");
         thirdTicket.ChangeStatus(otherStatus);
 
         var tickets = new[] { firstTicket, thirdTicket, secondTicket };

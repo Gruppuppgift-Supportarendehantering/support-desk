@@ -109,11 +109,22 @@ public partial class EditSupportTicketViewModel : ObservableObject
 
         _ticket.UpdateDetails(Title, Description);
         _ticket.ChangePriority(Priority);
-        _ticket.ChangeStatus(Status);
 
         if (!string.IsNullOrWhiteSpace(AssignedTechnician))
         {
             _ticket.AssignTechnician(AssignedTechnician);
+        }
+
+        try
+        {
+            _ticket.ChangeStatus(Status);
+        }
+
+        catch (InvalidOperationException ex)
+        {
+            ErrorMessage = ex.Message;
+            return;
+
         }
 
         var result = await _supportTicketService.UpdateTicketAsync(_ticket);

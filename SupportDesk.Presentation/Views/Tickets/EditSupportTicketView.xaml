@@ -93,21 +93,21 @@
                     TextWrapping="Wrap" />
 
 
-                <StackPanel
-                    Orientation="Horizontal"
-                    Spacing="12">
-                    <Button
-                        HorizontalAlignment="Left"
-                        Command="{x:Bind ViewModel.SaveChangesCommand}"
-                        Content="Spara ändringar"
-                        Style="{StaticResource AccentButtonStyle}" />
-                    <Button
-                        Width="120"
-                        Padding="20,6"
-                        Click="CancelButton_Click"
-                        Content="Avbryt" />
-                </StackPanel>
-
+            <StackPanel
+                Orientation="Horizontal"
+                Spacing="12">
+                <Button
+                    HorizontalAlignment="Left"
+                    Command="{x:Bind ViewModel.SaveChangesCommand}"
+                    Content="Spara ändringar"
+                    Style="{StaticResource AccentButtonStyle}" />
+                <Button
+                    Width="120"
+                    Padding="20,6"
+                    Click="CancelButton_Click"
+                    Content="Avbryt" />
+            </StackPanel>
+<!--under här-->
 			<StackPanel Margin="0,24,0,0" Spacing="8">
 				<Grid ColumnDefinitions="*,Auto">
 					<TextBlock
@@ -125,11 +125,10 @@
 
 				<ListView
 					MaxHeight="200"
-					ItemsSource="{x:Bind ViewModel.Comments}">
+					ItemsSource="{x:Bind ViewModel.Comments, Mode=OneWay}">
 					<ListView.ItemTemplate>
 						<DataTemplate>
 							<StackPanel Margin="0,4">
-								<!--<TextBlock FontWeight="Bold" Text="{Binding Author}" />-->
 								<TextBlock Text="{Binding Text}" TextWrapping="Wrap" />
 								<TextBlock FontSize="12" Text="{Binding CreatedAt}" />
 							</StackPanel>
@@ -139,17 +138,16 @@
 			</StackPanel>
 
 
-		</StackPanel>
-
-
-        
-    </ScrollViewer>
-		<Button
-        Margin="8"
-        HorizontalAlignment="Left"
-        VerticalAlignment="Top"
-        Command="{x:Bind ViewModel.GoBackCommand}">
-			<FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE72B;" />
-		</Button>
-	</Grid>
+            </StackPanel>
+        </ScrollViewer>
+        <Button
+            Margin="8"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Command="{x:Bind ViewModel.GoBackCommand}">
+            <FontIcon
+                FontFamily="Segoe Fluent Icons"
+                Glyph="&#xE72B;" />
+        </Button>
+    </Grid>
 </Page>

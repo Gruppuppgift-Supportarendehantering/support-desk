@@ -10,14 +10,8 @@ public sealed partial class CreateSupportTicketView : Page
 
     public CreateSupportTicketView()
     {
-
-        //tillfällig lösning, gör DI manuellt
         ViewModel = ((App)Microsoft.UI.Xaml.Application.Current).Services.GetRequiredService<CreateSupportTicketViewModel>();
-
         InitializeComponent();
-
-        
-        
     }
 
     private void CancelButton_Click(object sender, RoutedEventArgs e)

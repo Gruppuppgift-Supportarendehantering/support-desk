@@ -5,18 +5,30 @@ using System.Text.Json;
 
 namespace SupportDesk.Infrastructure.Customers;
 
-internal class JsonFileCustomerRepository : ICustomerRepository
+public class JsonFileCustomerRepository : ICustomerRepository
 {
-    private readonly string _filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-        "SupportDesk",
-        "customers.json"
-        );
+    private readonly string _filePath;
+
+    public JsonFileCustomerRepository() : this(GetDefaultFilePath()) { }
+
+    public JsonFileCustomerRepository(string filePath)
+    {
+        _filePath = filePath;
+    }
 
     private readonly JsonSerializerOptions _options = new()
     {
         WriteIndented = true,
         PropertyNameCaseInsensitive = true
     };
+
+    private static string GetDefaultFilePath()
+    {
+        return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+        "SupportDesk",
+        "customers.json"
+        );
+    }
 
     public async Task<bool> CreateAsync(Customer customer)
     {

@@ -19,13 +19,14 @@
             Color="{ThemeResource TextFillColorSecondary}" />
     </Page.Resources>
 
-    <Grid Padding="24,0,24,24">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="124" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+	<Grid Padding="24,0,24,24">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="124" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
 
         <!--  Ticket status summary  -->
 
@@ -184,10 +185,21 @@
 
         </Grid>
 
-        <!--  Ticket list  -->
+		<!-- Error messagee, hidden if no error message with Visibility... -->
+		<InfoBar
+			Grid.Row="3"
+			Margin="0,0,0,12"
+			IsOpen="True"
+			IsClosable="False"
+			Severity="Error"
+			Title="Kunde inte läsa in ärendena"
+			Message="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+			Visibility="{x:Bind helpers:TicketDisplay.VisibleIfNotEmpty(ViewModel.ErrorMessage), Mode=OneWay}" />
 
-        <ListView
-            Grid.Row="3"
+		<!--  Ticket list  -->
+
+		<ListView
+            Grid.Row="4"
             HorizontalAlignment="Stretch"
             ItemsSource="{x:Bind ViewModel.Tickets}"
             SelectedItem="{x:Bind ViewModel.SelectedTicket, Mode=TwoWay}"

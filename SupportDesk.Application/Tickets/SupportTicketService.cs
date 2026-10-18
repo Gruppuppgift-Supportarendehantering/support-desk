@@ -2,22 +2,38 @@
 using SupportDesk.Application.Dtos.Tickets;
 using SupportDesk.Domain.Tickets;
 using System.Reflection;
+using System.Text.Json;
 
 namespace SupportDesk.Application.Tickets;
 
 public class SupportTicketService : ISupportTicketService
 {
     private readonly ISupportTicketRepository _repository;
+    private readonly ICustomerRepository _customerRepository;
 
 
-    public SupportTicketService(ISupportTicketRepository repository)
+    public SupportTicketService(ISupportTicketRepository repository, ICustomerRepository customerRepository)
     {
         _repository = repository;
+        _customerRepository = customerRepository;
     }
 
 
     public async Task<SupportTicketResult> CreateTicketAsync(SupportTicketRequest request)
     {
+        if (request.CustomerId == Guid.Empty)
+        {
+            return new SupportTicketResult(false, null, "Du måste välja en kund.");
+                
+        }
+
+        var customer = await _customerRepository.GetByIdAsync(request.CustomerId);
+
+        if (customer == null)
+        {
+            return new SupportTicketResult(false, null, "Kunden hittades inte. Välj en registrerad kund.");
+        }
+
         SupportTicket ticket = new SupportTicket
             (
             request.CustomerId,
@@ -26,7 +42,14 @@ public class SupportTicketService : ISupportTicketService
             request.TicketPriority
             );
 
-        await _repository.AddTicketToJsonAsync(ticket);
+        try
+        {
+            await _repository.AddTicketToJsonAsync(ticket);
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or JsonException or KeyNotFoundException)
+        {
+            return new SupportTicketResult(false, null, "Kunde inte spara ärendet. Försök igen.");
+        }
 
         TicketData ticketData = new TicketData(
             ticket.Id,
@@ -39,12 +62,7 @@ public class SupportTicketService : ISupportTicketService
             );
 
 
-        return new SupportTicketResult
-            (
-            true,
-            ticketData,
-            null
-            );
+        return new SupportTicketResult(true, ticketData, null);
     }
     public async Task<IReadOnlyList<SupportTicket>> GetAllTicketsAsync()
     {
@@ -52,7 +70,14 @@ public class SupportTicketService : ISupportTicketService
     }
     public async Task<SupportTicketResult> UpdateTicketAsync(SupportTicket ticket)
     {
-        await _repository.UpdateTicketAsync(ticket);
+        try
+        {
+            await _repository.UpdateTicketAsync(ticket);
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or JsonException or KeyNotFoundException)
+        {
+            return new SupportTicketResult(false, null, "Kunde inte spara ärendet. Försök igen.");
+        }
 
         TicketData ticketData = new TicketData(
             ticket.Id,
