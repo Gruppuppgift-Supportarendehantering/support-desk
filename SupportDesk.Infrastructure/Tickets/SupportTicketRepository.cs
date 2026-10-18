@@ -18,8 +18,6 @@ public class SupportTicketRepository : ISupportTicketRepository
     public SupportTicketRepository(string filePath)
     {
         _filePath = filePath;
-        Debug.WriteLine(_filePath);
-        
     }
 
     private readonly JsonSerializerOptions jsonOptions = new JsonSerializerOptions()

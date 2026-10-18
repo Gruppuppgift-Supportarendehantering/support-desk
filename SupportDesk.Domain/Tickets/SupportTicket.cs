@@ -6,8 +6,8 @@ public class SupportTicket
 {
     private readonly List<TicketComment> _comments = new();
 
-    public Guid Id { get; } //supportärendet
-    public Guid CustomerId { get; } //kundens id
+    public Guid Id { get; } 
+    public Guid CustomerId { get; } 
     public string Title { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
     public TicketPriority Priority { get; private set; }
