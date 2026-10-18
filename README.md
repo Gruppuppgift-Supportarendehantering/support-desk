@@ -55,6 +55,12 @@ Kunder och supportärenden sparas lokalt i JSON-filer. I den aktuella implementa
 4. Välj `SupportDesk.Presentation (Package)` som startprojekt.
 5. Bygg lösningen och starta applikationen.
 
+**Via terminalen när du befinner dig i rotmappen**
+
+```bash
+dotnet run --project .\SupportDesk.Presentation\SupportDesk.Presentation.csproj --launch-profile "SupportDesk.Presentation (Unpackaged)" -p:Platform=x64 -p:WindowsPackageType=None
+```
+
 ## Tester
 
 Enhetstesterna körs i Test Explorer eller med:
@@ -62,7 +68,15 @@ Enhetstesterna körs i Test Explorer eller med:
 dotnet test
 ```
 
-Testerna kontrollerar bland annat att ett nytt ärende får status Nytt, att tom rubrik avvisas, att ett ärende utan handläggare inte kan bli Pågående, att en tillåten statusändring fungerar, att sökningen ignorerar stora och små bokstäver och att statusfiltret bara visar vald status.
+**Testerna kontrollerar bland annat:** 
+- att ett nytt ärende får status Nytt 
+- att tom rubrik avvisas
+- att ett ärende utan handläggare inte kan bli Pågående
+- att en tillåten statusändring fungerar
+- att sökningen ignorerar stora och små bokstäver
+- att statusfiltret bara visar vald status
+- att JSON-datan kvarstår genom programmet gång
+- att JSON-datan inte är korrupt
 
 Senaste körning: 24 av 24 tester godkända.
 
