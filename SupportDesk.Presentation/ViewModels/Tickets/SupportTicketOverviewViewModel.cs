@@ -116,11 +116,11 @@ public partial class SupportTicketOverviewViewModel : ObservableObject
         }
     }
 
-    public async Task AddQuickCommentAsync(SupportTicket ticket, string text)
+    public async Task<bool> AddQuickCommentAsync(SupportTicket ticket, string text)
     {
         if (string.IsNullOrWhiteSpace(text))
         {
-            return;
+            return false;
         }
 
         ticket.AddComment(text);
@@ -129,10 +129,11 @@ public partial class SupportTicketOverviewViewModel : ObservableObject
         if (!result.Succeeded)
         {
             ErrorMessage = result.ErrorMessage ?? "Kunde inte spara kommentaren.";
-            return;
+            return false;
         }
 
         await LoadTicketsAsync();
+        return true;
     }
 
     [RelayCommand]

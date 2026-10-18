@@ -57,6 +57,11 @@ public sealed partial class SupportTicketView : Page
             return;
         }
 
-        await ViewModel.AddQuickCommentAsync(ticket, textBox.Text);
+        if (await ViewModel.AddQuickCommentAsync(ticket, textBox.Text))
+        {
+            textBox.Text = string.Empty;
+        }
+
+
     }
 }
