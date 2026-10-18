@@ -14,7 +14,9 @@ SupportDesk är en skrivbordsapplikation för att registrera och hantera kunders
 
 ## Regler
 
-- Ett ärende måste ha en handläggare innan det kan bli Pågående eller Löst.
+- En kund måste ha giltigt namn och e-postadress. Fälten kan inte vara tomma.
+- Ett ärende måste bindas med en kund vid skapandet.
+- Ett ärende måste ha en handläggare innan det kan bli satt till status Pågående eller Löst.
 - Rubrik och beskrivning får inte vara tomma.
 
 
@@ -41,9 +43,8 @@ Kunder och supportärenden sparas lokalt i JSON-filer. I den aktuella implementa
 
 `Dokument\SupportDesk`
 
-Applikationen använder påhittade kunduppgifter och handläggare.
-`supporttickets.json` | Alla supportärenden och deras kommentarer
-`customers.json` | Alla kunder |
+`supporttickets.json` - supportärenden och deras kommentarer.
+`customers.json` - kunder.
 
 
 ## Komma igång
